@@ -1,9 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
 import 'package:social_media/presentation/login_screen/widgets/login_with_google_button.dart';
+import 'package:social_media/presentation/common%20widgets/password_text_field.dart';
+import 'package:social_media/presentation/signup_screen/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -25,6 +28,7 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              constHeight50,
               const LoginWithGoogleButton(),
               constHeight10,
               Text(
@@ -33,6 +37,7 @@ class LoginScreen extends StatelessWidget {
               ),
               constHeight10,
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   hintText: "Email",
                 ),
@@ -44,17 +49,7 @@ class LoginScreen extends StatelessWidget {
                 style: theme.textTheme.titleLarge,
               ),
               constHeight10,
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.remove_red_eye_outlined,
-                    ),
-                  ),
-                ),
-              ),
+              const PasswordTextField(),
               constHeight20,
               Text(
                 "Forgot Password?",
@@ -75,12 +70,22 @@ class LoginScreen extends StatelessWidget {
                     style: theme.textTheme.labelLarge,
                     children: <TextSpan>[
                       TextSpan(
-                          text: 'SignUp',
-                          style: linkTextStyle(
-                            theme.brightness == Brightness.dark
-                                ? whiteColor
-                                : blackColor,
-                          )),
+                        text: 'SignUp',
+                        style: linkTextStyle(
+                          theme.brightness == Brightness.dark
+                              ? whiteColor
+                              : blackColor,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignupScreen(),
+                              ),
+                            );
+                          },
+                      ),
                     ],
                   ),
                 ),

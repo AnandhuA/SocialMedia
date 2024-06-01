@@ -14,16 +14,16 @@ class Background extends StatelessWidget {
           top: 0,
           right: 0,
           child: Container(
-            height: 250,
-            width: 300,
+            height: 100,
+            width: 200,
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
         Positioned(
           bottom: 0,
           child: Container(
-            height: 250,
-            width: 300,
+            height: 100,
+            width: 200,
             color: Theme.of(context).colorScheme.secondary,
           ),
         ),

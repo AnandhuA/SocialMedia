@@ -58,8 +58,8 @@ TextButtonThemeData textButtonStyle({required Color color}) {
 
 TextStyle headlineStyle(Color color) {
   return TextStyle(
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
+    fontSize: 37,
+    fontWeight: FontWeight.w500,
     color: color,
   );
 }
@@ -94,7 +94,6 @@ InputDecorationTheme inputDecorationStyle({
   required Color bacgroundColor,
 }) {
   return InputDecorationTheme(
-    contentPadding: const EdgeInsets.all(10),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: boderColor),
     ),

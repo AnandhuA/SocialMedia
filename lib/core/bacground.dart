@@ -37,7 +37,7 @@ class Background extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: child,

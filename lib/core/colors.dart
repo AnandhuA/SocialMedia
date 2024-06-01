@@ -6,6 +6,10 @@ const Color primaryColor = Color(0xFFF42D92);
 const Color secondaryColor = Color(0xFF53ABFF);
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
+const Color customButtonBackground = Color.fromARGB(35, 217, 217, 217);
+
+const LinearGradient gradientColor =
+    LinearGradient(colors: [primaryColor, secondaryColor]);
 
 //------------lightMode---------------
 

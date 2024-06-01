@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:social_media/core/colors.dart';
 
 //--------------ButtonStyle-----------------
@@ -82,26 +79,37 @@ TextStyle lableStyle(Color color) {
   );
 }
 
+TextStyle linkTextStyle(Color color) {
+  return TextStyle(
+    color: color,
+    decoration: TextDecoration.underline,
+    fontWeight: FontWeight.w500,
+  );
+}
+
 //------------------InputDecorationStyle------------------
 
-InputDecorationTheme inputDecorationStyle(
-    {required Color boderColor, required Color bacgroundColor}) {
+InputDecorationTheme inputDecorationStyle({
+  required Color boderColor,
+  required Color bacgroundColor,
+}) {
   return InputDecorationTheme(
+    contentPadding: const EdgeInsets.all(10),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: boderColor),
     ),
     enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: boderColor),
-        borderRadius: BorderRadius.circular(20)),
-    fillColor: bacgroundColor,
-    focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: primaryColor),
-        borderRadius: BorderRadius.circular(20)),
-    hintStyle: TextStyle(
-      color: lightModeLabelColor,
+      borderSide: BorderSide(color: boderColor),
+      borderRadius: BorderRadius.circular(20),
     ),
-    labelStyle: TextStyle(
-      color: blackColor,
+    fillColor: bacgroundColor,
+    filled: true,
+    focusedBorder: OutlineInputBorder(
+      borderSide: const BorderSide(color: primaryColor),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    hintStyle: const TextStyle(
+      color: lightModeLabelColor,
     ),
   );
 }

@@ -8,30 +8,32 @@ class ThemeClass {
 
   static ThemeData lightTheme = ThemeData.light().copyWith(
       colorScheme: ColorScheme.light(
-        surface: surfaceLight,
-        primary: primaryColor,
-        secondary: secondaryColor,
-      ),
+          surface: surfaceLight,
+          primary: primaryColor,
+          secondary: secondaryColor,
+          outline: lightModeBoder),
       elevatedButtonTheme: elevatedButtonStyle,
       textButtonTheme: textButtonStyle(color: blackColor),
       textTheme: TextTheme(
         headlineLarge: headlineStyle(blackColor),
         titleLarge: titleStyle(blackColor),
         labelLarge: lableStyle(lightModeLabelColor),
+      
       ),
       inputDecorationTheme: inputDecorationStyle(
         boderColor: lightModeBoder,
-        bacgroundColor: blackColor,
+        bacgroundColor: lightModeTextFeildBackground,
+      
       ));
 
   //-----------darkMode-----------
 
   static ThemeData darkTheme = ThemeData.dark().copyWith(
       colorScheme: ColorScheme.dark(
-        surface: surfaceDark,
-        primary: primaryColor,
-        secondary: secondaryColor,
-      ),
+          surface: surfaceDark,
+          primary: primaryColor,
+          secondary: secondaryColor,
+          outline: darkModeBoder),
       elevatedButtonTheme: elevatedButtonStyle,
       textButtonTheme: textButtonStyle(color: whiteColor),
       textTheme: TextTheme(
@@ -41,6 +43,7 @@ class ThemeClass {
       ),
       inputDecorationTheme: inputDecorationStyle(
         boderColor: darkModeBoder,
-        bacgroundColor: whiteColor,
+        bacgroundColor: darkModeTextFeildBackground,
+    
       ));
 }

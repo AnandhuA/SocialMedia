@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/login_screen/login_screen.dart';
-import 'package:social_media/presentation/signup_screen/signup_screen.dart';
+import 'package:social_media/presentation/login/login_screen.dart';
+import 'package:social_media/presentation/signup/signup_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({super.key});

@@ -4,12 +4,13 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
+import 'package:social_media/presentation/forgot_password/forgot_password_screen.dart';
+import 'package:social_media/presentation/login/widgets/login_with_google_button.dart';
 import 'package:social_media/presentation/common%20widgets/password_text_field.dart';
-import 'package:social_media/presentation/login_screen/login_screen.dart';
-import 'package:social_media/presentation/verificatio_screen/verification_screen.dart';
+import 'package:social_media/presentation/signup/signup_screen.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class SignupScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Sign Up",
+          "Log In",
           style: theme.textTheme.headlineLarge,
         ),
       ),
@@ -29,19 +30,8 @@ class SignupScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               constHeight50,
-              Text(
-                "Name",
-                style: theme.textTheme.titleLarge,
-              ),
+              const LoginWithGoogleButton(),
               constHeight10,
-              TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  hintText: "Name",
-                ),
-                style: theme.textTheme.titleLarge,
-              ),
-              constHeight30,
               Text(
                 "Email",
                 style: theme.textTheme.titleLarge,
@@ -54,47 +44,46 @@ class SignupScreen extends StatelessWidget {
                 ),
                 style: theme.textTheme.titleLarge,
               ),
-              constHeight30,
-              Text(
-                "Phone",
-                style: theme.textTheme.titleLarge,
-              ),
-              constHeight10,
-              TextFormField(
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
-                  hintText: "Phone",
-                ),
-                style: theme.textTheme.titleLarge,
-              ),
-              constHeight30,
+              constHeight20,
               Text(
                 "Password",
                 style: theme.textTheme.titleLarge,
               ),
               constHeight10,
               const PasswordTextField(),
-              constHeight50,
-              ElevatedButton(
-                onPressed: () {
+              constHeight20,
+              InkWell(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => VerificationScreen(),
+                      builder: (context) => ForgotPasswordScreen(),
                     ),
                   );
                 },
-                child: const Text("Sign Up"),
+                child: Text(
+                  "Forgot Password?",
+                  style: linkTextStyle(
+                    theme.brightness == Brightness.dark
+                        ? whiteColor
+                        : blackColor,
+                  ),
+                ),
+              ),
+              constHeight50,
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text("Login"),
               ),
               constHeight50,
               Center(
                 child: RichText(
                   text: TextSpan(
-                    text: "Already have an account?  ",
+                    text: "Don't have an account?  ",
                     style: theme.textTheme.labelLarge,
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'Login',
+                        text: 'SignUp',
                         style: linkTextStyle(
                           theme.brightness == Brightness.dark
                               ? whiteColor
@@ -105,7 +94,7 @@ class SignupScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
+                                builder: (context) => const SignupScreen(),
                               ),
                             );
                           },

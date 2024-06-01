@@ -94,6 +94,7 @@ InputDecorationTheme inputDecorationStyle({
   required Color bacgroundColor,
 }) {
   return InputDecorationTheme(
+    contentPadding: const EdgeInsets.all(20),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: boderColor),
     ),
@@ -109,6 +110,7 @@ InputDecorationTheme inputDecorationStyle({
     ),
     hintStyle: const TextStyle(
       color: lightModeLabelColor,
+      fontSize: 15,
     ),
   );
 }

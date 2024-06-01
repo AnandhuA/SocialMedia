@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media/presentation/intro_screen/intro_screen.dart';
+import 'package:social_media/presentation/intro/intro_screen.dart';
 import 'package:social_media/core/theme.dart';
 
 void main() {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/verificatio_screen/widgets/otp_text_filed.dart';
+import 'package:social_media/presentation/profile/profile_screen.dart';
+import 'package:social_media/presentation/verification/widgets/otp_text_filed.dart';
 
 class VerificationScreen extends StatelessWidget {
   VerificationScreen({super.key});
@@ -38,7 +39,17 @@ class VerificationScreen extends StatelessWidget {
               ],
             ),
             constHeight50,
-            ElevatedButton(onPressed: () {}, child: const Text("Confirm"))
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: const Text("Confirm"))
           ],
         ),
       ),

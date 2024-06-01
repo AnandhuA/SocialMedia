@@ -4,12 +4,12 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
-import 'package:social_media/presentation/login_screen/widgets/login_with_google_button.dart';
 import 'package:social_media/presentation/common%20widgets/password_text_field.dart';
-import 'package:social_media/presentation/signup_screen/signup_screen.dart';
+import 'package:social_media/presentation/login/login_screen.dart';
+import 'package:social_media/presentation/verification/verification_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Log In",
+          "Sign Up",
           style: theme.textTheme.headlineLarge,
         ),
       ),
@@ -29,8 +29,19 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               constHeight50,
-              const LoginWithGoogleButton(),
+              Text(
+                "Name",
+                style: theme.textTheme.titleLarge,
+              ),
               constHeight10,
+              TextFormField(
+                keyboardType: TextInputType.name,
+                decoration: const InputDecoration(
+                  hintText: "Name",
+                ),
+                style: theme.textTheme.titleLarge,
+              ),
+              constHeight30,
               Text(
                 "Email",
                 style: theme.textTheme.titleLarge,
@@ -43,34 +54,47 @@ class LoginScreen extends StatelessWidget {
                 ),
                 style: theme.textTheme.titleLarge,
               ),
-              constHeight20,
+              constHeight30,
+              Text(
+                "Phone",
+                style: theme.textTheme.titleLarge,
+              ),
+              constHeight10,
+              TextFormField(
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  hintText: "Phone",
+                ),
+                style: theme.textTheme.titleLarge,
+              ),
+              constHeight30,
               Text(
                 "Password",
                 style: theme.textTheme.titleLarge,
               ),
               constHeight10,
               const PasswordTextField(),
-              constHeight20,
-              Text(
-                "Forgot Password?",
-                style: linkTextStyle(
-                  theme.brightness == Brightness.dark ? whiteColor : blackColor,
-                ),
-              ),
               constHeight50,
               ElevatedButton(
-                onPressed: () {},
-                child: const Text("Login"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerificationScreen(),
+                    ),
+                  );
+                },
+                child: const Text("Sign Up"),
               ),
               constHeight50,
               Center(
                 child: RichText(
                   text: TextSpan(
-                    text: "Don't have an account?  ",
+                    text: "Already have an account?  ",
                     style: theme.textTheme.labelLarge,
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'SignUp',
+                        text: 'Login',
                         style: linkTextStyle(
                           theme.brightness == Brightness.dark
                               ? whiteColor
@@ -81,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const SignupScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           },

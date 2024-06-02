@@ -17,6 +17,7 @@ Color surfaceLight = Colors.white.withOpacity(0.6);
 const Color lightModeBoder = Color(0xFF1E1E1E);
 const Color lightModeTextFeildBackground = Color(0xFFD9D9D9);
 const Color lightModeLabelColor = Color(0xFF8A8787);
+const Color lightModeCustomButtonBG = Color.fromARGB(175, 138, 135, 135);
 
 //------------darkMode--------------
 
@@ -24,3 +25,5 @@ Color surfaceDark = Colors.black.withOpacity(0.6);
 const Color darkModeBoder = Color(0xFF424242);
 const Color darkModeTextFeildBackground = Color(0xFF1E1E1E);
 const Color darkModeLabelColor = Color(0xFF8A8787);
+
+const Color darkModeCustomButtonBG = Color(0xFF1E1E1E);

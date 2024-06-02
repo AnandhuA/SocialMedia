@@ -36,8 +36,7 @@ class Background extends StatelessWidget {
             color: Theme.of(context).colorScheme.surface,
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+        SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: child,

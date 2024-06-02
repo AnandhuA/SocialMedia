@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/profile/widgets/profile_info_button.dart';
 
@@ -7,7 +8,7 @@ class ProfileSectionTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -33,32 +34,56 @@ class ProfileSectionTwo extends StatelessWidget {
           ),
           constHeight30,
           const TabBar(
+            dividerColor: greyColor,
             tabs: [
               Tab(text: 'Posts'),
               Tab(text: 'Saved'),
             ],
           ),
+          constHeight10,
           Expanded(
             child: TabBarView(
               children: [
-                ListView.builder(
-                  itemCount: 10,
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 3,
+                    mainAxisSpacing: 3,
+                  ),
+                  itemCount: dummylistpost.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        "data",
-                        style: theme.textTheme.labelLarge,
+                    return Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            dummylistpost[index],
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   },
                 ),
-                ListView.builder(
-                  itemCount: 10,
+                GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 3,
+                    mainAxisSpacing: 3,
+                  ),
+                  itemCount: dummylistsaved.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        "next",
-                        style: theme.textTheme.labelLarge,
+                    return Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            dummylistsaved[index],
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   },
@@ -71,3 +96,14 @@ class ProfileSectionTwo extends StatelessWidget {
     );
   }
 }
+
+List dummylistpost = [
+  "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREoRGyXmHy_6aIgXYqWHdOT3KjfmnuSyxypw&s",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4s4lswDnx95hVyzQEzWYtFEpQTs42NmxtqHqsweX6hU-GbZxJfYgeKa2LIuTiKf0O7Gg"
+];
+List dummylistsaved = [
+  "https://media.istockphoto.com/id/1317323736/photo/a-view-up-into-the-trees-direction-sky.jpg?s=612x612&w=0&k=20&c=i4HYO7xhao7CkGy7Zc_8XSNX_iqG0vAwNsrH1ERmw2Q=",
+  "https://media.istockphoto.com/id/1296344118/photo/beautiful-happy-woman-enjoying-the-warm-sunlight-in-a-tropical-public-park.jpg?s=612x612&w=0&k=20&c=Z0h4uIzZd4cxhkT_CSl9-1wFbnbuqEWYrp5heM9uDuQ=",
+  "https://media.istockphoto.com/id/1314559532/photo/relaxed-woman-breathing-fresh-air-in-a-green-forest.jpg?s=612x612&w=0&k=20&c=_LPHSLjVO_ZDMatEHl_62i6RW-6IpnHgjoG3aIDPY2A="
+];

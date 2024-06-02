@@ -8,6 +8,8 @@ const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
 const Color greyColor = Colors.grey;
 const Color customButtonBackground = Color.fromARGB(35, 217, 217, 217);
+const Color errorColor = Colors.red;
+const Color successColor = Colors.green;
 
 const LinearGradient gradientColor =
     LinearGradient(colors: [primaryColor, secondaryColor]);

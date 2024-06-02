@@ -25,26 +25,28 @@ class IntroScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text("Log In")),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text("Log In"),
+                ),
                 constHeight20,
                 TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignupScreen(),
-                        ),
-                      );
-                    },
-                    child: const Text("Sign Up")),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  SignupScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text("Sign Up"),
+                ),
                 const Spacer(),
               ],
             ),

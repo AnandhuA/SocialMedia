@@ -9,7 +9,8 @@ import 'package:social_media/presentation/Authentication/login/login_screen.dart
 import 'package:social_media/presentation/Authentication/verification/verification_screen.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+   SignupScreen({super.key});
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,9 @@ class SignupScreen extends StatelessWidget {
                   style: theme.textTheme.titleLarge,
                 ),
                 constHeight10,
-                const PasswordTextField(),
+                 PasswordTextField(
+                  controller: _passwordController,
+                ),
                 constHeight50,
                 ElevatedButton(
                   onPressed: () {
@@ -107,7 +110,7 @@ class SignupScreen extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                                  builder: (context) => LoginScreen(),
                                 ),
                               );
                             },

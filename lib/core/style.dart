@@ -102,6 +102,10 @@ InputDecorationTheme inputDecorationStyle({
       borderSide: BorderSide(color: boderColor),
       borderRadius: BorderRadius.circular(20),
     ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(color: errorColor),
+    ),
     fillColor: bacgroundColor,
     filled: true,
     focusedBorder: OutlineInputBorder(

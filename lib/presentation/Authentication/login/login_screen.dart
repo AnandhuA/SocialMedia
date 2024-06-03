@@ -6,6 +6,7 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
+import 'package:social_media/utils/validation.dart';
 import 'package:social_media/presentation/Authentication/forgot_password/forgot_password_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/login_with_google_button.dart';
 import 'package:social_media/presentation/Authentication/widgets/password_text_field.dart';
@@ -62,12 +63,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       constHeight10,
                       TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Enter email address";
-                          }
-                          return null;
-                        },
+                        validator: Validation.validateEmail,
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
@@ -83,6 +79,7 @@ class LoginScreen extends StatelessWidget {
                       constHeight10,
                       PasswordTextField(
                         controller: _passwordController,
+                    
                       ),
                       constHeight20,
                       InkWell(
@@ -115,12 +112,12 @@ class LoginScreen extends StatelessWidget {
                               log("ButtonClicked");
                               if (_formKey.currentState!.validate()) {
                                 log("ok");
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(LoginButtonClickEvent());
                               } else {
                                 log("No");
                               }
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(LoginButtonClickEvent());
                             },
                             child: const Text("Login"),
                           );

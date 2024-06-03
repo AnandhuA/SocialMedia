@@ -10,12 +10,20 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<LoginButtonClickEvent>(_loginButtonClickEvent);
+    on<SignupButtonClickEvent>(_signupButtonClickEvent);
   }
 
   FutureOr<void> _loginButtonClickEvent(
     LoginButtonClickEvent event,
     Emitter<AuthenticationState> emit,
   ) {
-    emit(LoginErrorState(error:  "error"));
+    emit(LoginLoadingState());
+  }
+
+  FutureOr<void> _signupButtonClickEvent(
+    SignupButtonClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(SignupLoadingState());
   }
 }

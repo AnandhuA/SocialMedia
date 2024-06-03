@@ -5,6 +5,7 @@ sealed class AuthenticationState {}
 
 final class AuthenticationInitial extends AuthenticationState {}
 
+//-------loginState-------------
 final class LoginLoadingState extends AuthenticationState {}
 
 final class LoginErrorState extends AuthenticationState {
@@ -14,3 +15,12 @@ final class LoginErrorState extends AuthenticationState {
 }
 
 final class LoginSuccessState extends AuthenticationState {}
+
+
+//-----------signupState------------
+
+final class SignupLoadingState extends AuthenticationState{}
+
+final class SignupSuccessState extends AuthenticationState{}
+
+final class SignupErrorState extends AuthenticationState{}

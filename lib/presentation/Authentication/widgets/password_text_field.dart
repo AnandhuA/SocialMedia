@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:social_media/utils/validation.dart';
 
 class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
+
   const PasswordTextField({
     super.key,
     required this.controller,
@@ -17,12 +19,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "Enter password";
-        }
-        return null;
-      },
+      validator: Validation.validatePassword,
       controller: widget.controller,
       obscureText: obscureText,
       decoration: InputDecoration(

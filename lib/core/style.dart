@@ -112,6 +112,10 @@ InputDecorationTheme inputDecorationStyle({
       borderSide: const BorderSide(color: primaryColor),
       borderRadius: BorderRadius.circular(20),
     ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(color: primaryColor),
+    ),
     hintStyle: const TextStyle(
       color: lightModeLabelColor,
       fontSize: 15,

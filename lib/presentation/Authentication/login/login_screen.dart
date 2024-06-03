@@ -6,6 +6,7 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
+import 'package:social_media/presentation/profile/profile_screen.dart';
 import 'package:social_media/utils/validation.dart';
 import 'package:social_media/presentation/Authentication/forgot_password/forgot_password_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/login_with_google_button.dart';
@@ -28,11 +29,24 @@ class LoginScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           customSnackbar(
-              context: context, message: "Sucess", color: successColor);
+            context: context,
+            message: "Success",
+            color: successColor,
+          );
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProfileScreen(),
+            ),
+            (Route<dynamic> route) => false,
+          );
         }
         if (state is LoginErrorState) {
           customSnackbar(
-              context: context, message: state.error, color: errorColor);
+            context: context,
+            message: state.error,
+            color: errorColor,
+          );
         }
       },
       builder: (context, state) {
@@ -79,7 +93,6 @@ class LoginScreen extends StatelessWidget {
                       constHeight10,
                       PasswordTextField(
                         controller: _passwordController,
-                    
                       ),
                       constHeight20,
                       InkWell(
@@ -114,7 +127,10 @@ class LoginScreen extends StatelessWidget {
                                 log("ok");
                                 context
                                     .read<AuthenticationBloc>()
-                                    .add(LoginButtonClickEvent());
+                                    .add(LoginButtonClickEvent(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    ));
                               } else {
                                 log("No");
                               }

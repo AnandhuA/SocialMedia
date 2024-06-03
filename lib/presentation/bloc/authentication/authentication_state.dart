@@ -16,11 +16,26 @@ final class LoginErrorState extends AuthenticationState {
 
 final class LoginSuccessState extends AuthenticationState {}
 
-
 //-----------signupState------------
 
-final class SignupLoadingState extends AuthenticationState{}
+final class SignupLoadingState extends AuthenticationState {}
 
-final class SignupSuccessState extends AuthenticationState{}
+final class SignupSuccessState extends AuthenticationState {}
 
-final class SignupErrorState extends AuthenticationState{}
+final class SignupErrorState extends AuthenticationState {
+  final String error;
+
+  SignupErrorState({required this.error});
+}
+
+//-------------verification---------
+
+final class VerificationLoadingState extends AuthenticationState {}
+
+final class VerificationSuccessState extends AuthenticationState {}
+
+final class VerificationErrorState extends AuthenticationState {
+  final String error;
+
+  VerificationErrorState({required this.error});
+}

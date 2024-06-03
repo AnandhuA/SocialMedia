@@ -11,7 +11,10 @@ class LoginRepo {
     required String password,
   }) async {
     try {
-      var user = {'email': email, 'password': password};
+      Map<String, String> user = {
+        'email': email,
+        'password': password,
+      };
       Response response = await http.post(Uri.parse(baseurl + loginurl),
           body: jsonEncode(user),
           headers: {"Content-Type": 'application/json'});
@@ -33,7 +36,6 @@ class LoginRepo {
         return response;
       }
     } catch (e) {
-      
       log(e.toString());
       return null;
     }

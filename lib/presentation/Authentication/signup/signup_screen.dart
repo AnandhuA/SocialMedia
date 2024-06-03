@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +36,7 @@ class SignupScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SignupErrorState) {
             customSnackbar(
-                context: context, message: "error", color: errorColor);
+                context: context, message: state.error, color: errorColor);
           } else if (state is SignupSuccessState) {
             customSnackbar(
                 context: context, message: "Success", color: successColor);
@@ -119,17 +118,19 @@ class SignupScreen extends StatelessWidget {
                       BlocBuilder<AuthenticationBloc, AuthenticationState>(
                         builder: (context, state) {
                           if (state is SignupLoadingState) {
-                         
-                           return const LoadingButton();
+                            return const LoadingButton();
                           }
                           return ElevatedButton(
                             onPressed: () {
-                        
-                             
                               if (_formKey.currentState!.validate()) {
-                                 context
+                                context
                                     .read<AuthenticationBloc>()
-                                    .add(SignupButtonClickEvent());
+                                    .add(SignupButtonClickEvent(
+                                      name: _nameController.text,
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                      phone: _phoneController.text,
+                                    ));
                               }
                             },
                             child: const Text("Sign Up"),

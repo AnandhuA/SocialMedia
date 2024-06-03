@@ -13,4 +13,18 @@ class LoginButtonClickEvent extends AuthenticationEvent {
   });
 }
 
-class SignupButtonClickEvent extends AuthenticationEvent {}
+class SignupButtonClickEvent extends AuthenticationEvent {
+  final String name;
+  final String email;
+  final String phone;
+  final String password;
+
+  SignupButtonClickEvent({
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.password,
+  });
+}
+
+class VerificationButtonClickEvent extends AuthenticationEvent{}

@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:social_media/repository/authentication/login_repo.dart';
+import 'package:social_media/repository/authentication/signup_repo.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -14,7 +15,10 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc() : super(AuthenticationInitial()) {
     on<LoginButtonClickEvent>(_loginButtonClickEvent);
+
     on<SignupButtonClickEvent>(_signupButtonClickEvent);
+
+    on<VerificationButtonClickEvent>(_verificationButtonClickEvent);
   }
 
   FutureOr<void> _loginButtonClickEvent(
@@ -34,14 +38,35 @@ class AuthenticationBloc
       final responseBody = jsonDecode(res.body);
       emit(LoginErrorState(error: responseBody["message"]));
     } else {
-      emit(LoginErrorState(error: "Error"));
+      emit(LoginErrorState(error: "Server Error"));
     }
   }
 
   FutureOr<void> _signupButtonClickEvent(
     SignupButtonClickEvent event,
     Emitter<AuthenticationState> emit,
-  ) {
+  ) async {
     emit(SignupLoadingState());
+    Response? res = await SignupRepo.userSignUp(
+        name: event.name,
+        email: event.email,
+        phone: event.phone,
+        password: event.password);
+
+    if (res != null && res.statusCode == 200) {
+      emit(SignupSuccessState());
+    } else if (res != null) {
+      final responseBody = jsonDecode(res.body);
+      emit(SignupErrorState(error: responseBody["message"]));
+    } else {
+      emit(SignupErrorState(error: "Server Error"));
+    }
+  }
+
+  FutureOr<void> _verificationButtonClickEvent(
+    VerificationButtonClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(VerificationLoadingState());
   }
 }

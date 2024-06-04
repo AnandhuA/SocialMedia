@@ -27,4 +27,12 @@ class SignupButtonClickEvent extends AuthenticationEvent {
   });
 }
 
-class VerificationButtonClickEvent extends AuthenticationEvent{}
+class VerificationButtonClickEvent extends AuthenticationEvent {
+  final String email;
+  final String otp;
+
+  VerificationButtonClickEvent({
+    required this.email,
+    required this.otp,
+  });
+}

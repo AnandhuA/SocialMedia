@@ -66,7 +66,19 @@ class AuthenticationBloc
   FutureOr<void> _verificationButtonClickEvent(
     VerificationButtonClickEvent event,
     Emitter<AuthenticationState> emit,
-  ) {
+  ) async {
     emit(VerificationLoadingState());
+    Response? res = await SignupRepo.otpVerification(
+      email: event.email,
+      otp: event.otp,
+    );
+    if (res != null && res.statusCode == 200) {
+      emit(VerificationSuccessState());
+    } else if (res != null) {
+      final responseBody = jsonDecode(res.body);
+      emit(VerificationErrorState(error: responseBody["message"]));
+    } else {
+      emit(VerificationErrorState(error: "Server Error"));
+    }
   }
 }

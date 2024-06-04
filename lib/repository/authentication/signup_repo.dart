@@ -29,4 +29,25 @@ class SignupRepo {
       return null;
     }
   }
+
+  static Future<Response?> otpVerification({
+    required String email,
+    required String otp,
+  }) async {
+    Map<String, String> data = {
+      "email": email,
+      "otp": otp,
+    };
+    try {
+      Response response = await post(Uri.parse(baseurl + otpurl),
+          body: jsonEncode(data),
+          headers: {
+            "Content-Type": "application/json",
+          });
+      return response;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
 }

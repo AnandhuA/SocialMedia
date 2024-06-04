@@ -6,15 +6,16 @@ sealed class AuthenticationState {}
 final class AuthenticationInitial extends AuthenticationState {}
 
 //-------loginState-------------
+
 final class LoginLoadingState extends AuthenticationState {}
+
+final class LoginSuccessState extends AuthenticationState {}
 
 final class LoginErrorState extends AuthenticationState {
   final String error;
 
   LoginErrorState({required this.error});
 }
-
-final class LoginSuccessState extends AuthenticationState {}
 
 //-----------signupState------------
 

@@ -19,6 +19,10 @@ class AuthenticationBloc
     on<SignupButtonClickEvent>(_signupButtonClickEvent);
 
     on<VerificationButtonClickEvent>(_verificationButtonClickEvent);
+
+    on<TimeOutEvent>(_timeOutEvent);
+
+    on<TimerRestartEvent>(_timerRestartEvent);
   }
 
   FutureOr<void> _loginButtonClickEvent(
@@ -61,6 +65,8 @@ class AuthenticationBloc
     } else {
       emit(SignupErrorState(error: "Server Error"));
     }
+
+    // return emit(SignupSuccessState());
   }
 
   FutureOr<void> _verificationButtonClickEvent(
@@ -80,5 +86,19 @@ class AuthenticationBloc
     } else {
       emit(VerificationErrorState(error: "Server Error"));
     }
+  }
+
+  FutureOr<void> _timeOutEvent(
+    TimeOutEvent event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(TimeOutState());
+  }
+
+  FutureOr<void> _timerRestartEvent(
+    TimerRestartEvent event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    emit(TimerRestartState());
   }
 }

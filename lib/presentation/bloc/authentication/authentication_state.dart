@@ -40,3 +40,5 @@ final class VerificationErrorState extends AuthenticationState {
 
   VerificationErrorState({required this.error});
 }
+final class TimeOutState extends AuthenticationState{}
+final class TimerRestartState extends AuthenticationState{}

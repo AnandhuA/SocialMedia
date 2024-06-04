@@ -36,3 +36,6 @@ class VerificationButtonClickEvent extends AuthenticationEvent {
     required this.otp,
   });
 }
+
+class TimeOutEvent extends AuthenticationEvent{}
+class TimerRestartEvent extends AuthenticationEvent {}

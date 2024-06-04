@@ -6,6 +6,7 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/Authentication/widgets/otp_text_filed.dart';
+import 'package:social_media/presentation/Authentication/widgets/timer_widget.dart';
 import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:social_media/presentation/custom_widgets/custom_snackbar.dart';
 import 'package:social_media/presentation/custom_widgets/loading_button.dart';
@@ -73,11 +74,39 @@ class VerificationScreen extends StatelessWidget {
                           context: context, controller: otpController4),
                     ],
                   ),
+                  constHeight20,
+                  Row(
+                    children: [
+                      const Spacer(),
+                      BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, state) {
+                          if (state is TimerRestartState ||
+                              state is SignupSuccessState) {
+                            return TimerWidget(
+                           
+                            );
+                          }
+                          return SizedBox();
+                        },
+                      ),
+                      constWidth20,
+                    ],
+                  ),
                   constHeight50,
                   BlocBuilder<AuthenticationBloc, AuthenticationState>(
                     builder: (context, state) {
                       if (state is VerificationLoadingState) {
                         return const LoadingButton();
+                      }
+                      if (state is TimeOutState) {
+                        return ElevatedButton(
+                          onPressed: () {
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(TimerRestartEvent());
+                          },
+                          child: const Text("Sent OTP"),
+                        );
                       }
                       return ElevatedButton(
                         onPressed: () {

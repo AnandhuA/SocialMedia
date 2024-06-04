@@ -32,8 +32,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           },
           icon: Icon(
             obscureText
-                ? Icons.visibility_outlined
-                : Icons.visibility_off_outlined,
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
           ),
         ),
       ),

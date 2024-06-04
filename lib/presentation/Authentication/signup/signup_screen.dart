@@ -38,8 +38,7 @@ class SignupScreen extends StatelessWidget {
             customSnackbar(
                 context: context, message: state.error, color: errorColor);
           } else if (state is SignupSuccessState) {
-            customSnackbar(
-                context: context, message: "Success", color: successColor);
+           
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -63,7 +62,7 @@ class SignupScreen extends StatelessWidget {
                     children: [
                       constHeight50,
                       Text(
-                        "Name",
+                        "Username",
                         style: theme.textTheme.titleLarge,
                       ),
                       constHeight10,
@@ -72,7 +71,7 @@ class SignupScreen extends StatelessWidget {
                         controller: _nameController,
                         keyboardType: TextInputType.name,
                         decoration: const InputDecoration(
-                          hintText: "Name",
+                          hintText: "Username",
                         ),
                         style: theme.textTheme.titleLarge,
                       ),
@@ -124,16 +123,16 @@ class SignupScreen extends StatelessWidget {
                           }
                           return ElevatedButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context
-                                    .read<AuthenticationBloc>()
-                                    .add(SignupButtonClickEvent(
-                                      name: _nameController.text,
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                      phone: _phoneController.text,
-                                    ));
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignupButtonClickEvent(
+                                    name: _nameController.text,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                    phone: _phoneController.text,
+                                  ));
+                              // }
                             },
                             child: const Text("Sign Up"),
                           );

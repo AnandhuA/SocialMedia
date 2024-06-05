@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:social_media/models/user_model.dart';
 import 'package:social_media/repository/authentication/login_repo.dart';
 import 'package:social_media/repository/authentication/signup_repo.dart';
 
@@ -51,11 +52,7 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     emit(SignupLoadingState());
-    Response? res = await SignupRepo.userSignUp(
-        name: event.name,
-        email: event.email,
-        phone: event.phone,
-        password: event.password);
+    Response? res = await SignupRepo.userSignUp(userModel: event.userModel);
 
     if (res != null && res.statusCode == 200) {
       emit(SignupSuccessState());
@@ -65,8 +62,6 @@ class AuthenticationBloc
     } else {
       emit(SignupErrorState(error: "Server Error"));
     }
-
-    // return emit(SignupSuccessState());
   }
 
   FutureOr<void> _verificationButtonClickEvent(

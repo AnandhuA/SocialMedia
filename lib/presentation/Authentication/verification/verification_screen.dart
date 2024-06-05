@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
+import 'package:social_media/models/user_model.dart';
 import 'package:social_media/presentation/Authentication/widgets/otp_text_filed.dart';
 import 'package:social_media/presentation/Authentication/widgets/timer_widget.dart';
 import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
@@ -13,10 +14,10 @@ import 'package:social_media/presentation/custom_widgets/loading_button.dart';
 import 'package:social_media/presentation/profile/profile_screen.dart';
 
 class VerificationScreen extends StatelessWidget {
-  final String email;
+  final UserModel userModel;
   VerificationScreen({
     super.key,
-    required this.email,
+    required this.userModel,
   });
   final TextEditingController otpController1 = TextEditingController();
   final TextEditingController otpController2 = TextEditingController();
@@ -57,7 +58,7 @@ class VerificationScreen extends StatelessWidget {
                   ),
                   constHeight10,
                   Text(
-                    "We have send verification code\n to your Email",
+                    "We have send verification code to\n${userModel.email}",
                     style: theme.textTheme.labelLarge,
                   ),
                   constHeight30,
@@ -82,11 +83,9 @@ class VerificationScreen extends StatelessWidget {
                         builder: (context, state) {
                           if (state is TimerRestartState ||
                               state is SignupSuccessState) {
-                            return TimerWidget(
-                           
-                            );
+                            return const TimerWidget();
                           }
-                          return SizedBox();
+                          return const SizedBox();
                         },
                       ),
                       constWidth20,
@@ -104,8 +103,13 @@ class VerificationScreen extends StatelessWidget {
                             context
                                 .read<AuthenticationBloc>()
                                 .add(TimerRestartEvent());
+                            context.read<AuthenticationBloc>().add(
+                                  SignupButtonClickEvent(
+                                    userModel: userModel,
+                                  ),
+                                );
                           },
-                          child: const Text("Sent OTP"),
+                          child: const Text("ReSent OTP"),
                         );
                       }
                       return ElevatedButton(
@@ -121,7 +125,7 @@ class VerificationScreen extends StatelessWidget {
                             log(otp);
                             context.read<AuthenticationBloc>().add(
                                   VerificationButtonClickEvent(
-                                    email: email,
+                                    email: userModel.email,
                                     otp: otp,
                                   ),
                                 );

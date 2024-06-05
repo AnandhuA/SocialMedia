@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:social_media/core/urls.dart';
+import 'package:social_media/utils/shared_preferences.dart';
 
 class LoginRepo {
   static Future<Response?> userLogin({
@@ -23,14 +24,7 @@ class LoginRepo {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       log(responseBody.toString());
       if (response.statusCode == 200) {
-        // await setUserLoggedin(
-        //   token: responseBody['user']['token'],
-        //   userrole: responseBody['user']['role'],
-        //   userid: responseBody['user']['_id'],
-        //   userEmail: responseBody['user']['email'],
-        //   userName: responseBody['user']['userName'],
-        //   userprofile: responseBody['user']['profilePic'],
-        // );
+        await setUserLoggedin(token: responseBody["user"]["token"]);
         return response;
       } else {
         return response;

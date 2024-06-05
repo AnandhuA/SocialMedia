@@ -5,6 +5,7 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
+import 'package:social_media/models/user_model.dart';
 import 'package:social_media/presentation/Authentication/widgets/password_text_field.dart';
 import 'package:social_media/presentation/Authentication/login/login_screen.dart';
 import 'package:social_media/presentation/Authentication/verification/verification_screen.dart';
@@ -38,12 +39,17 @@ class SignupScreen extends StatelessWidget {
             customSnackbar(
                 context: context, message: state.error, color: errorColor);
           } else if (state is SignupSuccessState) {
-           
+          UserModel  newModel = UserModel(
+              userName: _nameController.text,
+              email: _emailController.text,
+              phone: _phoneController.text,
+              password: _passwordController.text,
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => VerificationScreen(
-                  email: _emailController.text,
+                  userModel: newModel,
                 ),
               ),
             );
@@ -123,16 +129,19 @@ class SignupScreen extends StatelessWidget {
                           }
                           return ElevatedButton(
                             onPressed: () {
-                              // if (_formKey.currentState!.validate()) {
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(SignupButtonClickEvent(
-                                    name: _nameController.text,
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                    phone: _phoneController.text,
-                                  ));
-                              // }
+                              if (_formKey.currentState!.validate()) {
+                              UserModel  newModel = UserModel(
+                                  userName: _nameController.text,
+                                  email: _emailController.text,
+                                  phone: _phoneController.text,
+                                  password: _passwordController.text,
+                                );
+                                context.read<AuthenticationBloc>().add(
+                                      SignupButtonClickEvent(
+                                        userModel: newModel,
+                                      ),
+                                    );
+                              }
                             },
                             child: const Text("Sign Up"),
                           );

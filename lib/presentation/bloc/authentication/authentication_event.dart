@@ -14,16 +14,10 @@ class LoginButtonClickEvent extends AuthenticationEvent {
 }
 
 class SignupButtonClickEvent extends AuthenticationEvent {
-  final String name;
-  final String email;
-  final String phone;
-  final String password;
+  final UserModel userModel;
 
   SignupButtonClickEvent({
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.password,
+    required this.userModel
   });
 }
 
@@ -37,5 +31,6 @@ class VerificationButtonClickEvent extends AuthenticationEvent {
   });
 }
 
-class TimeOutEvent extends AuthenticationEvent{}
+class TimeOutEvent extends AuthenticationEvent {}
+
 class TimerRestartEvent extends AuthenticationEvent {}

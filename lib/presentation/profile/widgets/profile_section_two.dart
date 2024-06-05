@@ -46,7 +46,7 @@ class ProfileSectionTwo extends StatelessWidget {
               children: [
                 GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 3,
                     mainAxisSpacing: 3,
                   ),
@@ -68,7 +68,7 @@ class ProfileSectionTwo extends StatelessWidget {
                 ),
                 GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
+                    crossAxisCount: 3,
                     crossAxisSpacing: 3,
                     mainAxisSpacing: 3,
                   ),

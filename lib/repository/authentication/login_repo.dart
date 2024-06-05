@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:social_media/core/urls.dart';
-import 'package:social_media/utils/shared_preferences.dart';
+import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class LoginRepo {
   static Future<Response?> userLogin({

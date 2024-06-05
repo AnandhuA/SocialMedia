@@ -20,42 +20,44 @@ class ForgotPasswordScreen extends StatelessWidget {
       body: Background(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              constHeight50,
-              Center(
-                child: Text(
-                  "Please enter your email adderss,\nYou will receive a 4 digit code to verify",
-                  style: theme.textTheme.labelLarge,
+          child: SafeArea(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                constHeight50,
+                Center(
+                  child: Text(
+                    "Please enter your email adderss,\nYou will receive a 4 digit code to verify",
+                    style: theme.textTheme.labelLarge,
+                  ),
                 ),
-              ),
-              constHeight50,
-              Text(
-                "Email",
-                style: theme.textTheme.titleLarge,
-              ),
-              constHeight10,
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: "Enter your email",
+                constHeight50,
+                Text(
+                  "Email",
+                  style: theme.textTheme.titleLarge,
                 ),
-                style: theme.textTheme.titleLarge,
-              ),
-              constHeight50,
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NewPasswordScreen(),
-                      ));
-                },
-                child: const Text("Send OTP"),
-              )
-            ],
+                constHeight10,
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    hintText: "Enter your email",
+                  ),
+                  style: theme.textTheme.titleLarge,
+                ),
+                constHeight50,
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NewPasswordScreen(),
+                        ));
+                  },
+                  child: const Text("Send OTP"),
+                )
+              ],
+            ),
           ),
         ),
       ),

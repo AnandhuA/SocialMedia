@@ -8,3 +8,12 @@ setUserLoggedin({required String token}) async {
   await sharedPref.setBool(authKey, true);
   await sharedPref.setString(tokenKey, token);
 }
+
+ clearUserSession()async{
+   
+      final sharedprefs = await SharedPreferences.getInstance();
+      await sharedprefs.remove(authKey);
+      await sharedprefs.remove(tokenKey);
+    
+  
+  }

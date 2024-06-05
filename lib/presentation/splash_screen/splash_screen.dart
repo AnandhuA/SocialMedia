@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/presentation/intro/intro_screen.dart';
 import 'package:social_media/presentation/profile/profile_screen.dart';
-import 'package:social_media/utils/shared_preferences.dart';
+import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -4,11 +4,13 @@ class CustomButton extends StatelessWidget {
   final String title;
   final double minWidth;
   final Color color;
+  final Function onTap;
   const CustomButton({
     super.key,
     required this.title,
     required this.minWidth,
     required this.color,
+    required this.onTap(),
   });
 
   @override
@@ -18,7 +20,7 @@ class CustomButton extends StatelessWidget {
       color: color,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       minWidth: minWidth,
-      onPressed: () {},
+      onPressed: () => onTap(),
       child: Text(title),
     );
   }

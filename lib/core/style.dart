@@ -72,6 +72,14 @@ TextStyle titleStyle(Color color) {
   );
 }
 
+TextStyle titleMediumStyle(Color color) {
+  return TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: color,
+  );
+}
+
 TextStyle lableStyle(Color color) {
   return TextStyle(
     fontSize: 15,

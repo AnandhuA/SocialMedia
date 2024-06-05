@@ -18,6 +18,7 @@ class ThemeClass {
       textTheme: TextTheme(
         headlineLarge: headlineStyle(blackColor),
         titleLarge: titleStyle(blackColor),
+        titleMedium: titleMediumStyle(blackColor),
         labelLarge: lableStyle(lightModeLabelColor),
       ),
       inputDecorationTheme: inputDecorationStyle(
@@ -39,6 +40,7 @@ class ThemeClass {
       textTheme: TextTheme(
         headlineLarge: headlineStyle(whiteColor),
         titleLarge: titleStyle(whiteColor),
+        titleMedium: titleMediumStyle(whiteColor),
         labelLarge: lableStyle(darkModeLabelColor),
       ),
       inputDecorationTheme: inputDecorationStyle(

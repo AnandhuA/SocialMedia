@@ -37,12 +37,12 @@ Future<void> checkUserLogin(context) async {
   final userLoggedIn = preferences.get(authKey);
   debugPrint(userLoggedIn.toString());
   if (userLoggedIn == null || userLoggedIn == false) {
-    await Future.delayed(const Duration(milliseconds:999));
+    await Future.delayed(const Duration(milliseconds:985));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const IntroScreen(),
     ));
   } else {
-    await Future.delayed(const Duration(milliseconds: 999));
+    await Future.delayed(const Duration(milliseconds: 985));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const ProfileScreen(),
     ));

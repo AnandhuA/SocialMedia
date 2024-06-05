@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/custom_widgets/custom_button.dart';
+import 'package:social_media/presentation/settings_screen/settings_screen.dart';
 
 class ProfileSectionOne extends StatelessWidget {
   const ProfileSectionOne({
@@ -13,7 +16,7 @@ class ProfileSectionOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       final theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Column(
       children: [
         Stack(
@@ -52,7 +55,7 @@ class ProfileSectionOne extends StatelessWidget {
             )
           ],
         ),
-           Text(
+        Text(
           "Anandhu",
           style: theme.textTheme.headlineLarge,
         ),
@@ -66,6 +69,9 @@ class ProfileSectionOne extends StatelessWidget {
               color: theme.brightness == Brightness.dark
                   ? darkModeCustomButtonBG
                   : lightModeCustomButtonBG,
+              onTap: () {
+                log("message");
+              },
             ),
             CustomButton(
               title: "Settings",
@@ -73,6 +79,14 @@ class ProfileSectionOne extends StatelessWidget {
               color: theme.brightness == Brightness.dark
                   ? darkModeCustomButtonBG
                   : lightModeCustomButtonBG,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),

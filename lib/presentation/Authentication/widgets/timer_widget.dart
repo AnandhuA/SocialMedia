@@ -55,23 +55,10 @@ class TimerWidgetState extends State<TimerWidget> {
         child: formattedTime != "00:00"
             ? Text(
                 formattedTime,
+                style: Theme.of(context).textTheme.titleMedium,
               )
             : const SizedBox()
-        // : InkWell(
-        //     onTap: () {
-        //       log("Resend");
-        //     },
-        //     borderRadius: BorderRadius.circular(15),
-        //     child: Container(
-        //       width: 80,
-        //       height: 40,
-        //       decoration: BoxDecoration(
-        //         color: primaryColor,
-        //         borderRadius: BorderRadius.circular(15),
-        //       ),
-        //       child: const Center(child: Text("ReSend")),
-        //     ),
-        //   ),
+     
         );
   }
 }

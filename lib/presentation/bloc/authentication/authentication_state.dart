@@ -21,7 +21,12 @@ final class LoginErrorState extends AuthenticationState {
 
 final class SignupLoadingState extends AuthenticationState {}
 
-final class SignupSuccessState extends AuthenticationState {}
+final class SignupSuccessState extends AuthenticationState {
+  final UserModel model;
+
+  SignupSuccessState({required this.model});
+
+}
 
 final class SignupErrorState extends AuthenticationState {
   final String error;
@@ -40,5 +45,7 @@ final class VerificationErrorState extends AuthenticationState {
 
   VerificationErrorState({required this.error});
 }
-final class TimeOutState extends AuthenticationState{}
-final class TimerRestartState extends AuthenticationState{}
+
+final class TimeOutState extends AuthenticationState {}
+
+final class TimerRestartState extends AuthenticationState {}

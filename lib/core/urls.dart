@@ -1,8 +1,10 @@
 const String baseurl = 'https://0t0s19d2-7002.inc1.devtunnels.ms/api';
+
 //signup
 const String signup = '/users/send-otp';
 const String otpurl = '/users/verify-otp';
 const String loginurl = '/users/login';
+
 //post
 const String addposturl = '/posts/addPost';
 const String fetchposturl = '/posts/getpost';
@@ -20,6 +22,7 @@ const String unsaveposturl = '/posts/savePosts';
 const String reportposturl = '/posts/report-post';
 const String savedposturl = '/posts/savePosts';
 const String exploreposturl = '/posts/exploreposts';
+
 //users
 const String connectioncounturl = '/users/get-count';
 const String loginuserurl = '/users/getuser';
@@ -33,6 +36,7 @@ const String fetchfollowersurl = '/users/fetch-followers';
 const String searchusersurl = '/users/searchallusers?searchQuery=';
 const String getSingleuserurl = '/users/get-single-user';
 const String notificationurl = '/users/notifications';
+
 //chats
 const String getconversationurl = '/chats/conversation';
 const String createconversationurl = '/chats/conversation';

@@ -55,7 +55,7 @@ class AuthenticationBloc
     Response? res = await SignupRepo.userSignUp(userModel: event.userModel);
 
     if (res != null && res.statusCode == 200) {
-      emit(SignupSuccessState());
+      emit(SignupSuccessState(model: event.userModel));
     } else if (res != null) {
       final responseBody = jsonDecode(res.body);
       emit(SignupErrorState(error: responseBody["message"]));

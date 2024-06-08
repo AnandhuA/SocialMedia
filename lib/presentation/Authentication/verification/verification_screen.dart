@@ -1,17 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/models/user_model.dart';
+import 'package:social_media/presentation/Authentication/login/login_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/otp_text_filed.dart';
 import 'package:social_media/presentation/Authentication/widgets/timer_widget.dart';
 import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
 import 'package:social_media/presentation/custom_widgets/custom_snackbar.dart';
 import 'package:social_media/presentation/custom_widgets/loading_button.dart';
-import 'package:social_media/presentation/profile/profile_screen.dart';
 
 class VerificationScreen extends StatelessWidget {
   final UserModel userModel;
@@ -31,12 +30,10 @@ class VerificationScreen extends StatelessWidget {
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is VerificationSuccessState) {
-            customSnackbar(
-                context: context, message: "Success", color: successColor);
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const ProfileScreen(),
+                builder: (context) => LoginScreen(),
               ),
               (Route<dynamic> route) => false,
             );
@@ -95,6 +92,9 @@ class VerificationScreen extends StatelessWidget {
                   BlocBuilder<AuthenticationBloc, AuthenticationState>(
                     builder: (context, state) {
                       if (state is VerificationLoadingState) {
+                        return const LoadingButton();
+                      }
+                      if (state is SignupLoadingState) {
                         return const LoadingButton();
                       }
                       if (state is TimeOutState) {

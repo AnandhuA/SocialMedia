@@ -39,17 +39,11 @@ class SignupScreen extends StatelessWidget {
             customSnackbar(
                 context: context, message: state.error, color: errorColor);
           } else if (state is SignupSuccessState) {
-          UserModel  newModel = UserModel(
-              userName: _nameController.text,
-              email: _emailController.text,
-              phone: _phoneController.text,
-              password: _passwordController.text,
-            );
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => VerificationScreen(
-                  userModel: newModel,
+                  userModel: state.model,
                 ),
               ),
             );
@@ -130,7 +124,7 @@ class SignupScreen extends StatelessWidget {
                           return ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                              UserModel  newModel = UserModel(
+                                UserModel newModel = UserModel(
                                   userName: _nameController.text,
                                   email: _emailController.text,
                                   phone: _phoneController.text,

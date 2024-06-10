@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
+import 'package:social_media/BLoC/Authentication/authentication_bloc.dart';
 
 class TimerWidget extends StatefulWidget {
   const TimerWidget({super.key});

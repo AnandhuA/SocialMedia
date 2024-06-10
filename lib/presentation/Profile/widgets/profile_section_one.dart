@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/custom_widgets/custom_button.dart';
-import 'package:social_media/presentation/settings_screen/settings_screen.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_button.dart';
+import 'package:social_media/presentation/Settings/settings_screen.dart';
 
 class ProfileSectionOne extends StatelessWidget {
   const ProfileSectionOne({

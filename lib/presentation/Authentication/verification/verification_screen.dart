@@ -8,9 +8,9 @@ import 'package:social_media/models/user_model.dart';
 import 'package:social_media/presentation/Authentication/login/login_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/otp_text_filed.dart';
 import 'package:social_media/presentation/Authentication/widgets/timer_widget.dart';
-import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:social_media/presentation/custom_widgets/custom_snackbar.dart';
-import 'package:social_media/presentation/custom_widgets/loading_button.dart';
+import 'package:social_media/BLoC/Authentication/authentication_bloc.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
+import 'package:social_media/presentation/CustomWidgets/loading_button.dart';
 
 class VerificationScreen extends StatelessWidget {
   final UserModel userModel;

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_media/core/bacground.dart';
-import 'package:social_media/presentation/intro/intro_screen.dart';
-import 'package:social_media/presentation/profile/profile_screen.dart';
+import 'package:social_media/presentation/Intro/intro_screen.dart';
+import 'package:social_media/presentation/MainPage/main_page.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,14 +37,14 @@ Future<void> checkUserLogin(context) async {
   final userLoggedIn = preferences.get(authKey);
   debugPrint(userLoggedIn.toString());
   if (userLoggedIn == null || userLoggedIn == false) {
-    await Future.delayed(const Duration(milliseconds:985));
+    await Future.delayed(const Duration(milliseconds: 985));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const IntroScreen(),
     ));
   } else {
     await Future.delayed(const Duration(milliseconds: 985));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const ProfileScreen(),
+      builder: (context) => const MainPage(),
     ));
   }
 }

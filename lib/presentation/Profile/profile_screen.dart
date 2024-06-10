@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/bacground.dart';
 
-import 'package:social_media/presentation/profile/widgets/profile_section_one.dart';
-import 'package:social_media/presentation/profile/widgets/profile_section_two.dart';
+import 'package:social_media/presentation/Profile/widgets/profile_section_one.dart';
+import 'package:social_media/presentation/Profile/widgets/profile_section_two.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

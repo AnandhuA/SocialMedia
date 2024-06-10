@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/profile/widgets/profile_info_button.dart';
+import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
   const ProfileSectionTwo({super.key});

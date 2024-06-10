@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/custom_widgets/confirmation_diloge.dart';
-import 'package:social_media/presentation/custom_widgets/custom_appbar.dart';
-import 'package:social_media/presentation/intro/intro_screen.dart';
-import 'package:social_media/presentation/settings_screen/widgets/list_tile_widget.dart';
+import 'package:social_media/presentation/CustomWidgets/confirmation_diloge.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
+import 'package:social_media/presentation/Intro/intro_screen.dart';
+import 'package:social_media/presentation/Settings/widgets/list_tile_widget.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class SettingsScreen extends StatelessWidget {

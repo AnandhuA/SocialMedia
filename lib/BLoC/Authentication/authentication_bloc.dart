@@ -6,8 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:social_media/models/user_model.dart';
-import 'package:social_media/repository/authentication/login_repo.dart';
-import 'package:social_media/repository/authentication/signup_repo.dart';
+import 'package:social_media/repository/authentication/authentication_repo.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -32,7 +31,7 @@ class AuthenticationBloc
   ) async {
     log("bloc start");
     emit(LoginLoadingState());
-    Response? res = await LoginRepo.userLogin(
+    Response? res = await AuthenticationRepo.userLogin(
       email: event.email,
       password: event.password,
     );
@@ -52,7 +51,7 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     emit(SignupLoadingState());
-    Response? res = await SignupRepo.userSignUp(userModel: event.userModel);
+    Response? res = await AuthenticationRepo.userSignUp(userModel: event.userModel);
 
     if (res != null && res.statusCode == 200) {
       emit(SignupSuccessState(model: event.userModel));
@@ -69,7 +68,7 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     emit(VerificationLoadingState());
-    Response? res = await SignupRepo.otpVerification(
+    Response? res = await AuthenticationRepo.otpVerification(
       email: event.email,
       otp: event.otp,
     );

@@ -6,15 +6,15 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
-import 'package:social_media/presentation/profile/profile_screen.dart';
+import 'package:social_media/presentation/MainPage/main_page.dart';
+import 'package:social_media/presentation/Profile/profile_screen.dart';
 import 'package:social_media/utils/validation.dart';
 import 'package:social_media/presentation/Authentication/forgot_password/forgot_password_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/login_with_google_button.dart';
 import 'package:social_media/presentation/Authentication/widgets/password_text_field.dart';
-import 'package:social_media/presentation/Authentication/signup/signup_screen.dart';
-import 'package:social_media/presentation/bloc/authentication/authentication_bloc.dart';
-import 'package:social_media/presentation/custom_widgets/custom_snackbar.dart';
-import 'package:social_media/presentation/custom_widgets/loading_button.dart';
+import 'package:social_media/BLoC/Authentication/authentication_bloc.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
+import 'package:social_media/presentation/CustomWidgets/loading_button.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -158,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => SignupScreen(),
+                                        builder: (context) => const MainPage(),
                                       ),
                                     );
                                   },

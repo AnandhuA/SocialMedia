@@ -17,6 +17,7 @@ class ThemeClass {
       textButtonTheme: textButtonStyle(color: blackColor),
       textTheme: TextTheme(
         headlineLarge: headlineStyle(blackColor),
+        headlineMedium: headlineMediumStyle(blackColor),
         titleLarge: titleStyle(blackColor),
         titleMedium: titleMediumStyle(blackColor),
         labelLarge: lableStyle(lightModeLabelColor),
@@ -39,6 +40,7 @@ class ThemeClass {
       textButtonTheme: textButtonStyle(color: whiteColor),
       textTheme: TextTheme(
         headlineLarge: headlineStyle(whiteColor),
+        headlineMedium: headlineMediumStyle(whiteColor),
         titleLarge: titleStyle(whiteColor),
         titleMedium: titleMediumStyle(whiteColor),
         labelLarge: lableStyle(darkModeLabelColor),

@@ -91,10 +91,8 @@ class VerificationScreen extends StatelessWidget {
                   constHeight50,
                   BlocBuilder<AuthenticationBloc, AuthenticationState>(
                     builder: (context, state) {
-                      if (state is VerificationLoadingState) {
-                        return const LoadingButton();
-                      }
-                      if (state is SignupLoadingState) {
+                      if (state is VerificationLoadingState ||
+                          state is SignupLoadingState) {
                         return const LoadingButton();
                       }
                       if (state is TimeOutState) {

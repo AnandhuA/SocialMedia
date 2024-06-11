@@ -64,6 +64,14 @@ TextStyle headlineStyle(Color color) {
   );
 }
 
+TextStyle headlineMediumStyle(Color color) {
+  return TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w500,
+    color: color,
+  );
+}
+
 TextStyle titleStyle(Color color) {
   return TextStyle(
     fontSize: 20,

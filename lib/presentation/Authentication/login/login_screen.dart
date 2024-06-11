@@ -7,7 +7,6 @@ import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
 import 'package:social_media/presentation/MainPage/main_page.dart';
-import 'package:social_media/presentation/Profile/profile_screen.dart';
 import 'package:social_media/utils/validation.dart';
 import 'package:social_media/presentation/Authentication/forgot_password/forgot_password_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/login_with_google_button.dart';
@@ -36,7 +35,7 @@ class LoginScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const ProfileScreen(),
+              builder: (context) => const MainPage(),
             ),
             (Route<dynamic> route) => false,
           );
@@ -115,30 +114,25 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       constHeight50,
-                      BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                        builder: (context, state) {
-                          if (state is LoginLoadingState) {
-                            return const LoadingButton();
-                          }
-                          return ElevatedButton(
-                            onPressed: () {
-                              log("ButtonClicked");
-                              if (_formKey.currentState!.validate()) {
-                                log("ok");
-                                context
-                                    .read<AuthenticationBloc>()
-                                    .add(LoginButtonClickEvent(
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                    ));
-                              } else {
-                                log("No");
-                              }
-                            },
-                            child: const Text("Login"),
-                          );
-                        },
-                      ),
+                      state is LoginLoadingState
+                          ? const LoadingButton()
+                          : ElevatedButton(
+                              onPressed: () {
+                                log("ButtonClicked");
+                                if (_formKey.currentState!.validate()) {
+                                  log("ok");
+                                  context
+                                      .read<AuthenticationBloc>()
+                                      .add(LoginButtonClickEvent(
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      ));
+                                } else {
+                                  log("No");
+                                }
+                              },
+                              child: const Text("Login"),
+                            ),
                       constHeight50,
                       Center(
                         child: RichText(

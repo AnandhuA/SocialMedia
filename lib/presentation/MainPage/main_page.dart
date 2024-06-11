@@ -22,32 +22,25 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      body: BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
-        builder: (context, state) {
-          int currentIndex = 0;
-          if (state is BottomNavigationInitial) {
-            currentIndex = state.index;
-          }
-          return screens[currentIndex];
-        },
-      ),
-      bottomNavigationBar:
-          BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
-        builder: (context, state) {
-          int currentIndex = 0;
-          if (state is BottomNavigationInitial) {
-            currentIndex = state.index;
-          }
-          return BottomNavigationBar(
-            backgroundColor: Colors.transparent,
-            unselectedItemColor: theme.brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
+    int currentIndex = 0;
+    return BlocConsumer<BottomNavigationCubit, BottomNavigationState>(
+      listener: (context, state) {
+        if (state is BottomNavigationInitial) {
+          currentIndex = state.index;
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: screens[currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: transparentColor,
+            unselectedItemColor:
+                theme.brightness == Brightness.dark ? whiteColor : blackColor,
             selectedItemColor: primaryColor,
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
+            enableFeedback: true,
             onTap: (value) {
               context
                   .read<BottomNavigationCubit>()
@@ -75,9 +68,9 @@ class MainPage extends StatelessWidget {
                 label: "Message",
               )
             ],
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

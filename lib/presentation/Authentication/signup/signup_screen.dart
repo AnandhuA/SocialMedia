@@ -37,7 +37,10 @@ class SignupScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SignupErrorState) {
             customSnackbar(
-                context: context, message: state.error, color: errorColor);
+              context: context,
+              message: state.error,
+              color: errorColor,
+            );
           } else if (state is SignupSuccessState) {
             Navigator.push(
               context,
@@ -116,31 +119,26 @@ class SignupScreen extends StatelessWidget {
                         controller: _passwordController,
                       ),
                       constHeight50,
-                      BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                        builder: (context, state) {
-                          if (state is SignupLoadingState) {
-                            return const LoadingButton();
-                          }
-                          return ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                UserModel newModel = UserModel(
-                                  userName: _nameController.text,
-                                  email: _emailController.text,
-                                  phone: _phoneController.text,
-                                  password: _passwordController.text,
-                                );
-                                context.read<AuthenticationBloc>().add(
-                                      SignupButtonClickEvent(
-                                        userModel: newModel,
-                                      ),
-                                    );
-                              }
-                            },
-                            child: const Text("Sign Up"),
-                          );
-                        },
-                      ),
+                      state is SignupLoadingState
+                          ? const LoadingButton()
+                          : ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  UserModel newModel = UserModel(
+                                    userName: _nameController.text,
+                                    email: _emailController.text,
+                                    phone: _phoneController.text,
+                                    password: _passwordController.text,
+                                  );
+                                  context.read<AuthenticationBloc>().add(
+                                        SignupButtonClickEvent(
+                                          userModel: newModel,
+                                        ),
+                                      );
+                                }
+                              },
+                              child: const Text("Sign Up"),
+                            ),
                       constHeight50,
                       Center(
                         child: RichText(

@@ -23,6 +23,14 @@ class AuthenticationBloc
     on<TimeOutEvent>(_timeOutEvent);
 
     on<TimerRestartEvent>(_timerRestartEvent);
+
+    on<ForgotPasswordSendOtpButtonClickEvent>(
+        _forgotPasswordSendOtpButtonClick);
+
+    on<ForgotPasswordOtpVerficationButtonClickEvent>(
+        _forgotPasswordVerificationOtpButtonClick);
+
+    on<NewPasswordSaveButtonClickEvent>(_newPasswordSaveButtonClick);
   }
 
   FutureOr<void> _loginButtonClickEvent(
@@ -51,7 +59,8 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     emit(SignupLoadingState());
-    Response? res = await AuthenticationRepo.userSignUp(userModel: event.userModel);
+    Response? res =
+        await AuthenticationRepo.userSignUp(userModel: event.userModel);
 
     if (res != null && res.statusCode == 200) {
       emit(SignupSuccessState(model: event.userModel));
@@ -94,5 +103,65 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) {
     emit(TimerRestartState());
+  }
+
+  FutureOr<void> _forgotPasswordSendOtpButtonClick(
+    ForgotPasswordSendOtpButtonClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(ForgotPasswordLoadingState());
+    Response? res = await AuthenticationRepo.forgotPassword(email: event.email);
+
+    if (res != null && res.statusCode == 200) {
+      final responseBody = jsonDecode(res.body);
+      if (responseBody["status"] == 200) {
+        emit(ForgotPasswordSuccessState());
+      } else {
+        emit(ForgotPasswordErrorState(error: responseBody["message"]));
+      }
+    } else {
+      emit(ForgotPasswordErrorState(error: "Server Error"));
+    }
+  }
+
+  FutureOr<void> _forgotPasswordVerificationOtpButtonClick(
+    ForgotPasswordOtpVerficationButtonClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(VerificationLoadingState());
+    Response? res = await AuthenticationRepo.verifyOtpForgotPassword(
+      email: event.email,
+      otp: event.otp,
+    );
+    if (res != null && res.statusCode == 200) {
+      final responseBody = jsonDecode(res.body);
+      if (responseBody["status"]) {
+        return emit(VerificationSuccessState());
+      } else {
+        return emit(VerificationErrorState(error: 'invalid OTP'));
+      }
+    } else {
+      return emit(VerificationErrorState(error: 'Server error'));
+    }
+  }
+
+  FutureOr<void> _newPasswordSaveButtonClick(
+    NewPasswordSaveButtonClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(NewPasswordLoadingState());
+    Response? res = await AuthenticationRepo.setNewPassword(
+      email: event.email,
+      password: event.password,
+    );
+
+    if (res != null && res.statusCode == 200) {
+      return emit(NewPasswordSuccessState());
+    } else if (res != null) {
+      final responseBody = jsonDecode(res.body);
+      return emit(NewPasswordErrorState(error: responseBody["message"]));
+    } else {
+      return emit(NewPasswordErrorState(error: 'Server error'));
+    }
   }
 }

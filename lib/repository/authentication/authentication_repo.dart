@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+
 import 'package:social_media/core/urls.dart';
 import 'package:social_media/models/user_model.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class AuthenticationRepo {
-  
-  static Future<Response?> userLogin({
+  static Future<http.Response?> userLogin({
     required String email,
     required String password,
   }) async {
@@ -18,7 +17,7 @@ class AuthenticationRepo {
         'email': email,
         'password': password,
       };
-      Response response = await http.post(Uri.parse(baseurl + loginurl),
+      http.Response response = await http.post(Uri.parse(baseurl + loginurl),
           body: jsonEncode(user),
           headers: {"Content-Type": 'application/json'});
       log(response.body);
@@ -37,18 +36,18 @@ class AuthenticationRepo {
     }
   }
 
-  static Future<Response?> userSignUp({required UserModel userModel}) async {
+  static Future<http.Response?> userSignUp(
+      {required UserModel userModel}) async {
     Map<String, String> data = {
       "userName": userModel.userName,
       "email": userModel.email,
       "password": userModel.password,
     };
     try {
-      Response responcse = await post(Uri.parse(baseurl + signup),
-          body: jsonEncode(data),
-          headers: {
-            "Content-Type": "application/json",
-          });
+      http.Response responcse = await http
+          .post(Uri.parse(baseurl + signup), body: jsonEncode(data), headers: {
+        "Content-Type": "application/json",
+      });
       return responcse;
     } catch (e) {
       log(e.toString());
@@ -56,7 +55,7 @@ class AuthenticationRepo {
     }
   }
 
-  static Future<Response?> otpVerification({
+  static Future<http.Response?> otpVerification({
     required String email,
     required String otp,
   }) async {
@@ -65,11 +64,10 @@ class AuthenticationRepo {
       "otp": otp,
     };
     try {
-      Response response = await post(Uri.parse(baseurl + otpurl),
-          body: jsonEncode(data),
-          headers: {
-            "Content-Type": "application/json",
-          });
+      http.Response response = await http
+          .post(Uri.parse(baseurl + otpurl), body: jsonEncode(data), headers: {
+        "Content-Type": "application/json",
+      });
       return response;
     } catch (e) {
       log(e.toString());
@@ -77,4 +75,45 @@ class AuthenticationRepo {
     }
   }
 
+  static Future<http.Response?> forgotPassword({required String email}) async {
+    try {
+      http.Response response =
+          await http.get(Uri.parse("${baseurl + forgotPasswordurl}$email"));
+      return response;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<http.Response?> verifyOtpForgotPassword({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      http.Response response = await http
+          .get(Uri.parse('${baseurl + verifyOtpReset}$email&otp=$otp'));
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> setNewPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final user = {'email': email, 'password': password};
+      http.Response response = await http.patch(
+          Uri.parse(baseurl + updatePasswordurl),
+          body: jsonEncode(user),
+          headers: {"Content-Type": 'application/json'});
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

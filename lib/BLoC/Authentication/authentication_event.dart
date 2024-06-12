@@ -16,9 +16,7 @@ class LoginButtonClickEvent extends AuthenticationEvent {
 class SignupButtonClickEvent extends AuthenticationEvent {
   final UserModel userModel;
 
-  SignupButtonClickEvent({
-    required this.userModel
-  });
+  SignupButtonClickEvent({required this.userModel});
 }
 
 class VerificationButtonClickEvent extends AuthenticationEvent {
@@ -34,3 +32,29 @@ class VerificationButtonClickEvent extends AuthenticationEvent {
 class TimeOutEvent extends AuthenticationEvent {}
 
 class TimerRestartEvent extends AuthenticationEvent {}
+
+class ForgotPasswordSendOtpButtonClickEvent extends AuthenticationEvent {
+  final String email;
+
+  ForgotPasswordSendOtpButtonClickEvent({required this.email});
+}
+
+class ForgotPasswordOtpVerficationButtonClickEvent extends AuthenticationEvent {
+  final String email;
+  final String otp;
+
+  ForgotPasswordOtpVerficationButtonClickEvent({
+    required this.email,
+    required this.otp,
+  });
+}
+
+class NewPasswordSaveButtonClickEvent extends AuthenticationEvent {
+  final String email;
+  final String password;
+
+  NewPasswordSaveButtonClickEvent({
+    required this.email,
+    required this.password,
+  });
+}

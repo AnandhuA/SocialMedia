@@ -4,7 +4,6 @@ const String baseurl = 'https://0t0s19d2-7002.inc1.devtunnels.ms/api';
 const String signup = '/users/send-otp';
 const String otpurl = '/users/verify-otp';
 const String loginurl = '/users/login';
-
 //post
 const String addposturl = '/posts/addPost';
 const String fetchposturl = '/posts/getpost';

@@ -25,7 +25,6 @@ final class SignupSuccessState extends AuthenticationState {
   final UserModel model;
 
   SignupSuccessState({required this.model});
-
 }
 
 final class SignupErrorState extends AuthenticationState {
@@ -49,3 +48,25 @@ final class VerificationErrorState extends AuthenticationState {
 final class TimeOutState extends AuthenticationState {}
 
 final class TimerRestartState extends AuthenticationState {}
+
+//--------------forgot Password-----------------
+
+final class ForgotPasswordLoadingState extends AuthenticationState {}
+
+final class ForgotPasswordSuccessState extends AuthenticationState {}
+
+final class ForgotPasswordErrorState extends AuthenticationState {
+  final String error;
+
+  ForgotPasswordErrorState({required this.error});
+}
+
+final class NewPasswordLoadingState extends AuthenticationState {}
+
+final class NewPasswordSuccessState extends AuthenticationState {}
+
+final class NewPasswordErrorState extends AuthenticationState {
+  final String error;
+
+  NewPasswordErrorState({required this.error});
+}

@@ -2,6 +2,31 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/colors.dart';
 
+
+class AddPhotoWidget extends StatelessWidget {
+  const AddPhotoWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Widget dottedContainer({
   required double height,
   required ThemeData theme,

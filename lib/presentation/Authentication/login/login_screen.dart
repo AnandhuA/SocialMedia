@@ -36,7 +36,7 @@ class LoginScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) =>  MainPage(),
+              builder: (context) => MainPage(),
             ),
             (Route<dynamic> route) => false,
           );
@@ -100,8 +100,7 @@ class LoginScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const ForgotPasswordScreen(),
+                              builder: (context) => ForgotPasswordScreen(),
                             ),
                           );
                         },
@@ -153,7 +152,7 @@ class LoginScreen extends StatelessWidget {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>  SignupScreen(),
+                                        builder: (context) => SignupScreen(),
                                       ),
                                     );
                                   },

@@ -14,8 +14,8 @@ class ProfileIconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      width: 120,
-      height: 120,
+      width: 80,
+      height: 80,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(
@@ -28,15 +28,15 @@ class ProfileIconWidget extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            bottom: 18,
+            bottom: 12,
             right: 0,
-            left: 32,
+            left: 21,
             top: 0,
             child: Center(
               child: CircleAvatar(
-                radius: 20,
+                radius: 15,
                 child: InkWell(
-                  onTap:()=> onTap(),
+                  onTap: () => onTap(),
                   child: child,
                 ),
               ),
@@ -45,11 +45,11 @@ class ProfileIconWidget extends StatelessWidget {
           const Positioned(
             bottom: 0,
             top: 10,
-            left: 60,
+            left: 45,
             right: 0,
             child: Center(
               child: CircleAvatar(
-                radius: 5,
+                radius: 4,
                 backgroundColor: onlineColor,
               ),
             ),

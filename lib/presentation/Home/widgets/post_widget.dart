@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/size.dart';
+import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
 
 class PostWidget extends StatelessWidget {
   const PostWidget({super.key});
@@ -60,9 +61,9 @@ class PostWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Icon(Icons.favorite),
-                Icon(Icons.comment),
-                Icon(Icons.save),
+                PostReactionButton(icon: Icons.favorite, count: "100"),
+                PostReactionButton(icon: Icons.comment, count: "60"),
+                PostReactionButton(icon: Icons.save, count: "12"),
               ],
             ),
           )

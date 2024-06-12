@@ -9,7 +9,7 @@ import 'package:social_media/presentation/Nottification/notification_screen.dart
 import 'package:social_media/presentation/Search/search_screen.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+   MainPage({super.key});
 
   static List<Widget> screens = [
     const HomeScreen(),
@@ -18,11 +18,11 @@ class MainPage extends StatelessWidget {
     const NotificationScreen(),
     const MessageScreen(),
   ];
-
+    int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    int currentIndex = 0;
+  
     return BlocConsumer<BottomNavigationCubit, BottomNavigationState>(
       listener: (context, state) {
         if (state is BottomNavigationInitial) {

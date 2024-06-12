@@ -44,7 +44,7 @@ Future<void> checkUserLogin(context) async {
   } else {
     await Future.delayed(const Duration(milliseconds: 985));
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const MainPage(),
+      builder: (context) =>  MainPage(),
     ));
   }
 }

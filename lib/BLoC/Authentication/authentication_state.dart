@@ -17,6 +17,7 @@ final class LoginErrorState extends AuthenticationState {
   LoginErrorState({required this.error});
 }
 
+final class LoginWithGoogleLoadingState extends AuthenticationState {}
 //-----------signupState------------
 
 final class SignupLoadingState extends AuthenticationState {}
@@ -70,3 +71,4 @@ final class NewPasswordErrorState extends AuthenticationState {
 
   NewPasswordErrorState({required this.error});
 }
+

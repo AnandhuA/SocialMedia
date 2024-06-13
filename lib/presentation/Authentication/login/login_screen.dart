@@ -69,7 +69,12 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       constHeight50,
-                      const LoginWithGoogleButton(),
+                      InkWell(
+                        onTap: () => context.read<AuthenticationBloc>().add(
+                              LoginWithGoogleClickEvent(),
+                            ),
+                        child: const LoginWithGoogleButton(),
+                      ),
                       constHeight10,
                       Text(
                         "Email",

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:social_media/models/user_model.dart';
@@ -31,6 +32,7 @@ class AuthenticationBloc
         _forgotPasswordVerificationOtpButtonClick);
 
     on<NewPasswordSaveButtonClickEvent>(_newPasswordSaveButtonClick);
+    on<LoginWithGoogleClickEvent>(_loginWithGoogle);
   }
 
   FutureOr<void> _loginButtonClickEvent(
@@ -162,6 +164,33 @@ class AuthenticationBloc
       return emit(NewPasswordErrorState(error: responseBody["message"]));
     } else {
       return emit(NewPasswordErrorState(error: 'Server error'));
+    }
+  }
+
+  FutureOr<void> _loginWithGoogle(
+    LoginWithGoogleClickEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    emit(LoginWithGoogleLoadingState());
+    UserCredential? response = await AuthenticationRepo.siginWithGoogle();
+  
+    if (response != null &&
+        response.user != null &&
+        response.user!.email != null) {
+      String? email = response.user!.email;
+
+      Response? finalResponse = await AuthenticationRepo.googleLogin(email!);
+      if (finalResponse != null && finalResponse.statusCode == 200) {
+        return emit(LoginSuccessState());
+      } else if (finalResponse != null) {
+        final errorMessage = jsonDecode(finalResponse.body);
+
+        emit(LoginErrorState(error: errorMessage["message"]));
+      } else {
+        return emit(LoginErrorState(error: 'Server Error'));
+      }
+    } else {
+      emit(LoginErrorState(error: 'account not found'));
     }
   }
 }

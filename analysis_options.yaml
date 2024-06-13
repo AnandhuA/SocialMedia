@@ -10,6 +10,7 @@
 analyzer:
   errors:
     must_be_immutable: ignore
+    use_build_context_synchronously: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

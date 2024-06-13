@@ -58,3 +58,6 @@ class NewPasswordSaveButtonClickEvent extends AuthenticationEvent {
     required this.password,
   });
 }
+
+
+class  LoginWithGoogleClickEvent extends AuthenticationEvent{}

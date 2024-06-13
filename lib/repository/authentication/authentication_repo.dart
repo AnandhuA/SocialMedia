@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:social_media/core/urls.dart';
@@ -111,6 +113,49 @@ class AuthenticationRepo {
           body: jsonEncode(user),
           headers: {"Content-Type": 'application/json'});
 
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UserCredential?> siginWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      log(userCredential.toString());
+      return userCredential;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<http.Response?> googleLogin(String email) async {
+    try {
+      final finalEmail = {'email': email};
+      http.Response response = await http.post(
+          Uri.parse(baseurl + googleLoginurl),
+          body: jsonEncode(finalEmail),
+          headers: {"Content-Type": 'application/json'});
+
+      if (response.statusCode == 200) {
+        final responseBody = jsonDecode(response.body);
+
+        await setUserLoggedin(
+          token: responseBody['user']['token'],
+          // userrole: responseBody['user']['role'],
+          // userid: responseBody['user']['_id'],
+          // userEmail: responseBody['user']['email'],
+          // userName: responseBody['user']['userName'],
+          // userprofile: responseBody['user']['profilePic'],
+        );
+      }
       return response;
     } catch (e) {
       return null;

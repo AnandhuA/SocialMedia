@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:social_media/BLoC/AddPost/add_post_bloc.dart';
+import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
@@ -25,7 +25,7 @@ class AddPostScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: SingleChildScrollView(
-            child: BlocConsumer<AddPostBloc, AddPostState>(
+            child: BlocConsumer<UserPostBloc, UserPostState>(
               listener: (context, state) {
                 if (state is PostErrorState) {
                   customSnackbar(
@@ -76,7 +76,7 @@ class AddPostScreen extends StatelessWidget {
                                           source: ImageSource.camera);
                                       Navigator.pop(context);
                                       context
-                                          .read<AddPostBloc>()
+                                          .read<UserPostBloc>()
                                           .add(ImageSeletedEvent());
                                     },
                                   ),
@@ -88,7 +88,7 @@ class AddPostScreen extends StatelessWidget {
                                           source: ImageSource.gallery);
                                       Navigator.pop(context);
                                       context
-                                          .read<AddPostBloc>()
+                                          .read<UserPostBloc>()
                                           .add(ImageSeletedEvent());
                                     },
                                   )
@@ -116,7 +116,7 @@ class AddPostScreen extends StatelessWidget {
                         : ElevatedButton(
                             onPressed: () {
                               if (imgFile != null) {
-                                context.read<AddPostBloc>().add(
+                                context.read<UserPostBloc>().add(
                                       PostButtonClickEvent(
                                         imagePath: imgFile!.path,
                                         description:

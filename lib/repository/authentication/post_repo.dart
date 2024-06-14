@@ -54,4 +54,21 @@ class PostRepo {
       return null;
     }
   }
+
+
+//get post
+  static Future<http.Response?> fetchPosts() async {
+    try {
+      final token = await getUsertoken();
+   
+      var response = await http.get(
+          Uri.parse(baseurl+ fetchposturl),
+          headers: {'Authorization': 'Bearer $token'});
+
+      return response;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
 }

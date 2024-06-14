@@ -4,25 +4,25 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
 
-part 'add_post_event.dart';
-part 'add_post_state.dart';
+part 'user_post_event.dart';
+part 'user_post_state.dart';
 
-class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
-  AddPostBloc() : super(AddPostInitial()) {
+class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
+  UserPostBloc() : super(UserPostInitial()) {
     on<ImageSeletedEvent>(_imageSelectedEvent);
     on<PostButtonClickEvent>(_postButtonClick);
   }
 
   FutureOr<void> _imageSelectedEvent(
-    AddPostEvent event,
-    Emitter<AddPostState> emit,
+    UserPostEvent event,
+    Emitter<UserPostState> emit,
   ) {
     emit(ImageSelectedState());
   }
 
   FutureOr<void> _postButtonClick(
     PostButtonClickEvent event,
-    Emitter<AddPostState> emit,
+    Emitter<UserPostState> emit,
   ) async {
     emit(PostLoadingState());
     final response = await PostRepo.addPost(

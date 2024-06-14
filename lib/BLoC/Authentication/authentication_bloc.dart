@@ -173,12 +173,12 @@ class AuthenticationBloc
   ) async {
     emit(LoginWithGoogleLoadingState());
     UserCredential? response = await AuthenticationRepo.siginWithGoogle();
-  
+
     if (response != null &&
         response.user != null &&
         response.user!.email != null) {
       String? email = response.user!.email;
-
+      log(response.user.toString());
       Response? finalResponse = await AuthenticationRepo.googleLogin(email!);
       if (finalResponse != null && finalResponse.statusCode == 200) {
         return emit(LoginSuccessState());

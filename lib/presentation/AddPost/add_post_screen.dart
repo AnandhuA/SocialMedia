@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
@@ -30,7 +31,41 @@ class AddPostScreen extends StatelessWidget {
                   ),
                 ),
                 constHeight30,
-                dottedContainer(height: 150, theme: theme),
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 150,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: const Icon(Icons.photo_camera),
+                                title: const Text("Camera"),
+                                onTap: () async {
+                                  await ImagePicker()
+                                      .pickImage(source: ImageSource.camera);
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              ListTile(
+                                leading: const Icon(Icons.photo_library),
+                                title: const Text("Gallery"),
+                                onTap: () async {
+                                  await ImagePicker()
+                                      .pickImage(source: ImageSource.gallery);
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: dottedContainer(height: 150, theme: theme),
+                ),
                 constHeight30,
                 ElevatedButton(
                   onPressed: () {},

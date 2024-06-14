@@ -27,7 +27,10 @@ class AuthenticationRepo {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       log(responseBody.toString());
       if (response.statusCode == 200) {
-        await setUserLoggedin(token: responseBody["user"]["token"]);
+        await setUserLoggedin(
+          token: responseBody["user"]["token"],
+          userid: responseBody['user']['_id'],
+        );
         return response;
       } else {
         return response;
@@ -149,11 +152,9 @@ class AuthenticationRepo {
 
         await setUserLoggedin(
           token: responseBody['user']['token'],
-          // userrole: responseBody['user']['role'],
-          // userid: responseBody['user']['_id'],
-          // userEmail: responseBody['user']['email'],
-          // userName: responseBody['user']['userName'],
-          // userprofile: responseBody['user']['profilePic'],
+  
+          userid: responseBody['user']['_id'],
+ 
         );
       }
       return response;

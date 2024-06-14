@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
   static List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const AddPostScreen(),
+     AddPostScreen(),
     const NotificationScreen(),
     const MessageScreen(),
   ];

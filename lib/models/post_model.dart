@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class PostModel {
   final String post;
   final String description;
@@ -15,33 +13,27 @@ class PostModel {
     required this.updateDate,
   });
 
-  // Factory constructor to create an instance from JSON
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      post: json['post'],
-      description: json['description'],
-      likes: List<String>.from(json['likes']),
-      createDate: json['createDate'],
-      updateDate: json['updateDate'],
+      post: json['image'] ?? '',
+      description: json['description'] ?? '',
+      likes: json['likes'] != null ? List<String>.from(json['likes']) : [],
+      createDate: json['createdAt'] ?? '',
+      updateDate: json['updatedAt'] ?? '',
     );
   }
 
-  // Method to convert an instance to JSON
   Map<String, dynamic> toJson() {
     return {
-      'post': post,
+      'image': post,
       'description': description,
       'likes': likes,
-      'createDate': createDate,
-      'updateDate': updateDate,
+      'createdAt': createDate,
+      'updatedAt': updateDate,
     };
   }
+}
 
-}
-List<PostModel> parsePostsFromJson(String responseBody) {
-  final List<dynamic> parsed = jsonDecode(responseBody);
-  return parsed.map<PostModel>((json) => PostModel.fromJson(json)).toList();
-}
 
 
 

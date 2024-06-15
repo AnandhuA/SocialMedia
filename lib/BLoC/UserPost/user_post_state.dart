@@ -23,7 +23,11 @@ final class PostErrorState extends UserPostState {
 
 final class FeatchAllMyPostLoadingState extends UserPostState {}
 
-final class FeatchAllMyPostSuccessState extends UserPostState {}
+final class FeatchAllMyPostSuccessState extends UserPostState {
+  final List<PostModel> postList;
+
+  FeatchAllMyPostSuccessState({required this.postList});
+}
 
 final class FeatchAllMyPostErrorState extends UserPostState {
   final String error;

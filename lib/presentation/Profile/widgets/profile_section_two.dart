@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
@@ -41,55 +44,71 @@ class ProfileSectionTwo extends StatelessWidget {
             ],
           ),
           constHeight10,
-          Expanded(
-            child: TabBarView(
-              children: [
-                GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 3,
-                    mainAxisSpacing: 3,
-                  ),
-                  itemCount: dummylistpost.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            dummylistpost[index],
+          BlocConsumer<UserPostBloc, UserPostState>(
+            listener: (context, state) {
+              if (state is FeatchAllMyPostErrorState) {
+                customSnackbar(
+                    context: context, message: state.error, color: errorColor);
+              }
+            },
+            builder: (context, state) {
+              return Expanded(
+                child: TabBarView(
+                  children: [
+                    state is FeatchAllMyPostSuccessState
+                        ? GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 3,
+                              mainAxisSpacing: 3,
+                            ),
+                            itemCount: state.postList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      state.postList[index].post,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          fit: BoxFit.cover,
-                        ),
+                    GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 3,
+                        mainAxisSpacing: 3,
                       ),
-                    );
-                  },
-                ),
-                GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 3,
-                    mainAxisSpacing: 3,
-                  ),
-                  itemCount: dummylistsaved.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            dummylistsaved[index],
+                      itemCount: dummylistsaved.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                dummylistsaved[index],
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

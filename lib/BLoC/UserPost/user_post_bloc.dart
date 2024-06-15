@@ -46,21 +46,21 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     FeatchAllMyPostEvent event,
     Emitter<UserPostState> emit,
   ) async {
-    log("===========Start=============");
+  
     emit(FeatchAllMyPostLoadingState());
-    log("=============Lading============");
+ 
     final response = await PostRepo.fetchPosts();
     if (response != null && response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
-      log("==========$responseBody===============");
+    
 
-      final List<PostModel> posts = responseBody
+      final List<PostModel> posts = await responseBody
           .map<PostModel>((json) => PostModel.fromJson(json))
           .toList();
-      log("=========================");
-      print(posts);
+     
+      log(posts.toString());
 
-      return emit(FeatchAllMyPostSuccessState());
+      return emit(FeatchAllMyPostSuccessState(postList: posts));
     } else if (response != null) {
       final responseBody = jsonDecode(response.body);
 

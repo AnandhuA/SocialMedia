@@ -85,4 +85,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'socialmedia-60e45.appspot.com',
     measurementId: 'G-J5L6G340HK',
   );
+
+
 }

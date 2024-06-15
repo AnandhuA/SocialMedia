@@ -27,13 +27,13 @@ class AddPostScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: BlocConsumer<UserPostBloc, UserPostState>(
               listener: (context, state) {
-                if (state is PostErrorState) {
+                if (state is AddPostErrorState) {
                   customSnackbar(
                     context: context,
                     message: state.error,
                     color: errorColor,
                   );
-                } else if (state is PostSuccessState) {
+                } else if (state is AddPostSuccessState) {
                   customSnackbar(
                     context: context,
                     message: "Post add Success",
@@ -57,6 +57,7 @@ class AddPostScreen extends StatelessWidget {
                       decoration: const InputDecoration(
                         hintText: "What would you like to say?",
                       ),
+                      style: theme.textTheme.titleLarge,
                     ),
                     constHeight30,
                     InkWell(
@@ -109,7 +110,7 @@ class AddPostScreen extends StatelessWidget {
                             ),
                     ),
                     constHeight30,
-                    state is PostLoadingState
+                    state is AddPostLoadingState
                         ? const LoadingButton(
                             color: secondaryColor,
                           )

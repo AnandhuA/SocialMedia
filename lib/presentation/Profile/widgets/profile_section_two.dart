@@ -4,6 +4,7 @@ import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
+import 'package:social_media/presentation/PostView/post_view_screen.dart';
 import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
@@ -65,15 +66,24 @@ class ProfileSectionTwo extends StatelessWidget {
                             ),
                             itemCount: state.postList.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      state.postList[index].post,
+                              return InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PostViewScreen(
+                                        post: state.postList[index],
+                                      ),
+                                    )),
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        state.postList[index].image,
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               );

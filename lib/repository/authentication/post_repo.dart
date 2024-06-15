@@ -13,7 +13,7 @@ class PostRepo {
     try {
       final url =
           Uri.parse('https://api.cloudinary.com/v1_1/dm27venn4/image/upload');
- 
+
       final request = http.MultipartRequest('POST', url)
         ..fields['upload_preset'] = 'yzegocze'
         ..files.add(await http.MultipartFile.fromPath('file', file.path));
@@ -55,19 +55,30 @@ class PostRepo {
     }
   }
 
-
 //get post
   static Future<http.Response?> fetchPosts() async {
     try {
       final token = await getUsertoken();
-   
-      var response = await http.get(
-          Uri.parse(baseurl+ fetchposturl),
+
+      var response = await http.get(Uri.parse(baseurl + fetchposturl),
           headers: {'Authorization': 'Bearer $token'});
 
       return response;
     } catch (e) {
       log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<http.Response?> deletePost({required String postId}) async {
+    try {
+      final token = await getUsertoken();
+      var response = await http.delete(
+          Uri.parse('$baseurl$deleteposturl/$postId'),
+          headers: {'Authorization': 'Bearer $token'});
+
+      return response;
+    } catch (e) {
       return null;
     }
   }

@@ -9,14 +9,14 @@ final class UserPostInitial extends UserPostState {}
 
 final class ImageSelectedState extends UserPostState {}
 
-final class PostLoadingState extends UserPostState {}
+final class AddPostLoadingState extends UserPostState {}
 
-final class PostSuccessState extends UserPostState {}
+final class AddPostSuccessState extends UserPostState {}
 
-final class PostErrorState extends UserPostState {
+final class AddPostErrorState extends UserPostState {
   final String error;
 
-  PostErrorState({required this.error});
+  AddPostErrorState({required this.error});
 }
 
 //-------------FeatchPost State-------------
@@ -33,4 +33,16 @@ final class FeatchAllMyPostErrorState extends UserPostState {
   final String error;
 
   FeatchAllMyPostErrorState({required this.error});
+}
+
+//---------------Delete post--------------
+
+final class DeletePostLoadingState extends UserPostState {}
+
+final class DeletePostSuccessState extends UserPostState {}
+
+final class DeletePostErrorState extends UserPostState {
+  final String error;
+
+  DeletePostErrorState({required this.error});
 }

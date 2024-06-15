@@ -17,8 +17,13 @@ final class PostButtonClickEvent extends UserPostEvent {
   });
 }
 
-
 //-------------Featch my all posts event---------
 
+final class FeatchAllMyPostEvent extends UserPostEvent {}
 
-final class FeatchAllMyPostEvent extends UserPostEvent{}
+//---------------Delete post---------
+final class DeletePostEvent extends UserPostEvent {
+  final String postId;
+
+  DeletePostEvent({required this.postId});
+}

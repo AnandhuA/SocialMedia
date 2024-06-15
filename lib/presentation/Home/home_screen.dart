@@ -19,7 +19,15 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: 3,
                   itemBuilder: (context, index) {
-                    return const PostWidget();
+                    return const PostWidget(
+                      postUrl:
+                          "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
+                      description: "Welcome",
+                      userName: "Anandhu",
+                      likeCount: "14",
+                      commentCount: "10",
+                      time: "20 min ago",
+                    );
                   },
                 ),
               )

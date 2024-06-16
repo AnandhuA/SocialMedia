@@ -178,7 +178,7 @@ class AuthenticationBloc
         response.user != null &&
         response.user!.email != null) {
       String? email = response.user!.email;
-      log(response.user.toString());
+   
       Response? finalResponse = await AuthenticationRepo.googleLogin(email!);
       if (finalResponse != null && finalResponse.statusCode == 200) {
         return emit(LoginSuccessState());

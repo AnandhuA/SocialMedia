@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
@@ -79,6 +80,36 @@ class PostRepo {
 
       return response;
     } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> editPost({
+    required String description,
+    required XFile? imgFile,
+    required String postId,
+    required String? imageUrl,
+  }) async {
+    String image ="";
+    try {
+      if (imgFile != null) {
+         image = await PostRepo._uploadImage(imgFile.path);
+      }
+      final token = await getUsertoken();
+      final post = {
+        'imageUrl': imgFile == null ? imageUrl : image,
+        'description': description,
+      };
+      var response = await http.put(Uri.parse('$baseurl$editposturl/$postId'),
+          body: jsonEncode(post),
+          headers: {
+            "Content-Type": 'application/json',
+            'Authorization': 'Bearer $token'
+          });
+
+      return response;
+    } catch (e) {
+      log(e.toString());
       return null;
     }
   }

@@ -16,7 +16,20 @@ final class PostButtonClickEvent extends UserPostEvent {
     required this.description,
   });
 }
+//-----------Edit Post Event-----------
 
+final class EditPostButtonClickEvent extends UserPostEvent {
+  final String description;
+  final XFile? imageFile;
+  final String? imageLink;
+  final String postId;
+
+  EditPostButtonClickEvent(
+      {required this.description,
+      required this.imageFile,
+      required this.imageLink,
+      required this.postId});
+}
 //-------------Featch my all posts event---------
 
 final class FeatchAllMyPostEvent extends UserPostEvent {}

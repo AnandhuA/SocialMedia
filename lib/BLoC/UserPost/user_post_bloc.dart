@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
 
@@ -16,6 +17,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     on<PostButtonClickEvent>(_postButtonClick);
     on<FeatchAllMyPostEvent>(_featchMyAllPost);
     on<DeletePostEvent>(_deletePostEvent);
+    on<EditPostButtonClickEvent>(_editPostButtonClick);
   }
 
   FutureOr<void> _imageSelectedEvent(
@@ -105,6 +107,38 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         DeletePostErrorState(
           error: 'Something went wrong',
         ),
+      );
+    }
+  }
+
+  FutureOr<void> _editPostButtonClick(
+    EditPostButtonClickEvent event,
+    Emitter<UserPostState> emit,
+  ) async {
+    emit(AddPostLoadingState());
+    final response = await PostRepo.editPost(
+      description: event.description,
+      imgFile: event.imageFile,
+      postId: event.postId,
+      imageUrl: event.imageLink,
+    );
+    if (response != null && response.statusCode == 200) {
+      add(FeatchAllMyPostEvent());
+      return emit(EditPostSuccessState());
+    } else if (response != null && response.statusCode == 500) {
+      return emit(
+        AddPostErrorState(error: 'Server not responding'),
+      );
+    } else if (response != null) {
+      final responseBody = jsonDecode(response.body);
+      return emit(
+        AddPostErrorState(
+          error: responseBody['message'],
+        ),
+      );
+    } else {
+      return emit(
+        AddPostErrorState(error: 'Something went wrong'),
       );
     }
   }

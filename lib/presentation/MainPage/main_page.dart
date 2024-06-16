@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/colors.dart';
-import 'package:social_media/presentation/AddPost/add_post_screen.dart';
+import 'package:social_media/presentation/AddAndEditPost/add_post_screen.dart';
 import 'package:social_media/BLoC/bottomNavigation/bottom_navigation_cubit.dart';
 import 'package:social_media/presentation/Home/home_screen.dart';
 import 'package:social_media/presentation/Message/message_screen.dart';
@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
   static List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
-     AddPostScreen(),
+   const  AddPostScreen(),
     const NotificationScreen(),
     const MessageScreen(),
   ];

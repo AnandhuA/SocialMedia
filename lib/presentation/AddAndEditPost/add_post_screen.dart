@@ -7,15 +7,38 @@ import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/presentation/AddPost/widgets/dotted_container.dart';
+import 'package:social_media/models/post_model.dart';
+import 'package:social_media/presentation/AddAndEditPost/widgets/dotted_container.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/loading_button.dart';
 
-class AddPostScreen extends StatelessWidget {
-  AddPostScreen({super.key});
+class AddPostScreen extends StatefulWidget {
+  const AddPostScreen({
+    super.key,
+    this.editpost = false,
+    this.postModel,
+  });
+  final bool editpost;
+  final PostModel? postModel;
+
+  @override
+  State<AddPostScreen> createState() => _AddPostScreenState();
+}
+
+class _AddPostScreenState extends State<AddPostScreen> {
   XFile? imgFile;
+  String? postImage;
+
   final TextEditingController _descriptionController = TextEditingController();
+  @override
+  void initState() {
+    if (widget.editpost && widget.postModel != null) {
+      _descriptionController.text = widget.postModel!.description;
+      postImage = widget.postModel!.image;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +64,22 @@ class AddPostScreen extends StatelessWidget {
                   );
                   _descriptionController.clear();
                   imgFile = null;
+                } else if (state is EditPostSuccessState) {
+                  customSnackbar(
+                    context: context,
+                    message: "Post Edited",
+                    color: successColor,
+                  );
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 }
               },
               builder: (context, state) {
                 return Column(
                   children: [
-                    const CustomAppbar(
-                      title: "Create",
+                    CustomAppbar(
+                      title: widget.editpost ? "Edit Post" : "Create Post",
+                      backButton: widget.editpost,
                     ),
                     constHeight30,
                     TextField(
@@ -100,7 +132,18 @@ class AddPostScreen extends StatelessWidget {
                         );
                       },
                       child: imgFile == null
-                          ? dottedContainer(height: 150, theme: theme)
+                          ? postImage != null
+                              ? SizedBox(
+                                  height: 200,
+                                  child: Image.network(
+                                    postImage!,
+                                    fit: BoxFit.fill,
+                                  ),
+                                )
+                              : dottedContainer(
+                                  height: 150,
+                                  theme: theme,
+                                )
                           : SizedBox(
                               height: 200,
                               child: Image.file(
@@ -116,14 +159,23 @@ class AddPostScreen extends StatelessWidget {
                           )
                         : ElevatedButton(
                             onPressed: () {
-                              if (imgFile != null) {
-                                context.read<UserPostBloc>().add(
-                                      PostButtonClickEvent(
-                                        imagePath: imgFile!.path,
-                                        description:
-                                            _descriptionController.text,
-                                      ),
-                                    );
+                              if (imgFile != null || postImage != null) {
+                                widget.editpost
+                                    ? context.read<UserPostBloc>().add(
+                                          EditPostButtonClickEvent(
+                                              description:
+                                                  _descriptionController.text,
+                                              imageLink: postImage,
+                                              imageFile: imgFile,
+                                              postId: widget.postModel!.id),
+                                        )
+                                    : context.read<UserPostBloc>().add(
+                                          PostButtonClickEvent(
+                                            imagePath: imgFile!.path,
+                                            description:
+                                                _descriptionController.text,
+                                          ),
+                                        );
                               } else {
                                 customSnackbar(
                                   context: context,

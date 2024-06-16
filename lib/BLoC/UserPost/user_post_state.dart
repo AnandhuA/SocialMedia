@@ -13,6 +13,8 @@ final class AddPostLoadingState extends UserPostState {}
 
 final class AddPostSuccessState extends UserPostState {}
 
+final class EditPostSuccessState extends UserPostState{}
+
 final class AddPostErrorState extends UserPostState {
   final String error;
 

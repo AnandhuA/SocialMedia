@@ -4,6 +4,7 @@ import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/models/post_model.dart';
+import 'package:social_media/presentation/AddAndEditPost/add_post_screen.dart';
 import 'package:social_media/presentation/CustomWidgets/confirmation_diloge.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
@@ -27,9 +28,7 @@ class PostViewScreen extends StatelessWidget {
               } else if (state is DeletePostErrorState) {
                 customSnackbar(
                     context: context, message: state.error, color: errorColor);
-              } else if (state is DeletePostLoadingState) {
-                
-              }
+              } else if (state is DeletePostLoadingState) {}
             },
             builder: (context, state) {
               return Column(
@@ -48,6 +47,15 @@ class PostViewScreen extends StatelessWidget {
                     moreIcon: PopupMenuButton<String>(
                       onSelected: (value) {
                         if (value == 'edit') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddPostScreen(
+                                editpost: true,
+                                postModel: post,
+                              ),
+                            ),
+                          );
                         } else if (value == 'delete') {
                           confirmationDiloge(
                               context: context,

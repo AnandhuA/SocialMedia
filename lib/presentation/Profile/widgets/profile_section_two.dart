@@ -12,7 +12,7 @@ class ProfileSectionTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
+    final theme = Theme.of(context);
     return DefaultTabController(
       length: 2,
       child: Column(
@@ -57,38 +57,45 @@ class ProfileSectionTwo extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     state is FeatchAllMyPostSuccessState
-                        ? GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 3,
-                              mainAxisSpacing: 3,
-                            ),
-                            itemCount: state.postList.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PostViewScreen(
-                                        post: state.postList[index],
-                                      ),
-                                    )),
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        state.postList[index].image,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                        ? state.postList.isEmpty
+                            ? Center(
+                                child: Text(
+                                  "No Post",
+                                  style: theme.textTheme.titleLarge,
                                 ),
-                              );
-                            },
-                          )
+                              )
+                            : GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 3,
+                                  mainAxisSpacing: 3,
+                                ),
+                                itemCount: state.postList.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PostViewScreen(
+                                            post: state.postList[index],
+                                          ),
+                                        )),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            state.postList[index].image,
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
                         : const Center(
                             child: CircularProgressIndicator(),
                           ),

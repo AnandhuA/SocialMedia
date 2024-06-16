@@ -39,6 +39,7 @@ class PostWidget extends StatelessWidget {
             constWidth10,
             Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   userName,

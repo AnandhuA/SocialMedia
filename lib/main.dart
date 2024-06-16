@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/BLoC/Authentication/authentication_bloc.dart';
 import 'package:social_media/core/theme.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthenticationBloc()),
         BlocProvider(create: (context) => BottomNavigationCubit()),
         BlocProvider(create: (context) => UserPostBloc()),
+        BlocProvider(create: (context) => UserDetailsBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

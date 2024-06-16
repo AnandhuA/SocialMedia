@@ -25,3 +25,50 @@ Widget postGridShimmerEffect({required int itemCount}) {
     ),
   );
 }
+
+Widget profileLoadingShimmer() {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Column(
+      children: [
+        Container(
+          height: 200,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        Container(
+          height: 20,
+          width: 150,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Container(
+              height: 50,
+              width: 150,
+              color: Colors.white,
+            ),
+            Container(
+              height: 50,
+              width: 150,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+Widget imageLoadingShimmer() {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Container(
+      color: Colors.white,
+    ),
+  );
+}

@@ -1,39 +1,3 @@
-// class PostModel {
-//   final String post;
-//   final String description;
-//   final List likes;
-//   final String createDate;
-//   final String updateDate;
-
-//   PostModel({
-//     required this.post,
-//     required this.description,
-//     required this.likes,
-//     required this.createDate,
-//     required this.updateDate,
-//   });
-
-//   factory PostModel.fromJson(Map<String, dynamic> json) {
-//     return PostModel(
-//       post: json['image'] ?? '',
-//       description: json['description'] ?? '',
-//       likes: json['likes'] != null ? List<String>.from(json['likes']) : [],
-//       createDate: json['createdAt'] ?? '',
-//       updateDate: json['updatedAt'] ?? '',
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'image': post,
-//       'description': description,
-//       'likes': likes,
-//       'createdAt': createDate,
-//       'updatedAt': updateDate,
-//     };
-//   }
-// }
-
 
 
 class UserModel {

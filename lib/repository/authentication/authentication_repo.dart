@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:social_media/core/urls.dart';
-import 'package:social_media/models/user_model.dart';
+import 'package:social_media/models/auth_user_model.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class AuthenticationRepo {
@@ -42,7 +42,7 @@ class AuthenticationRepo {
   }
 
   static Future<http.Response?> userSignUp(
-      {required UserModel userModel}) async {
+      {required AuthUserModel userModel}) async {
     Map<String, String> data = {
       "userName": userModel.userName,
       "email": userModel.email,

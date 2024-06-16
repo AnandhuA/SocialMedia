@@ -47,6 +47,7 @@ class PostViewScreen extends StatelessWidget {
                       likeCount: post.likes.length.toString(),
                       commentCount: "2",
                       time: timeAgo,
+                      profilePic: post.userId.profilePic,
                       moreIcon: PopupMenuButton<String>(
                         onSelected: (value) {
                           if (value == 'edit') {

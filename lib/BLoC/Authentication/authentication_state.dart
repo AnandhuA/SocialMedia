@@ -23,7 +23,7 @@ final class LoginWithGoogleLoadingState extends AuthenticationState {}
 final class SignupLoadingState extends AuthenticationState {}
 
 final class SignupSuccessState extends AuthenticationState {
-  final UserModel model;
+  final AuthUserModel model;
 
   SignupSuccessState({required this.model});
 }
@@ -71,4 +71,3 @@ final class NewPasswordErrorState extends AuthenticationState {
 
   NewPasswordErrorState({required this.error});
 }
-

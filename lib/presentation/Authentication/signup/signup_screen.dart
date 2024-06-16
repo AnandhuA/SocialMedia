@@ -5,7 +5,7 @@ import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/core/style.dart';
-import 'package:social_media/models/user_model.dart';
+import 'package:social_media/models/auth_user_model.dart';
 import 'package:social_media/presentation/Authentication/widgets/password_text_field.dart';
 import 'package:social_media/presentation/Authentication/login/login_screen.dart';
 import 'package:social_media/presentation/Authentication/verification/verification_screen.dart';
@@ -124,7 +124,7 @@ class SignupScreen extends StatelessWidget {
                           : ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  UserModel newModel = UserModel(
+                                  AuthUserModel newModel = AuthUserModel(
                                     userName: _nameController.text,
                                     email: _emailController.text,
                                     phone: _phoneController.text,

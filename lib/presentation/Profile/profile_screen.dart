@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 
@@ -17,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     context.read<UserPostBloc>().add(FeatchAllMyPostEvent());
+    context.read<UserDetailsBloc>().add(FeatchUserDetailsEvent());
     super.initState();
   }
 
@@ -30,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverToBoxAdapter(
-                  child: ProfileSectionOne(size: size),
+                  child: ProfileSectionOne(size: size,),
                 ),
               ];
             },

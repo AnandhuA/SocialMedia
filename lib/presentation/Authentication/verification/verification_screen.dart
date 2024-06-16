@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
-import 'package:social_media/models/user_model.dart';
+import 'package:social_media/models/auth_user_model.dart';
 import 'package:social_media/presentation/Authentication/login/login_screen.dart';
 import 'package:social_media/presentation/Authentication/widgets/otp_text_filed.dart';
 import 'package:social_media/presentation/Authentication/widgets/timer_widget.dart';
@@ -13,7 +13,7 @@ import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/loading_button.dart';
 
 class VerificationScreen extends StatelessWidget {
-  final UserModel userModel;
+  final AuthUserModel userModel;
   VerificationScreen({
     super.key,
     required this.userModel,

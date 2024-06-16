@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
                       likeCount: "14",
                       commentCount: "10",
                       time: "20 min ago",
+                      profilePic: "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png" ,
                     );
                   },
                 ),

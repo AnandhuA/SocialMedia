@@ -14,7 +14,7 @@ class LoginButtonClickEvent extends AuthenticationEvent {
 }
 
 class SignupButtonClickEvent extends AuthenticationEvent {
-  final UserModel userModel;
+  final AuthUserModel userModel;
 
   SignupButtonClickEvent({required this.userModel});
 }

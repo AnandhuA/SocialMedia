@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:social_media/core/colors.dart';
+
 import 'package:social_media/core/size.dart';
+import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
 
 class PostWidget extends StatelessWidget {
@@ -13,6 +13,7 @@ class PostWidget extends StatelessWidget {
   final String commentCount;
   final String time;
   final Widget? moreIcon;
+  final String profilePic;
   const PostWidget({
     super.key,
     required this.postUrl,
@@ -21,6 +22,7 @@ class PostWidget extends StatelessWidget {
     required this.likeCount,
     required this.commentCount,
     required this.time,
+    required this.profilePic,
     this.moreIcon,
   });
 
@@ -33,9 +35,21 @@ class PostWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 25,
-              child: Icon(Icons.person),
+              child: CachedNetworkImage(
+                imageUrl: profilePic,
+                imageBuilder: (context, imageProvider) => CircleAvatar(
+                  radius: 60,
+                  backgroundImage: imageProvider,
+                ),
+                placeholder: (context, url) => ClipRRect(
+                    borderRadius: BorderRadius.circular(60),
+                    child: imageLoadingShimmer()),
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
+                ),
+              ),
             ),
             constWidth10,
             Column(
@@ -65,13 +79,7 @@ class PostWidget extends StatelessWidget {
             imageUrl: postUrl,
             fit: BoxFit.cover,
             placeholder: (context, url) {
-              return SizedBox(
-                height: 300,
-                child: Center(
-                  child: LoadingAnimationWidget.fourRotatingDots(
-                      color: greyColor100, size: 30),
-                ),
-              );
+              return SizedBox(height: 300, child: imageLoadingShimmer());
             },
           ),
           SizedBox(

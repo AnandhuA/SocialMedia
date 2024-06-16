@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
 
@@ -26,8 +29,6 @@ class PostWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.all(10),
-      width: double.infinity,
-      height: 600,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,17 +61,18 @@ class PostWidget extends StatelessWidget {
             style: theme.textTheme.titleMedium,
           ),
           constHeight10,
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    postUrl,
-                  ),
-                  fit: BoxFit.cover,
+          CachedNetworkImage(
+            imageUrl: postUrl,
+            fit: BoxFit.cover,
+            placeholder: (context, url) {
+              return SizedBox(
+                height: 300,
+                child: Center(
+                  child: LoadingAnimationWidget.fourRotatingDots(
+                      color: greyColor100, size: 30),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           SizedBox(
             width: double.infinity,

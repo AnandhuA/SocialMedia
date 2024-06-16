@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/presentation/Home/widgets/home_app_bar.dart';
-import 'package:social_media/presentation/Home/widgets/post_widget.dart';
+import 'package:social_media/presentation/CustomWidgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

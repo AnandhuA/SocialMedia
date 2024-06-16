@@ -7,6 +7,8 @@ const Color secondaryColor = Color(0xFF53ABFF);
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
 const Color greyColor = Colors.grey;
+Color greyColor100 = Colors.grey.shade100;
+Color greyColor200 = Colors.grey.shade200;
 
 const Color customButtonBackground = Color.fromARGB(35, 217, 217, 217);
 const Color errorColor = Colors.red;

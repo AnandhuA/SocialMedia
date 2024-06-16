@@ -8,7 +8,7 @@ import 'package:social_media/presentation/AddAndEditPost/add_post_screen.dart';
 import 'package:social_media/presentation/CustomWidgets/confirmation_diloge.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
-import 'package:social_media/presentation/Home/widgets/post_widget.dart';
+import 'package:social_media/presentation/CustomWidgets/post_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostViewScreen extends StatelessWidget {
@@ -20,75 +20,79 @@ class PostViewScreen extends StatelessWidget {
     final timeAgo = timeago.format(post.date);
     return Scaffold(
       body: Background(
-        child: SingleChildScrollView(
-          child: BlocConsumer<UserPostBloc, UserPostState>(
-            listener: (context, state) {
-              if (state is DeletePostSuccessState) {
-                Navigator.pop(context);
-              } else if (state is DeletePostErrorState) {
-                customSnackbar(
-                    context: context, message: state.error, color: errorColor);
-              } else if (state is DeletePostLoadingState) {}
-            },
-            builder: (context, state) {
-              return Column(
-                children: [
-                  const CustomAppbar(
-                    title: "",
-                    backButton: true,
-                  ),
-                  PostWidget(
-                    postUrl: post.image,
-                    description: post.description,
-                    userName: post.userId.userName,
-                    likeCount: post.likes.length.toString(),
-                    commentCount: "2",
-                    time: timeAgo,
-                    moreIcon: PopupMenuButton<String>(
-                      onSelected: (value) {
-                        if (value == 'edit') {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddPostScreen(
-                                editpost: true,
-                                postModel: post,
-                              ),
-                            ),
-                          );
-                        } else if (value == 'delete') {
-                          confirmationDiloge(
-                              context: context,
-                              title: "Delete Post",
-                              confirmBtn: () {
-                                context.read<UserPostBloc>().add(
-                                      DeletePostEvent(postId: post.id),
-                                    );
-                                Navigator.pop(context);
-                              },
-                              content: "Do you want to delete this post?");
-                        }
-                      },
-                      itemBuilder: (BuildContext context) {
-                        return [
-                          const PopupMenuItem<String>(
-                            value: 'edit',
-                            child: Text('Edit'),
-                          ),
-                          const PopupMenuItem<String>(
-                            value: 'delete',
-                            child: Text('Delete'),
-                          ),
-                        ];
-                      },
-                      icon: const Icon(
-                        Icons.more_vert_outlined,
-                      ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: BlocConsumer<UserPostBloc, UserPostState>(
+              listener: (context, state) {
+                if (state is DeletePostSuccessState) {
+                  Navigator.pop(context);
+                } else if (state is DeletePostErrorState) {
+                  customSnackbar(
+                      context: context,
+                      message: state.error,
+                      color: errorColor);
+                } else if (state is DeletePostLoadingState) {}
+              },
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    const CustomAppbar(
+                      title: "",
+                      backButton: true,
                     ),
-                  )
-                ],
-              );
-            },
+                    PostWidget(
+                      postUrl: post.image,
+                      description: post.description,
+                      userName: post.userId.userName,
+                      likeCount: post.likes.length.toString(),
+                      commentCount: "2",
+                      time: timeAgo,
+                      moreIcon: PopupMenuButton<String>(
+                        onSelected: (value) {
+                          if (value == 'edit') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddPostScreen(
+                                  editpost: true,
+                                  postModel: post,
+                                ),
+                              ),
+                            );
+                          } else if (value == 'delete') {
+                            confirmationDiloge(
+                                context: context,
+                                title: "Delete Post",
+                                confirmBtn: () {
+                                  context.read<UserPostBloc>().add(
+                                        DeletePostEvent(postId: post.id),
+                                      );
+                                  Navigator.pop(context);
+                                },
+                                content: "Do you want to delete this post?");
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            const PopupMenuItem<String>(
+                              value: 'edit',
+                              child: Text('Edit'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'delete',
+                              child: Text('Delete'),
+                            ),
+                          ];
+                        },
+                        icon: const Icon(
+                          Icons.more_vert_outlined,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

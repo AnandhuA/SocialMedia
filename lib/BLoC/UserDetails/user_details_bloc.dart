@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media/models/post_model.dart';
+import 'package:social_media/models/user_model.dart';
 import 'package:social_media/repository/authentication/user_repo.dart';
 
 part 'user_details_event.dart';

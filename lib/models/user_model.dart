@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   final String id;
   final String userName;
   final String email;
@@ -13,8 +13,25 @@ class User {
   final String backGroundImage;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String? name;
+  final String? bio;
 
-  User({
+  // class UserModel {
+//   final String id;
+//   final String userName;
+//   final String email;
+//   final String password;
+//   final String profilePic;
+//   final bool online;
+//   final bool blocked;
+//   final bool verified;
+//   final String role;
+//   final bool isPrivate;
+//   final String backGroundImage;
+//   final DateTime createdAt;
+//   final DateTime updatedAt;
+
+  UserModel({
     required this.id,
     required this.userName,
     required this.email,
@@ -29,10 +46,12 @@ class User {
     required this.backGroundImage,
     required this.createdAt,
     required this.updatedAt,
+    this.bio,
+    this.name,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       id: json['_id'] as String,
       userName: json['userName'] as String,
       email: json['email'] as String,
@@ -47,6 +66,8 @@ class User {
       backGroundImage: json['backGroundImage'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      bio: json["bio"],
+      name: json["name"],
     );
   }
 
@@ -66,6 +87,8 @@ class User {
       'backGroundImage': backGroundImage,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      "bio": bio,
+      "name": name,
     };
   }
 }

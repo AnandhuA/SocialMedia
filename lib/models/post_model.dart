@@ -1,6 +1,4 @@
-
-
-class UserModel {
+class _UserModel {
   final String id;
   final String userName;
   final String email;
@@ -15,7 +13,7 @@ class UserModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  UserModel({
+  _UserModel({
     required this.id,
     required this.userName,
     required this.email,
@@ -31,8 +29,8 @@ class UserModel {
     required this.updatedAt,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
+  factory _UserModel.fromJson(Map<String, dynamic> json) {
+    return _UserModel(
       id: json['_id'] as String,
       userName: json['userName'] as String,
       email: json['email'] as String,
@@ -68,9 +66,10 @@ class UserModel {
   }
 }
 
+
 class PostModel {
   final String id;
-  final UserModel userId;
+  final _UserModel userId;
   final String image;
   final String description;
   final List<String> likes;
@@ -100,7 +99,7 @@ class PostModel {
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
       id: json['_id'] as String,
-      userId: UserModel.fromJson(json['userId'] as Map<String, dynamic>),
+      userId: _UserModel.fromJson(json['userId'] as Map<String, dynamic>),
       image: json['image'] as String,
       description: json['description'] as String,
       likes: List<String>.from(json['likes'] as List),

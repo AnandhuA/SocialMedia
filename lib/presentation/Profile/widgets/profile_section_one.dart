@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +6,7 @@ import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_button.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
+import 'package:social_media/presentation/Profile/edit__profile.dart';
 import 'package:social_media/presentation/Settings/settings_screen.dart';
 
 class ProfileSectionOne extends StatelessWidget {
@@ -99,7 +98,13 @@ class ProfileSectionOne extends StatelessWidget {
                       ? darkModeCustomButtonBG
                       : lightModeCustomButtonBG,
                   onTap: () {
-                    log("message");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfileScreen(
+                            userDetails: state.userDetails,
+                          ),
+                        ));
                   },
                 ),
                 CustomButton(

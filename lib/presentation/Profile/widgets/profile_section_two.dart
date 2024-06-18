@@ -17,45 +17,51 @@ class ProfileSectionTwo extends StatelessWidget {
     final theme = Theme.of(context);
     return DefaultTabController(
       length: 2,
-      child: Column(
-        children: [
-          constHeight30,
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      child: BlocConsumer<UserPostBloc, UserPostState>(
+        listener: (context, state) {
+          if (state is FeatchAllMyPostErrorState) {
+            customSnackbar(
+                context: context, message: state.error, color: errorColor);
+          }
+        },
+        builder: (context, state) {
+          return Column(
             children: [
-              ProfileInfoButton(
-                count: "03",
-                title: "Posts",
+              constHeight30,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ProfileInfoButton(
+                    count: state is FeatchAllMyPostSuccessState
+                        ? state.postList.length.toString()
+                        : "...",
+                    title: "Posts",
+                  ),
+                  ProfileInfoButton(
+                    count: state is FeatchAllMyPostSuccessState
+                        ? state.followersCount
+                        : "...",
+                    title: "Follower",
+                  ),
+                  ProfileInfoButton(
+                    count: state is FeatchAllMyPostSuccessState
+                        ? state.followingCount
+                        : "...",
+                    title: "Following",
+                  )
+                ],
               ),
-              ProfileInfoButton(
-                count: "234",
-                title: "Follower",
+              constHeight30,
+              const TabBar(
+                dividerColor: greyColor,
+                tabs: [
+                  Tab(text: 'Posts'),
+                  Tab(text: 'Saved'),
+                ],
               ),
-              ProfileInfoButton(
-                count: "302",
-                title: "Following",
-              )
-            ],
-          ),
-          constHeight30,
-          const TabBar(
-            dividerColor: greyColor,
-            tabs: [
-              Tab(text: 'Posts'),
-              Tab(text: 'Saved'),
-            ],
-          ),
-          constHeight10,
-          BlocConsumer<UserPostBloc, UserPostState>(
-            listener: (context, state) {
-              if (state is FeatchAllMyPostErrorState) {
-                customSnackbar(
-                    context: context, message: state.error, color: errorColor);
-              }
-            },
-            builder: (context, state) {
-              return Expanded(
+              constHeight10,
+              Expanded(
                 child: TabBarView(
                   children: [
                     state is FeatchAllMyPostSuccessState
@@ -99,8 +105,7 @@ class ProfileSectionTwo extends StatelessWidget {
                                         fit: BoxFit.cover,
                                         placeholder: (context, url) {
                                           return Center(
-                                            child: imageLoadingShimmer()
-                                          );
+                                              child: imageLoadingShimmer());
                                         },
                                         errorWidget: (context, url, error) =>
                                             const Icon(Icons.error),
@@ -135,10 +140,10 @@ class ProfileSectionTwo extends StatelessWidget {
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        ],
+              )
+            ],
+          );
+        },
       ),
     );
   }

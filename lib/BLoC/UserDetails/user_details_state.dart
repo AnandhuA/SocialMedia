@@ -9,8 +9,12 @@ final class FeatchUserDetailsLoadingState extends UserDetailsState {}
 
 final class FeatchUserDetailsSuccessState extends UserDetailsState {
   final UserModel userDetails;
+  
 
-  FeatchUserDetailsSuccessState({required this.userDetails});
+  FeatchUserDetailsSuccessState({
+ 
+    required this.userDetails,
+  });
 }
 
 final class FeatchUserDetailsErrorState extends UserDetailsState {

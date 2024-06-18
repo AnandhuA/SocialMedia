@@ -20,11 +20,19 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
   ) async {
     emit(FeatchUserDetailsLoadingState());
     final response = await UserRepo.fetchLoggedInUserDetails();
-    if (response != null && response.statusCode == 200) {
-      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+    
 
+    if (response != null &&
+        response.statusCode == 200 ) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+    
       UserModel userDetails = UserModel.fromJson(responseBody);
-      emit(FeatchUserDetailsSuccessState(userDetails: userDetails));
+      emit(
+        FeatchUserDetailsSuccessState(
+          userDetails: userDetails,
+         
+        ),
+      );
     } else {
       return emit(FeatchUserDetailsErrorState(error: "error"));
     }

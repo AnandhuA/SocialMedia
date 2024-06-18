@@ -27,8 +27,13 @@ final class FeatchAllMyPostLoadingState extends UserPostState {}
 
 final class FeatchAllMyPostSuccessState extends UserPostState {
   final List<PostModel> postList;
+  final String followersCount;
+  final String followingCount;
 
-  FeatchAllMyPostSuccessState({required this.postList});
+  FeatchAllMyPostSuccessState({required this.postList,
+    required this.followersCount,
+    required this.followingCount,
+  });
 }
 
 final class FeatchAllMyPostErrorState extends UserPostState {

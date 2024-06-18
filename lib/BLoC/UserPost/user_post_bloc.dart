@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
+import 'package:social_media/repository/authentication/user_repo.dart';
 
 part 'user_post_event.dart';
 part 'user_post_state.dart';
@@ -54,7 +54,11 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     emit(FeatchAllMyPostLoadingState());
 
     final response = await PostRepo.fetchPosts();
-    if (response != null && response.statusCode == 200) {
+    final res = await UserRepo.fetchCount();
+    if (response != null &&
+        response.statusCode == 200 &&
+        res != null &&
+        res.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
 
       final List<PostModel> posts = await responseBody
@@ -63,10 +67,14 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           )
           .toList();
 
-      log(posts.toString());
+      final Map<String, dynamic> resBody = jsonDecode(res.body);
 
       return emit(
-        FeatchAllMyPostSuccessState(postList: posts),
+        FeatchAllMyPostSuccessState(
+          postList: posts,
+          followersCount: resBody["followersCount"].toString(),
+          followingCount: resBody["followingCount"].toString(),
+        ),
       );
     } else if (response != null) {
       final responseBody = jsonDecode(response.body);

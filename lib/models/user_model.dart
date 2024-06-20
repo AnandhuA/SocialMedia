@@ -1,10 +1,9 @@
 class UserModel {
-  final String id;
   final String userName;
+  final String id;
   final String email;
   final String password;
   final String profilePic;
-  final String phone;
   final bool online;
   final bool blocked;
   final bool verified;
@@ -15,6 +14,7 @@ class UserModel {
   final DateTime updatedAt;
   final String? name;
   final String? bio;
+  final String? phone;
 
   // class UserModel {
 //   final String id;
@@ -52,20 +52,20 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['_id'] as String,
-      userName: json['userName'] as String,
-      email: json['email'] as String,
-      password: json['password'] as String,
-      profilePic: json['profilePic'] as String,
-      phone: json['phone'] as String,
-      online: json['online'] as bool,
-      blocked: json['blocked'] as bool,
-      verified: json['verified'] as bool,
-      role: json['role'] as String,
-      isPrivate: json['isPrivate'] as bool,
-      backGroundImage: json['backGroundImage'] as String,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      id: json['_id'],
+      userName: json['userName'],
+      email: json['email'],
+      password: json['password'],
+      profilePic: json['profilePic'],
+      phone: json['phone'],
+      online: json['online'],
+      blocked: json['blocked'],
+      verified: json['verified'],
+      role: json['role'],
+      isPrivate: json['isPrivate'],
+      backGroundImage: json['backGroundImage'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
       bio: json["bio"],
       name: json["name"],
     );

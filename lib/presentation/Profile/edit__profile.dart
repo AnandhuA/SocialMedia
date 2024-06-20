@@ -25,7 +25,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     _nameController.text = widget.userDetails.name ?? "";
-    _phoneController.text = widget.userDetails.phone;
+    _phoneController.text = widget.userDetails.phone ?? "";
     _bioController.text = widget.userDetails.bio ?? "";
     super.initState();
   }

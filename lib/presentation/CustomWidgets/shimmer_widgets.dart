@@ -28,33 +28,42 @@ Widget postGridShimmerEffect({required int itemCount}) {
 
 Widget profileLoadingShimmer() {
   return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
+    baseColor: greyColor300,
+    highlightColor: greyColor100,
     child: Column(
       children: [
         Container(
-          height: 200,
-          color: Colors.white,
+          height: 150,
+          color: whiteColor,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         Container(
-          height: 20,
-          width: 150,
-          color: Colors.white,
+          height: 100,
+          width: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            color: whiteColor,
+          ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               height: 50,
               width: 150,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: whiteColor,
+              ),
             ),
             Container(
               height: 50,
               width: 150,
-              color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: whiteColor,
+              ),
             ),
           ],
         ),
@@ -65,10 +74,10 @@ Widget profileLoadingShimmer() {
 
 Widget imageLoadingShimmer() {
   return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
+    baseColor: greyColor300,
+    highlightColor: greyColor100,
     child: Container(
-      color: Colors.white,
+      color: whiteColor,
     ),
   );
 }

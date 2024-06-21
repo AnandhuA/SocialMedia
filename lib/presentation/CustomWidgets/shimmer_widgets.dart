@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:social_media/core/colors.dart';
+import 'package:social_media/core/size.dart';
 
 Widget postGridShimmerEffect({required int itemCount}) {
   return Center(
@@ -26,10 +27,51 @@ Widget postGridShimmerEffect({required int itemCount}) {
   );
 }
 
+Widget followingListLoading({required int iteamCount}) {
+  return Expanded(
+    child: ListView.separated(
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: greyColor,
+          highlightColor: greyColor200,
+          child: ListTile(
+            leading: const CircleAvatar(
+              radius: 30,
+              backgroundColor: whiteColor,
+            ),
+            title: Row(
+              children: [
+                Container(
+                  width: 80,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ],
+            ),
+            trailing: Container(
+              width: 80,
+              height: 35,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: whiteColor,
+              ),
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) => constHeight20,
+      itemCount: iteamCount,
+    ),
+  );
+}
+
 Widget profileLoadingShimmer() {
   return Shimmer.fromColors(
-    baseColor: greyColor300,
-    highlightColor: greyColor100,
+    baseColor: greyColor,
+    highlightColor: greyColor200,
     child: Column(
       children: [
         Container(
@@ -74,8 +116,8 @@ Widget profileLoadingShimmer() {
 
 Widget imageLoadingShimmer() {
   return Shimmer.fromColors(
-    baseColor: greyColor300,
-    highlightColor: greyColor100,
+    baseColor: greyColor,
+    highlightColor: greyColor200,
     child: Container(
       color: whiteColor,
     ),

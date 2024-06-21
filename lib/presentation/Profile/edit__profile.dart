@@ -51,11 +51,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 widget: widget,
                 coverPhotoAdd: () {
                   bottomSheet(context: context);
-                  print(imgFile);
+                
                 },
                 profilePhotoAdd: () {
                   bottomSheet(context: context);
-                  print(imgFile);
+                
                 },
               ),
               Padding(
@@ -129,7 +129,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onTap: () async {
                   imgFile =
                       await ImagePicker().pickImage(source: ImageSource.camera);
-                  print("ok");
+                  
                 },
               ),
               ListTile(
@@ -138,7 +138,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onTap: () async {
                   imgFile = await ImagePicker()
                       .pickImage(source: ImageSource.gallery);
-                  print("ok");
+        
                 },
               )
             ],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/PostView/post_view_screen.dart';
+import 'package:social_media/presentation/Profile/following_list_screen.dart';
 import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
@@ -33,18 +36,29 @@ class ProfileSectionTwo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProfileInfoButton(
+                    onTapFun: () {},
                     count: state is FeatchAllMyPostSuccessState
                         ? state.postList.length.toString()
                         : "...",
                     title: "Posts",
                   ),
                   ProfileInfoButton(
+                    onTapFun: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const FollowingListScreen(),
+                        ),
+                      );
+                    },
                     count: state is FeatchAllMyPostSuccessState
                         ? state.followersCount
                         : "...",
                     title: "Follower",
                   ),
                   ProfileInfoButton(
+                    onTapFun: () {
+                      log("Follwing");
+                    },
                     count: state is FeatchAllMyPostSuccessState
                         ? state.followingCount
                         : "...",

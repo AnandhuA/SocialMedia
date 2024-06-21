@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -55,19 +56,25 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
 
     final response = await PostRepo.fetchPosts();
     final res = await UserRepo.fetchCount();
+    Map<String, dynamic> resBody;
     if (response != null &&
         response.statusCode == 200 &&
         res != null &&
         res.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
+      log(responseBody.toString());
+      if (res.body.isNotEmpty) {
+        resBody = jsonDecode(res.body);
+      } else {
+        resBody = {"followersCount": 0, "followingCount": 0};
+      }
 
+      log(resBody.toString());
       final List<PostModel> posts = await responseBody
           .map<PostModel>(
             (json) => PostModel.fromJson(json),
           )
           .toList();
-
-      final Map<String, dynamic> resBody = jsonDecode(res.body);
 
       return emit(
         FeatchAllMyPostSuccessState(

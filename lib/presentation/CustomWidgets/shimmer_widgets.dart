@@ -75,7 +75,7 @@ Widget profileLoadingShimmer() {
     child: Column(
       children: [
         Container(
-          height: 150,
+          height: 200,
           color: whiteColor,
         ),
         const SizedBox(height: 10),

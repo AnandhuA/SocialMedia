@@ -13,6 +13,12 @@ final class FeatchFollowingSuccessState extends FeatchFollowingState {
   FeatchFollowingSuccessState({required this.follwingList});
 }
 
+final class FeatchFollowerSuccessState extends FeatchFollowingState {
+  final List<UserModel> followerList;
+
+  FeatchFollowerSuccessState({required this.followerList});
+}
+
 final class FeatchFollowingErrorState extends FeatchFollowingState {
   final String error;
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -14,19 +13,37 @@ class FeatchFollowingBloc
     extends Bloc<FeatchFollowingEvent, FeatchFollowingState> {
   FeatchFollowingBloc() : super(FeatchFollowingInitial()) {
     on<FeatchFollwingListEvent>((event, emit) async {
-      log("featching bloc started");
+      emit(FeatchFollowingLoadingState());
+
+      final http.Response? responce = await FolloweRepo.fetchFollowing();
+      if (responce != null && responce.statusCode == 200) {
+        final Map<String, dynamic> decodedResponce = jsonDecode(responce.body);
+        final List<dynamic> followersJson = decodedResponce['following'];
+        final List<UserModel> following =
+            followersJson.map((json) => UserModel.fromJson(json)).toList();
+        emit(
+          FeatchFollowingSuccessState(follwingList: following),
+        );
+      } else {
+        emit(
+          FeatchFollowingErrorState(error: "Somethig Wrong"),
+        );
+      }
+    });
+
+    on<FeatchFollowerListEvent>((event, emit) async {
+    
       emit(FeatchFollowingLoadingState());
 
       final http.Response? responce = await FolloweRepo.fetchFollowers();
 
       if (responce != null && responce.statusCode == 200) {
-        final decodedResponce = jsonDecode(responce.body);
+        final Map<String, dynamic> decodedResponce = jsonDecode(responce.body);
+
         final List<dynamic> followersJson = decodedResponce['followers'];
         final List<UserModel> followers =
             followersJson.map((json) => UserModel.fromJson(json)).toList();
-        emit(
-          FeatchFollowingSuccessState(follwingList: followers),
-        );
+        emit(FeatchFollowerSuccessState(followerList: followers));
       } else {
         emit(
           FeatchFollowingErrorState(error: "Somethig Wrong"),

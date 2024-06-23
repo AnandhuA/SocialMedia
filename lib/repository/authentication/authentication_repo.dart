@@ -131,7 +131,7 @@ class AuthenticationRepo {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      log(userCredential.toString());
+     
       return userCredential;
     } catch (e) {
       log(e.toString());

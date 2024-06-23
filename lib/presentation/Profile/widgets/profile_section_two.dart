@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/PostView/post_view_screen.dart';
-import 'package:social_media/presentation/Profile/following_list_screen.dart';
+import 'package:social_media/presentation/Profile/follow_screen.dart';
 import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
@@ -47,10 +46,12 @@ class ProfileSectionTwo extends StatelessWidget {
                     onTapFun: () {
                       context
                           .read<FeatchFollowingBloc>()
-                          .add(FeatchFollwingListEvent());
+                          .add(FeatchFollowerListEvent());
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const FollowingListScreen(),
+                          builder: (context) =>  FollowScreen(
+                            follwing: false,
+                          ),
                         ),
                       );
                     },
@@ -61,7 +62,16 @@ class ProfileSectionTwo extends StatelessWidget {
                   ),
                   ProfileInfoButton(
                     onTapFun: () {
-                      log("Follwing");
+                      context
+                          .read<FeatchFollowingBloc>()
+                          .add(FeatchFollwingListEvent());
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>  FollowScreen(
+                            follwing: true,
+                          ),
+                        ),
+                      );
                     },
                     count: state is FeatchAllMyPostSuccessState
                         ? state.followingCount

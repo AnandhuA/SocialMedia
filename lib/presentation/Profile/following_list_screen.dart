@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/FeatchFollowing/featch_following_bloc.dart';
@@ -23,9 +24,7 @@ class FollowingListScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: BlocConsumer<FeatchFollowingBloc, FeatchFollowingState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 return Column(
                   children: [
@@ -72,10 +71,29 @@ class FollowingListScreen extends StatelessWidget {
                             child: ListView.separated(
                               itemBuilder: (context, index) {
                                 return ListTile(
-                                  leading: const CircleAvatar(
+                                  leading: CircleAvatar(
                                     radius: 30,
+                                    backgroundColor: transparentColor,
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          state.follwingList[index].profilePic,
+                                      imageBuilder: (context, imageProvider) =>
+                                          CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: imageProvider,
+                                      ),
+                                      placeholder: (context, url) => ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: imageLoadingShimmer(),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(
+                                        Icons.error,
+                                      ),
+                                    ),
                                   ),
-                                  title: const Text("Name"),
+                                  title:
+                                      Text(state.follwingList[index].userName),
                                   trailing: CustomButton(
                                     title: "Remove",
                                     minWidth: 15,
@@ -90,7 +108,7 @@ class FollowingListScreen extends StatelessWidget {
                               },
                               separatorBuilder: (context, index) =>
                                   constHeight20,
-                              itemCount: 23,
+                              itemCount: state.follwingList.length,
                             ),
                           )
                         : followingListLoading(iteamCount: 10)

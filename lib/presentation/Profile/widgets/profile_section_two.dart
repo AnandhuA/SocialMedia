@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/BLoC/FeatchFollowing/featch_following_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
@@ -44,6 +45,9 @@ class ProfileSectionTwo extends StatelessWidget {
                   ),
                   ProfileInfoButton(
                     onTapFun: () {
+                      context
+                          .read<FeatchFollowingBloc>()
+                          .add(FeatchFollwingListEvent());
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const FollowingListScreen(),

@@ -49,48 +49,51 @@ class ForgotPasswordScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: SafeArea(
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    constHeight50,
-                    Center(
-                      child: Text(
-                        "Please enter your email adderss,\nYou will receive a 4 digit code to verify",
-                        style: theme.textTheme.labelLarge,
-                      ),
-                    ),
-                    constHeight50,
-                    Text(
-                      "Email",
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    constHeight10,
-                    Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        validator: Validation.validateEmail,
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: "Enter your email",
+                child: SingleChildScrollView(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      constHeight50,
+                      Center(
+                        child: Text(
+                          "Please enter your email adderss,\nYou will receive a 4 digit code to verify",
+                          style: theme.textTheme.labelLarge,
                         ),
+                      ),
+                      constHeight50,
+                      Text(
+                        "Email",
                         style: theme.textTheme.titleLarge,
                       ),
-                    ),
-                    constHeight50,
-                    state is ForgotPasswordLoadingState
-                        ? const LoadingButton()
-                        : ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.read<AuthenticationBloc>().add(
-                                    ForgotPasswordSendOtpButtonClickEvent(email: _emailController.text));
-                              }
-                            },
-                            child: const Text("Send OTP"),
-                          )
-                  ],
+                      constHeight10,
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          validator: Validation.validateEmail,
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            hintText: "Enter your email",
+                          ),
+                          style: theme.textTheme.titleLarge,
+                        ),
+                      ),
+                      constHeight50,
+                      state is ForgotPasswordLoadingState
+                          ? const LoadingButton()
+                          : ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthenticationBloc>().add(
+                                      ForgotPasswordSendOtpButtonClickEvent(
+                                          email: _emailController.text));
+                                }
+                              },
+                              child: const Text("Send OTP"),
+                            )
+                    ],
+                  ),
                 ),
               ),
             ),

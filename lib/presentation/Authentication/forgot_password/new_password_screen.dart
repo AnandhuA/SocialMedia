@@ -55,66 +55,68 @@ class NewPasswordScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    constHeight50,
-                    Text(
-                      "New password",
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    constHeight10,
-                    TextFormField(
-                      controller: _newPasswordController,
-                      validator: Validation.validatePassword,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        hintText: "New Password",
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      constHeight50,
+                      Text(
+                        "New password",
+                        style: theme.textTheme.titleLarge,
                       ),
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    constHeight40,
-                    Text(
-                      "Confirm password",
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    constHeight10,
-                    TextFormField(
-                      controller: _confirmPasswordController,
-                      validator: Validation.validatePassword,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        hintText: "Confirm password",
+                      constHeight10,
+                      TextFormField(
+                        controller: _newPasswordController,
+                        validator: Validation.validatePassword,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          hintText: "New Password",
+                        ),
+                        style: theme.textTheme.titleLarge,
                       ),
-                      style: theme.textTheme.titleLarge,
-                    ),
-                    const Spacer(),
-                    state is NewPasswordLoadingState
-                        ? const LoadingButton()
-                        : ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                if (_newPasswordController.text ==
-                                    _confirmPasswordController.text) {
-                                  context.read<AuthenticationBloc>().add(
-                                        NewPasswordSaveButtonClickEvent(
-                                          email: email,
-                                          password: _newPasswordController.text,
-                                        ),
-                                      );
-                                } else {
-                                  customSnackbar(
-                                    context: context,
-                                    message: "Password NotMatch",
-                                    color: errorColor,
-                                  );
+                      constHeight40,
+                      Text(
+                        "Confirm password",
+                        style: theme.textTheme.titleLarge,
+                      ),
+                      constHeight10,
+                      TextFormField(
+                        controller: _confirmPasswordController,
+                        validator: Validation.validatePassword,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          hintText: "Confirm password",
+                        ),
+                        style: theme.textTheme.titleLarge,
+                      ),
+                      const Spacer(),
+                      state is NewPasswordLoadingState
+                          ? const LoadingButton()
+                          : ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  if (_newPasswordController.text ==
+                                      _confirmPasswordController.text) {
+                                    context.read<AuthenticationBloc>().add(
+                                          NewPasswordSaveButtonClickEvent(
+                                            email: email,
+                                            password: _newPasswordController.text,
+                                          ),
+                                        );
+                                  } else {
+                                    customSnackbar(
+                                      context: context,
+                                      message: "Password NotMatch",
+                                      color: errorColor,
+                                    );
+                                  }
                                 }
-                              }
-                            },
-                            child: const Text("Save"),
-                          ),
-                    constHeight50
-                  ],
+                              },
+                              child: const Text("Save"),
+                            ),
+                      constHeight50
+                    ],
+                  ),
                 ),
               ),
             ),

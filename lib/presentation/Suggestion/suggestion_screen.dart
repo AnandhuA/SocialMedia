@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Suggestion/suggestion_bloc_bloc.dart';
 import 'package:social_media/core/bacground.dart';
@@ -22,7 +21,15 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const crossAxisCount = 2;
+    final childAspectRatio = screenWidth / (screenWidth / crossAxisCount * 2.3);
     final theme = Theme.of(context);
     return Scaffold(
       body: Background(
@@ -49,11 +56,11 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                         return GridView.builder(
                           itemCount: 41,
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 5,
-                            childAspectRatio: 0.7,
+                            childAspectRatio: childAspectRatio,
                           ),
                           itemBuilder: (context, index) {
                             return suggestionShimmer();
@@ -63,11 +70,11 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                         return GridView.builder(
                           itemCount: state.suggestionModelList.length,
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
                             mainAxisSpacing: 8,
                             crossAxisSpacing: 5,
-                            childAspectRatio: 0.75,
+                            childAspectRatio: childAspectRatio,
                           ),
                           itemBuilder: (context, index) {
                             return SuggestionTile(

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/colors.dart';
-import 'package:social_media/core/size.dart';
 import 'package:social_media/models/user_model.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 
@@ -12,6 +11,9 @@ class SuggestionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double avatarRadius = screenWidth * 0.1;
+    final double containerHeight = screenWidth * 0.35;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: greyColor),
@@ -26,10 +28,10 @@ class SuggestionTile extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  height: 100,
+                  height: containerHeight * 0.6,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
+                    borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(10),
                     ),
                     image: DecorationImage(
@@ -57,11 +59,11 @@ class SuggestionTile extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 30,
+                  top: containerHeight * 0.25,
                   right: 0,
                   left: 0,
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: avatarRadius,
                     child: CachedNetworkImage(
                       imageUrl: suggessionUser.profilePic,
                       imageBuilder: (context, imageProvider) => CircleAvatar(
@@ -79,11 +81,12 @@ class SuggestionTile extends StatelessWidget {
               ],
             ),
           ),
+           const Spacer(),
           Text(
             suggessionUser.userName,
             style: theme.textTheme.titleLarge,
           ),
-          constHeight10,
+          const Spacer(),
           SizedBox(
             height: 30,
             width: 150,
@@ -97,7 +100,7 @@ class SuggestionTile extends StatelessWidget {
               ),
             ),
           ),
-          constHeight10
+          const Spacer(),
         ],
       ),
     );

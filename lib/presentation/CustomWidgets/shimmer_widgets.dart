@@ -133,7 +133,7 @@ Widget suggestionShimmer() {
     child: Column(
       children: [
         SizedBox(
-          height: 135,
+          height: 120,
           child: Stack(
             children: [
               Container(
@@ -165,7 +165,7 @@ Widget suggestionShimmer() {
                 right: 0,
                 left: 0,
                 child: CircleAvatar(
-                  radius: 50,
+                  radius: 45,
                   backgroundColor: greyColor, // Placeholder color
                   child: Shimmer.fromColors(
                     baseColor: greyColor300,
@@ -180,6 +180,7 @@ Widget suggestionShimmer() {
             ],
           ),
         ),
+        const Spacer(),
         Shimmer.fromColors(
           baseColor: greyColor300,
           highlightColor: greyColor100,
@@ -193,7 +194,7 @@ Widget suggestionShimmer() {
             margin: const EdgeInsets.only(top: 10),
           ),
         ),
-        constHeight20,
+        const Spacer(),
         Shimmer.fromColors(
           baseColor: greyColor300,
           highlightColor: greyColor100,
@@ -207,7 +208,7 @@ Widget suggestionShimmer() {
             margin: const EdgeInsets.only(bottom: 10),
           ),
         ),
-        constHeight10,
+        const Spacer(),
       ],
     ),
   );

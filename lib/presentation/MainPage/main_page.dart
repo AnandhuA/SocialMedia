@@ -18,7 +18,7 @@ class MainPage extends StatelessWidget {
     const SuggestionScreen(),
     const MessageScreen(),
   ];
-  int currentIndex = 3;
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

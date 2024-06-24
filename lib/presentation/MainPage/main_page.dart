@@ -5,24 +5,24 @@ import 'package:social_media/presentation/AddAndEditPost/add_post_screen.dart';
 import 'package:social_media/BLoC/bottomNavigation/bottom_navigation_cubit.dart';
 import 'package:social_media/presentation/Home/home_screen.dart';
 import 'package:social_media/presentation/Message/message_screen.dart';
-import 'package:social_media/presentation/Nottification/notification_screen.dart';
+import 'package:social_media/presentation/Suggestion/suggestion_screen.dart';
 import 'package:social_media/presentation/Search/search_screen.dart';
 
 class MainPage extends StatelessWidget {
-   MainPage({super.key});
+  MainPage({super.key});
 
   static List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
-   const  AddPostScreen(),
-    const NotificationScreen(),
+    const AddPostScreen(),
+    const SuggestionScreen(),
     const MessageScreen(),
   ];
-    int currentIndex = 0;
+  int currentIndex = 3;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-  
+
     return BlocConsumer<BottomNavigationCubit, BottomNavigationState>(
       listener: (context, state) {
         if (state is BottomNavigationInitial) {
@@ -60,8 +60,8 @@ class MainPage extends StatelessWidget {
                 label: "Add",
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: "Notification",
+                icon: Icon(Icons.diversity_3_rounded),
+                label: "Suggestion",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.message),

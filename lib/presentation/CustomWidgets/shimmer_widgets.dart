@@ -123,3 +123,92 @@ Widget imageLoadingShimmer() {
     ),
   );
 }
+
+Widget suggestionShimmer() {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: greyColor),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Column(
+      children: [
+        SizedBox(
+          height: 135,
+          child: Stack(
+            children: [
+              Container(
+                height: 100,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(10),
+                  ),
+                  color: greyColor, // Placeholder color
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(10),
+                  ),
+                  child: Shimmer.fromColors(
+                    baseColor: greyColor300,
+                    highlightColor: greyColor100,
+                    child: Container(
+                      height: 100,
+                      width: double.infinity,
+                      color: whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 30,
+                right: 0,
+                left: 0,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: greyColor, // Placeholder color
+                  child: Shimmer.fromColors(
+                    baseColor: greyColor300,
+                    highlightColor: greyColor100,
+                    child: const CircleAvatar(
+                      radius: 50,
+                      backgroundColor: whiteColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Shimmer.fromColors(
+          baseColor: greyColor300,
+          highlightColor: greyColor100,
+          child: Container(
+            width: 100,
+            height: 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: whiteColor,
+            ),
+            margin: const EdgeInsets.only(top: 10),
+          ),
+        ),
+        constHeight20,
+        Shimmer.fromColors(
+          baseColor: greyColor300,
+          highlightColor: greyColor100,
+          child: Container(
+            height: 30,
+            width: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: whiteColor,
+            ),
+            margin: const EdgeInsets.only(bottom: 10),
+          ),
+        ),
+        constHeight10,
+      ],
+    ),
+  );
+}

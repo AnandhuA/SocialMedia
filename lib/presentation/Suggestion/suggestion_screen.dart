@@ -49,8 +49,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                 ),
                 constHeight20,
                 Expanded(
-                  child: BlocConsumer<SuggestionBloc, SuggestionBlocState>(
-                    listener: (context, state) {},
+                  child: BlocBuilder<SuggestionBloc, SuggestionBlocState>(
                     builder: (context, state) {
                       if (state is SuggestionLoadingState) {
                         return GridView.builder(

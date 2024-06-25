@@ -9,7 +9,8 @@ class FolloweRepo {
   static Future<http.Response?> fetchFollowers() async {
     try {
       final token = await getUsertoken();
-      var response = http.get(Uri.parse('$baseurl$fetchfollowersurl'),
+      http.Response response = await http.get(
+          Uri.parse('$baseurl$fetchfollowersurl'),
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {
@@ -22,7 +23,44 @@ class FolloweRepo {
   static Future<http.Response?> fetchFollowing() async {
     try {
       final token = await getUsertoken();
-      var response = http.get(Uri.parse('$baseurl$fetchfollowingurl'),
+      http.Response response = await http.get(
+          Uri.parse(
+            '$baseurl$fetchfollowingurl',
+          ),
+          headers: {'Authorization': 'Bearer $token'});
+      return response;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+//follow user
+  static Future<http.Response?> followUser(
+      {required String followId}) async {
+    try {
+      final token = await getUsertoken();
+      http.Response response = await http.post(
+          Uri.parse(
+            '$baseurl$followuserurl/$followId',
+          ),
+          headers: {'Authorization': 'Bearer $token'});
+      return response;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  //unfollow user
+  static Future<http.Response?> unfollowUser(
+      {required String followId}) async {
+    try {
+      final token = await getUsertoken();
+      http.Response response = await http.put(
+          Uri.parse(
+            '$baseurl$unfollowuserurl/$followId',
+          ),
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {

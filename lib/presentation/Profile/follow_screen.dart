@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media/BLoC/FeatchFollowing/featch_following_bloc.dart';
+import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';
@@ -24,7 +24,7 @@ class FollowScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: BlocConsumer<FeatchFollowingBloc, FeatchFollowingState>(
+            child: BlocConsumer<FollowBloc, FollowState>(
               listener: (context, state) {},
               builder: (context, state) {
                 return Column(
@@ -47,7 +47,7 @@ class FollowScreen extends StatelessWidget {
                           onTap: () {
                             follwing = !follwing;
                             context
-                                .read<FeatchFollowingBloc>()
+                                .read<FollowBloc>()
                                 .add(FeatchFollowerListEvent());
                           },
                         ),
@@ -62,7 +62,7 @@ class FollowScreen extends StatelessWidget {
                           onTap: () {
                             follwing = !follwing;
                             context
-                                .read<FeatchFollowingBloc>()
+                                .read<FollowBloc>()
                                 .add(FeatchFollwingListEvent());
 
                           },
@@ -80,7 +80,7 @@ class FollowScreen extends StatelessWidget {
                       ),
                     ),
                     constHeight10,
-                    BlocBuilder<FeatchFollowingBloc, FeatchFollowingState>(
+                    BlocBuilder<FollowBloc, FollowState>(
                       builder: (context, state) {
                         if (state is FeatchFollowerSuccessState) {
                           return FollowerList(state: state);

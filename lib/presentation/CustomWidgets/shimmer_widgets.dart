@@ -143,7 +143,7 @@ Widget suggestionShimmer() {
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(10),
                   ),
-                  color: greyColor, // Placeholder color
+                  color: greyColor, 
                 ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(
@@ -166,7 +166,7 @@ Widget suggestionShimmer() {
                 left: 0,
                 child: CircleAvatar(
                   radius: 45,
-                  backgroundColor: greyColor, // Placeholder color
+                  backgroundColor: greyColor, 
                   child: Shimmer.fromColors(
                     baseColor: greyColor300,
                     highlightColor: greyColor100,

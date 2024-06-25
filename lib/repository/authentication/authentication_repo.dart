@@ -47,6 +47,7 @@ class AuthenticationRepo {
       "userName": userModel.userName,
       "email": userModel.email,
       "password": userModel.password,
+      "phone": userModel.phone,
     };
     try {
       http.Response responcse = await http
@@ -131,7 +132,6 @@ class AuthenticationRepo {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-     
       return userCredential;
     } catch (e) {
       log(e.toString());
@@ -153,7 +153,6 @@ class AuthenticationRepo {
         await setUserLoggedin(
           token: responseBody['user']['token'],
           userid: responseBody['user']['_id'],
- 
         );
       }
       return response;

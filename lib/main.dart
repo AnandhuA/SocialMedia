@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:social_media/BLoC/FeatchFollowing/featch_following_bloc.dart';
+import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/BLoC/Suggestion/suggestion_bloc_bloc.dart';
 import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BottomNavigationCubit()),
         BlocProvider(create: (context) => UserPostBloc()),
         BlocProvider(create: (context) => UserDetailsBloc()),
-        BlocProvider(create: (context) => FeatchFollowingBloc()),
+        BlocProvider(create: (context) => FollowBloc()),
         BlocProvider(create: (context) => SuggestionBloc()),
       ],
       child: MaterialApp(

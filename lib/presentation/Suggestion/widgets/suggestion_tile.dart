@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/models/user_model.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
@@ -81,24 +85,61 @@ class SuggestionTile extends StatelessWidget {
               ],
             ),
           ),
-           const Spacer(),
+          const Spacer(),
           Text(
             suggessionUser.userName,
             style: theme.textTheme.titleLarge,
           ),
           const Spacer(),
-          SizedBox(
-            height: 30,
-            width: 150,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "Follow",
-                style: TextStyle(
-                  fontSize: 15,
+          BlocBuilder<FollowBloc, FollowState>(
+            builder: (context, state) {
+              if (state is FollowUserSuccessState) {
+                log("======================");
+
+                return SizedBox(
+                  height: 30,
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<FollowBloc>()
+                          .add(FollowButtonClickEvent(user: suggessionUser));
+                    },
+                    child: state.connectionUserId.contains(suggessionUser.id)
+                        ? const Text(
+                            "remove",
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          )
+                        : const Text(
+                            "Loading",
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                  ),
+                );
+              }
+
+              return SizedBox(
+                height: 30,
+                width: 150,
+                child: ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<FollowBloc>()
+                        .add(FollowButtonClickEvent(user: suggessionUser));
+                  },
+                  child: const Text(
+                    "Follow",
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           const Spacer(),
         ],

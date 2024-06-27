@@ -91,7 +91,7 @@ class FollowScreen extends StatelessWidget {
                         }
                         return Container(
                           color: errorColor,
-                          child: Center(
+                          child: const Center(
                             child: Text("error"),
                           ),
                         );

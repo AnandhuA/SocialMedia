@@ -7,15 +7,14 @@ final class FeatchFollwingListEvent extends FollowEvent {}
 
 final class FeatchFollowerListEvent extends FollowEvent {}
 
-final class FollowButtonClickEvent extends FeatchFollowerListEvent {
+final class FollowButtonClickEvent extends FollowEvent {
   final UserModel user;
 
   FollowButtonClickEvent({required this.user});
 }
 
-final class UnFollowButtonClickEvent extends FeatchFollowerListEvent {
+final class UnFollowButtonClickEvent extends FollowEvent {
   final UserModel user;
 
   UnFollowButtonClickEvent({required this.user});
-  
 }

@@ -1,17 +1,22 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/models/user_model.dart';
+import 'package:social_media/presentation/CustomWidgets/custom_button.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 
-class SuggestionTile extends StatelessWidget {
+class SuggestionTile extends StatefulWidget {
   final UserModel suggessionUser;
   const SuggestionTile({super.key, required this.suggessionUser});
 
+  @override
+  State<SuggestionTile> createState() => _SuggestionTileState();
+}
+
+class _SuggestionTileState extends State<SuggestionTile> {
+  bool isfollow = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -40,7 +45,7 @@ class SuggestionTile extends StatelessWidget {
                     ),
                     image: DecorationImage(
                       image: CachedNetworkImageProvider(
-                        suggessionUser.backGroundImage,
+                        widget.suggessionUser.backGroundImage,
                       ),
                       fit: BoxFit.fill,
                     ),
@@ -50,7 +55,7 @@ class SuggestionTile extends StatelessWidget {
                       top: Radius.circular(10),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl: suggessionUser.backGroundImage,
+                      imageUrl: widget.suggessionUser.backGroundImage,
                       fit: BoxFit.cover,
                       placeholder: (context, url) {
                         return Center(
@@ -69,7 +74,7 @@ class SuggestionTile extends StatelessWidget {
                   child: CircleAvatar(
                     radius: avatarRadius,
                     child: CachedNetworkImage(
-                      imageUrl: suggessionUser.profilePic,
+                      imageUrl: widget.suggessionUser.profilePic,
                       imageBuilder: (context, imageProvider) => CircleAvatar(
                         radius: 50,
                         backgroundImage: imageProvider,
@@ -87,39 +92,38 @@ class SuggestionTile extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            suggessionUser.userName,
+            widget.suggessionUser.userName,
             style: theme.textTheme.titleLarge,
           ),
           const Spacer(),
-          BlocBuilder<FollowBloc, FollowState>(
+          BlocConsumer<FollowBloc, FollowState>(
+            listener: (context, state) {
+              if (state is FollowUserErrorState) {
+                isfollow = false;
+              }
+            },
             builder: (context, state) {
-              if (state is FollowUserSuccessState) {
-                log("======================");
-
+              if (state is FollowUserSuccessState &&
+                      state.connectionUserId
+                          .contains(widget.suggessionUser.id) ||
+                  isfollow) {
                 return SizedBox(
-                  height: 30,
-                  width: 150,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<FollowBloc>()
-                          .add(FollowButtonClickEvent(user: suggessionUser));
-                    },
-                    child: state.connectionUserId.contains(suggessionUser.id)
-                        ? const Text(
-                            "remove",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          )
-                        : const Text(
-                            "Loading",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                  ),
-                );
+                    height: 30,
+                    width: 150,
+                    child: CustomButton(
+                      title: "Remove",
+                      minWidth: 5,
+                      color: theme.brightness == Brightness.dark
+                          ? darkModeCustomButtonBG
+                          : lightModeCustomButtonBG,
+                      onTap: () {
+                        context.read<FollowBloc>().add(UnFollowButtonClickEvent(
+                            user: widget.suggessionUser));
+                        setState(() {
+                          isfollow = false;
+                        });
+                      },
+                    ));
               }
 
               return SizedBox(
@@ -127,9 +131,11 @@ class SuggestionTile extends StatelessWidget {
                 width: 150,
                 child: ElevatedButton(
                   onPressed: () {
-                    context
-                        .read<FollowBloc>()
-                        .add(FollowButtonClickEvent(user: suggessionUser));
+                    context.read<FollowBloc>().add(
+                        FollowButtonClickEvent(user: widget.suggessionUser));
+                    setState(() {
+                      isfollow = true;
+                    });
                   },
                   child: const Text(
                     "Follow",

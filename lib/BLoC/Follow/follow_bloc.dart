@@ -68,14 +68,14 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     Emitter<FollowState> emit,
   ) async {
     emit(FollowUserLoadingState());
+    log("follw");
     final http.Response? responce =
         await FolloweRepo.followUser(followId: event.user.id);
     if (responce != null && responce.statusCode == 200) {
-      log(responce.body);
       Map<String, dynamic> responseBody = jsonDecode(responce.body);
 
       List connectionUserId = responseBody['userConnection']["following"];
-
+      log("follwset");
       emit(FollowUserSuccessState(connectionUserId: connectionUserId));
     } else {
       emit(FollowUserErrorState());
@@ -87,10 +87,11 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     Emitter<FollowState> emit,
   ) async {
     emit(UnFollowUserLoadingState());
+    log("unfollw");
     final http.Response? response =
         await FolloweRepo.unfollowUser(followId: event.user.id);
     if (response != null && response.statusCode == 200) {
-      log(response.body);
+      log("unfollwset");
     }
   }
 }

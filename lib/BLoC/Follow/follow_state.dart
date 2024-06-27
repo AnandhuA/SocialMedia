@@ -37,14 +37,18 @@ final class FollowUserSuccessState extends FollowState {
   FollowUserSuccessState({required this.connectionUserId});
 }
 
-final class FollowUserErrorState extends FollowState {}
+final class FollowUserErrorState extends FollowState {
+  final String error;
+
+  FollowUserErrorState({required this.error});
+}
 
 final class UnFollowUserLoadingState extends FollowState {}
 
-final class UnFollowUserSuccessState extends FollowState {
-  final List connectionUserId;
+final class UnFollowUserSuccessState extends FollowState {}
 
-  UnFollowUserSuccessState({required this.connectionUserId});
+final class UnFollowUserErrorState extends FollowState {
+  final String error;
+
+  UnFollowUserErrorState({required this.error});
 }
-
-final class UnFollowUserErrorState extends FollowState {}

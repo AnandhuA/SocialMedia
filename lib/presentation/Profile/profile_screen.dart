@@ -17,8 +17,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    context.read<UserPostBloc>().add(FeatchAllMyPostEvent());
     context.read<UserDetailsBloc>().add(FeatchUserDetailsEvent());
+    context.read<UserPostBloc>().add(FeatchAllMyPostEvent());
     super.initState();
   }
 
@@ -32,7 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverToBoxAdapter(
-                  child: ProfileSectionOne(size: size,),
+                  child: ProfileSectionOne(
+                    size: size,
+                  ),
                 ),
               ];
             },

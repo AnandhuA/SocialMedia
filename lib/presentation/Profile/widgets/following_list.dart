@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
+import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_button.dart';
@@ -16,45 +17,56 @@ class FollowingList extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Expanded(
-      child: ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundColor: transparentColor,
-              child: CachedNetworkImage(
-                imageUrl: state.follwingList[index].profilePic,
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: 30,
-                  backgroundImage: imageProvider,
-                ),
-                placeholder: (context, url) => ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: imageLoadingShimmer(),
-                ),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
-                ),
+      child: state.follwingList.isEmpty
+          ? Center(
+              child: Text(
+                "No Following",
+                style: theme.textTheme.titleLarge,
               ),
-            ),
-            title: Text(state.follwingList[index].userName),
-            trailing: CustomButton(
-              title: "Remove",
-              minWidth: 15,
-              color: theme.brightness == Brightness.dark
-                  ? darkModeCustomButtonBG
-                  : lightModeCustomButtonBG,
-              onTap: () {
-                context.read<FollowBloc>().add(
-                      UnFollowButtonClickEvent(user: state.follwingList[index]),
-                    );
+            )
+          : ListView.separated(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: transparentColor,
+                    child: CachedNetworkImage(
+                      imageUrl: state.follwingList[index].profilePic,
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        radius: 30,
+                        backgroundImage: imageProvider,
+                      ),
+                      placeholder: (context, url) => ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: imageLoadingShimmer(),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                      ),
+                    ),
+                  ),
+                  title: Text(state.follwingList[index].userName),
+                  trailing: CustomButton(
+                    title: "Remove",
+                    minWidth: 15,
+                    color: theme.brightness == Brightness.dark
+                        ? darkModeCustomButtonBG
+                        : lightModeCustomButtonBG,
+                    onTap: () {
+                      context.read<FollowBloc>().add(
+                            UnFollowButtonClickEvent(
+                              user: state.follwingList[index],
+                            ),
+                          );
+                      context.read<FollowBloc>().add(FeatchFollwingListEvent());
+                      context.read<UserPostBloc>().add(FeatchAllMyPostEvent());
+                    },
+                  ),
+                );
               },
+              separatorBuilder: (context, index) => constHeight20,
+              itemCount: state.follwingList.length,
             ),
-          );
-        },
-        separatorBuilder: (context, index) => constHeight20,
-        itemCount: state.follwingList.length,
-      ),
     );
   }
 }

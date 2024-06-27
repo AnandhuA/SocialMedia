@@ -26,18 +26,55 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     emit(FeatchFollowingLoadingState());
 
     final http.Response? responce = await FolloweRepo.fetchFollowing();
-    if (responce != null && responce.statusCode == 200) {
-      final Map<String, dynamic> decodedResponce = jsonDecode(responce.body);
-      final List<dynamic> followersJson = decodedResponce['following'];
-      final List<UserModel> following =
-          followersJson.map((json) => UserModel.fromJson(json)).toList();
-      emit(
-        FeatchFollowingSuccessState(follwingList: following),
-      );
+    // if (responce != null && responce.statusCode == 200) {
+
+    // } else {
+    //   emit(
+    //     FeatchFollowingErrorState(error: "Somethig Wrong"),
+    //   );
+    // }
+
+    if (responce != null) {
+      final responseBody = jsonDecode(responce.body);
+      switch (responce.statusCode) {
+        case 200:
+          final Map<String, dynamic> decodedResponce =
+              jsonDecode(responce.body);
+          final List<dynamic> followersJson = decodedResponce['following'];
+          final List<UserModel> following =
+              followersJson.map((json) => UserModel.fromJson(json)).toList();
+          emit(
+            FeatchFollowingSuccessState(follwingList: following),
+          );
+          break;
+        case 400:
+          emit(FeatchFollowingErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(FeatchFollowingErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(FeatchFollowingErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(FeatchFollowingErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(FeatchFollowingErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(FeatchFollowingErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
       emit(
-        FeatchFollowingErrorState(error: "Somethig Wrong"),
-      );
+          FeatchFollowingErrorState(error: "No response received from server"));
     }
   }
 
@@ -49,17 +86,54 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
 
     final http.Response? responce = await FolloweRepo.fetchFollowers();
 
-    if (responce != null && responce.statusCode == 200) {
-      final Map<String, dynamic> decodedResponce = jsonDecode(responce.body);
+    // if (responce != null && responce.statusCode == 200) {
 
-      final List<dynamic> followersJson = decodedResponce['followers'];
-      final List<UserModel> followers =
-          followersJson.map((json) => UserModel.fromJson(json)).toList();
-      emit(FeatchFollowerSuccessState(followerList: followers));
+    // } else {
+    //   emit(
+    //     FeatchFollowingErrorState(error: "Somethig Wrong"),
+    //   );
+    // }
+
+    if (responce != null) {
+      final responseBody = jsonDecode(responce.body);
+      switch (responce.statusCode) {
+        case 200:
+          final Map<String, dynamic> decodedResponce =
+              jsonDecode(responce.body);
+
+          final List<dynamic> followersJson = decodedResponce['followers'];
+          final List<UserModel> followers =
+              followersJson.map((json) => UserModel.fromJson(json)).toList();
+          emit(FeatchFollowerSuccessState(followerList: followers));
+          break;
+        case 400:
+          emit(FeatchFollowingErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(FeatchFollowingErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(FeatchFollowingErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(FeatchFollowingErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(FeatchFollowingErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(FeatchFollowingErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
       emit(
-        FeatchFollowingErrorState(error: "Somethig Wrong"),
-      );
+          FeatchFollowingErrorState(error: "No response received from server"));
     }
   }
 
@@ -71,14 +145,50 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     log("follw");
     final http.Response? responce =
         await FolloweRepo.followUser(followId: event.user.id);
-    if (responce != null && responce.statusCode == 200) {
-      Map<String, dynamic> responseBody = jsonDecode(responce.body);
+    // if (responce != null && responce.statusCode == 200) {
+      
+    // } else {
+    //   emit(FollowUserErrorState());
+    // }
 
-      List connectionUserId = responseBody['userConnection']["following"];
-      log("follwset");
-      emit(FollowUserSuccessState(connectionUserId: connectionUserId));
+     if (responce != null) {
+      final responseBody = jsonDecode(responce.body);
+      switch (responce.statusCode) {
+        case 200:
+       Map<String, dynamic> responseBody = jsonDecode(responce.body);
+
+          List connectionUserId = responseBody['userConnection']["following"];
+          log("follwset");
+          emit(FollowUserSuccessState(connectionUserId: connectionUserId));
+          break;
+        case 400:
+          emit(FollowUserErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(FollowUserErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(FollowUserErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(FollowUserErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(FollowUserErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(FollowUserErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
-      emit(FollowUserErrorState());
+      emit(
+          FeatchFollowingErrorState(error: "No response received from server"));
     }
   }
 
@@ -86,12 +196,48 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     UnFollowButtonClickEvent event,
     Emitter<FollowState> emit,
   ) async {
-    emit(UnFollowUserLoadingState());
     log("unfollw");
     final http.Response? response =
         await FolloweRepo.unfollowUser(followId: event.user.id);
-    if (response != null && response.statusCode == 200) {
-      log("unfollwset");
+    // if (response != null && response.statusCode == 200) {
+    //   log("unfollwset");
+    // } else {
+    //   emit(UnFollowUserErrorState());
+    // }
+     if (response != null) {
+      final responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+          log("unfollwset");
+          break;
+        case 400:
+          emit(UnFollowUserErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(UnFollowUserErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(UnFollowUserErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(UnFollowUserErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(UnFollowUserErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(UnFollowUserErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
+    } else {
+      emit(
+          UnFollowUserErrorState(error: "No response received from server"));
     }
   }
 }

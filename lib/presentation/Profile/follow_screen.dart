@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
@@ -64,7 +63,6 @@ class FollowScreen extends StatelessWidget {
                             context
                                 .read<FollowBloc>()
                                 .add(FeatchFollwingListEvent());
-
                           },
                         ),
                       ],
@@ -80,7 +78,8 @@ class FollowScreen extends StatelessWidget {
                       ),
                     ),
                     constHeight10,
-                    BlocBuilder<FollowBloc, FollowState>(
+                    BlocConsumer<FollowBloc, FollowState>(
+                      listener: (context, state) {},
                       builder: (context, state) {
                         if (state is FeatchFollowerSuccessState) {
                           return FollowerList(state: state);

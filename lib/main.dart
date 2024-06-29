@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
+import 'package:social_media/BLoC/ImageUpload/image_upload_bloc.dart';
 import 'package:social_media/BLoC/Suggestion/suggestion_bloc_bloc.dart';
 import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserDetailsBloc()),
         BlocProvider(create: (context) => FollowBloc()),
         BlocProvider(create: (context) => SuggestionBloc()),
+              BlocProvider(create: (context) => ImageUploadBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

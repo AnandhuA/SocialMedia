@@ -21,15 +21,53 @@ class SuggestionBloc extends Bloc<SuggestionBlocEvent, SuggestionBlocState> {
   ) async {
     emit(SuggestionLoadingState());
     final Response? response = await UserRepo.fetchSuggessionUser();
-    if (response != null && response.statusCode == 200) {
-      final Map<String, dynamic> decodedResponce = jsonDecode(response.body);
+    // if (response != null && response.statusCode == 200) {
+     
+    // } else {
+    //   return emit(SuggestionErrorState(error: "error"));
+    // }
 
-      final List<dynamic> suggestionModelJson = decodedResponce['data'];
-      final List<UserModel> suggestionModelList =
-          suggestionModelJson.map((json) => UserModel.fromJson(json)).toList();
-      emit(SuggestionSuccessState(suggestionModelList: suggestionModelList));
+
+      if (response != null) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+       
+
+          final List<dynamic> suggestionModelJson = responseBody['data'];
+          final List<UserModel> suggestionModelList = suggestionModelJson
+              .map((json) => UserModel.fromJson(json))
+              .toList();
+          emit(
+              SuggestionSuccessState(suggestionModelList: suggestionModelList));
+          break;
+        case 400:
+          emit(SuggestionErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(SuggestionErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(
+              SuggestionErrorState(error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(
+              SuggestionErrorState(error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(SuggestionErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(SuggestionErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
-      return emit(SuggestionErrorState(error: "error"));
+      emit(SuggestionErrorState(error: "No response received from server"));
     }
   }
 }

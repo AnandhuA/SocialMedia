@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
@@ -39,5 +41,33 @@ class UserRepo {
       return null;
     }
   }
-  
+
+//edit user profile
+  static Future<http.Response?> editProfile({
+    required String name,
+    required String bio,
+    required String coverPhoto,
+    required String profilePhoto,
+  }) async {
+    try {
+      final token = await getUsertoken();
+      final details = {
+        "name": name,
+        "bio": bio,
+        "image": profilePhoto,
+        "backGroundImage": coverPhoto,
+       
+      };
+      var response = await http.put(Uri.parse('$baseurl$editprofileurl'),
+          body: jsonEncode(details),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json'
+          });
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

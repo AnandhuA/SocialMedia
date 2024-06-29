@@ -6,14 +6,14 @@ import 'package:social_media/BLoC/bottomNavigation/bottom_navigation_cubit.dart'
 import 'package:social_media/presentation/Home/home_screen.dart';
 import 'package:social_media/presentation/Message/message_screen.dart';
 import 'package:social_media/presentation/Suggestion/suggestion_screen.dart';
-import 'package:social_media/presentation/Search/search_screen.dart';
+import 'package:social_media/presentation/Explore/explore_screen.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
 
   static List<Widget> screens = [
     const HomeScreen(),
-    const SearchScreen(),
+    const ExploreScreen(),
     const AddPostScreen(),
     const SuggestionScreen(),
     const MessageScreen(),

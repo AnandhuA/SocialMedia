@@ -53,3 +53,5 @@ final class DeletePostErrorState extends UserPostState {
 
   DeletePostErrorState({required this.error});
 }
+
+

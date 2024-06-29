@@ -37,14 +37,41 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
       event.description,
       event.imagePath,
     );
-    if (response != null && response.statusCode == 200) {
-      emit(AddPostSuccessState());
-    } else if (response != null) {
-      emit(
-        AddPostErrorState(error: 'something went wrong'),
-      );
+
+    if (response != null) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+          emit(AddPostSuccessState());
+
+          break;
+        case 400:
+          emit(AddPostErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(AddPostErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(AddPostErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(AddPostErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(AddPostErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(AddPostErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
-      emit(AddPostErrorState(error: 'Server error'));
+      emit(AddPostErrorState(error: "No response received from server"));
     }
   }
 
@@ -105,24 +132,43 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     emit(DeletePostLoadingState());
     final response = await PostRepo.deletePost(postId: event.postId);
 
-    if (response != null && response.statusCode == 200) {
-      add(FeatchAllMyPostEvent());
-      return emit(
-        DeletePostSuccessState(),
-      );
-    } else if (response != null) {
-      final responseBody = jsonDecode(response.body);
-      return emit(
-        DeletePostErrorState(
-          error: responseBody['message'],
-        ),
-      );
+    if (response != null) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+          add(FeatchAllMyPostEvent());
+          emit(
+            DeletePostSuccessState(),
+          );
+
+          break;
+        case 400:
+          emit(DeletePostErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(DeletePostErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(DeletePostErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(DeletePostErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(DeletePostErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(DeletePostErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
-      return emit(
-        DeletePostErrorState(
-          error: 'Something went wrong',
-        ),
-      );
+      emit(DeletePostErrorState(error: "No response received from server"));
     }
   }
 
@@ -137,24 +183,42 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
       postId: event.postId,
       imageUrl: event.imageLink,
     );
-    if (response != null && response.statusCode == 200) {
-      add(FeatchAllMyPostEvent());
-      return emit(EditPostSuccessState());
-    } else if (response != null && response.statusCode == 500) {
-      return emit(
-        AddPostErrorState(error: 'Server not responding'),
-      );
-    } else if (response != null) {
-      final responseBody = jsonDecode(response.body);
-      return emit(
-        AddPostErrorState(
-          error: responseBody['message'],
-        ),
-      );
+
+    if (response != null) {
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+          add(FeatchAllMyPostEvent());
+          emit(EditPostSuccessState());
+
+          break;
+        case 400:
+          emit(AddPostErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(AddPostErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(AddPostErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(AddPostErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(AddPostErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(AddPostErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
     } else {
-      return emit(
-        AddPostErrorState(error: 'Something went wrong'),
-      );
+      emit(AddPostErrorState(error: "No response received from server"));
     }
   }
 }

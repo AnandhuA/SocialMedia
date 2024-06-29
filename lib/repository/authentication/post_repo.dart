@@ -8,7 +8,7 @@ import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class PostRepo {
-  static Future _uploadImage(imagePath) async {
+  static Future uploadImage(imagePath) async {
     String filePath = imagePath;
     File file = File(filePath);
     try {
@@ -35,7 +35,7 @@ class PostRepo {
   static Future<http.Response?> addPost(
       String description, String image) async {
     try {
-      final imageUrl = await PostRepo._uploadImage(image);
+      final imageUrl = await PostRepo.uploadImage(image);
       final userid = await getUserId();
       final token = await getUsertoken();
       final post = {
@@ -93,7 +93,7 @@ class PostRepo {
     String image ="";
     try {
       if (imgFile != null) {
-         image = await PostRepo._uploadImage(imgFile.path);
+         image = await PostRepo.uploadImage(imgFile.path);
       }
       final token = await getUsertoken();
       final post = {

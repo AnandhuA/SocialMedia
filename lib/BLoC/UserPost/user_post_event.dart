@@ -40,3 +40,5 @@ final class DeletePostEvent extends UserPostEvent {
 
   DeletePostEvent({required this.postId});
 }
+
+

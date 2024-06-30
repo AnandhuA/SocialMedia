@@ -121,17 +121,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         style: theme.textTheme.titleLarge,
                       ),
                       constHeight10,
-                      Text(
-                        "  Phone",
-                        style: theme.textTheme.titleLarge,
-                      ),
-                      constHeight10,
-                      TextField(
-                        controller: _phoneController,
-                        decoration: const InputDecoration(hintText: "Phone"),
-                        style: theme.textTheme.titleLarge,
-                      ),
-                      constHeight10,
+                      // Text(
+                      //   "  Phone",
+                      //   style: theme.textTheme.titleLarge,
+                      // ),
+                      // constHeight10,
+                      // TextField(
+                      //   controller: _phoneController,
+                      //   decoration: const InputDecoration(hintText: "Phone"),
+                      //   style: theme.textTheme.titleLarge,
+                      // ),
+                      // constHeight10,
                       Text(
                         "  Bio",
                         style: theme.textTheme.titleLarge,

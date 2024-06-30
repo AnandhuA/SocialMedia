@@ -90,10 +90,10 @@ class PostRepo {
     required String postId,
     required String? imageUrl,
   }) async {
-    String image ="";
+    String image = "";
     try {
       if (imgFile != null) {
-         image = await PostRepo.uploadImage(imgFile.path);
+        image = await PostRepo.uploadImage(imgFile.path);
       }
       final token = await getUsertoken();
       final post = {
@@ -110,6 +110,19 @@ class PostRepo {
       return response;
     } catch (e) {
       log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<http.Response?> getFollowersPost({required int page}) async {
+    try {
+      final token = await getUsertoken();
+      var response = await http.get(
+          Uri.parse('$baseurl$followersposturl?page=$page&pageSize=5'),
+          headers: {'Authorization': 'Bearer $token'});
+
+      return response;
+    } catch (e) {
       return null;
     }
   }

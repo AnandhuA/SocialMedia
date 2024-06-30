@@ -96,7 +96,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         resBody = {"followersCount": 0, "followingCount": 0};
       }
 
-      log(resBody.toString());
+      // log(resBody.toString());
       final List<PostModel> posts = await responseBody
           .map<PostModel>(
             (json) => PostModel.fromJson(json),

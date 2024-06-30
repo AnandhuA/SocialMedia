@@ -66,7 +66,6 @@ class _UserModel {
   }
 }
 
-
 class PostModel {
   final String id;
   final _UserModel userId;
@@ -102,11 +101,18 @@ class PostModel {
       userId: _UserModel.fromJson(json['userId'] as Map<String, dynamic>),
       image: json['image'] as String,
       description: json['description'] as String,
-      likes: List<String>.from(json['likes'] as List),
+      likes: (json['likes'] as List<dynamic>).map((e) => e.toString()).toList(),
+      // likes: List<String>.from(json['likes'] as List),
       hidden: json['hidden'] as bool,
       blocked: json['blocked'] as bool,
-      tags: List<String>.from(json['tags'] as List),
-      taggedUsers: List<String>.from(json['taggedUsers'] as List),
+      tags: (json['tags'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(), // Ensure tags are converted to String
+      taggedUsers: (json['taggedUsers'] as List<dynamic>)
+          .map((e) => e.toString())
+          .toList(),
+      // tags: List<String>.from(json['tags'] as List),
+      // taggedUsers: List<String>.from(json['taggedUsers'] as List),
       date: DateTime.parse(json['date'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),

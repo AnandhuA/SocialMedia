@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
@@ -143,7 +144,7 @@ Widget suggestionShimmer() {
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(10),
                   ),
-                  color: greyColor, 
+                  color: greyColor,
                 ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(
@@ -166,7 +167,7 @@ Widget suggestionShimmer() {
                 left: 0,
                 child: CircleAvatar(
                   radius: 45,
-                  backgroundColor: greyColor, 
+                  backgroundColor: greyColor,
                   child: Shimmer.fromColors(
                     baseColor: greyColor300,
                     highlightColor: greyColor100,
@@ -212,4 +213,95 @@ Widget suggestionShimmer() {
       ],
     ),
   );
+}
+
+class ShimmerPostList extends StatelessWidget {
+  const ShimmerPostList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return Container(
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  shimmerCircle(50),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      shimmerRectangle(width: 100, height: 20),
+                      const SizedBox(height: 5),
+                      shimmerRectangle(width: 60, height: 15),
+                    ],
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 10),
+              shimmerRectangle(width: double.infinity, height: 20),
+              const SizedBox(height: 10),
+              shimmerRectangle(width: double.infinity, height: 200),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    shimmerIconButton(icon: Icons.favorite),
+                    shimmerIconButton(icon: Icons.message),
+                    shimmerIconButton(icon: Icons.save),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget shimmerCircle(double size) {
+    return Shimmer.fromColors(
+      baseColor: greyColor300,
+      highlightColor: greyColor100,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: const BoxDecoration(
+          color: whiteColor,
+          shape: BoxShape.circle,
+        ),
+      ),
+    );
+  }
+
+  Widget shimmerRectangle({required double width, required double height}) {
+    return Shimmer.fromColors(
+      baseColor: greyColor300,
+      highlightColor: greyColor100,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: whiteColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  Widget shimmerIconButton({required IconData icon}) {
+    return Shimmer.fromColors(
+      baseColor: greyColor300,
+      highlightColor: greyColor100,
+      child: Icon(icon, color: greyColor),
+    );
+  }
 }

@@ -1,29 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:social_media/core/size.dart';
+import 'package:social_media/models/post_model.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
-  final String postUrl;
-  final String description;
-  final String userName;
-  final String likeCount;
-  final String commentCount;
-  final String time;
+  final PostModel postModel;
+
   final Widget? moreIcon;
-  final String profilePic;
   const PostWidget({
     super.key,
-    required this.postUrl,
-    required this.description,
-    required this.userName,
-    required this.likeCount,
-    required this.commentCount,
-    required this.time,
-    required this.profilePic,
     this.moreIcon,
+    required this.postModel,
   });
 
   @override
@@ -38,7 +28,7 @@ class PostWidget extends StatelessWidget {
             CircleAvatar(
               radius: 25,
               child: CachedNetworkImage(
-                imageUrl: profilePic,
+                imageUrl: postModel.userId.profilePic,
                 imageBuilder: (context, imageProvider) => CircleAvatar(
                   radius: 60,
                   backgroundImage: imageProvider,
@@ -57,11 +47,15 @@ class PostWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  userName,
+                  postModel.userId.userName,
                   style: theme.textTheme.titleLarge,
                 ),
                 Text(
-                  time,
+                  isEdited(
+                          dateTime1: postModel.createdAt,
+                          dateTime2: postModel.updatedAt)
+                      ? timeago.format(postModel.createdAt)
+                      : "${timeago.format(postModel.createdAt)}(Edited)",
                   style: theme.textTheme.labelLarge,
                 )
               ],
@@ -71,12 +65,12 @@ class PostWidget extends StatelessWidget {
           ]),
           constHeight10,
           Text(
-            description,
+            postModel.description,
             style: theme.textTheme.titleMedium,
           ),
           constHeight10,
           CachedNetworkImage(
-            imageUrl: postUrl,
+            imageUrl: postModel.image,
             fit: BoxFit.cover,
             placeholder: (context, url) {
               return SizedBox(height: 300, child: imageLoadingShimmer());
@@ -88,8 +82,11 @@ class PostWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                PostReactionButton(icon: Icons.favorite, count: likeCount),
-                PostReactionButton(icon: Icons.comment, count: commentCount),
+                PostReactionButton(
+                  icon: Icons.favorite,
+                  count: postModel.likes.length.toString(),
+                ),
+                const PostReactionButton(icon: Icons.comment, count: ""),
                 const PostReactionButton(icon: Icons.save, count: "12"),
               ],
             ),
@@ -97,5 +94,17 @@ class PostWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  bool isEdited({
+    required DateTime dateTime1,
+    required DateTime dateTime2,
+  }) {
+    return dateTime1.year == dateTime2.year &&
+        dateTime1.month == dateTime2.month &&
+        dateTime1.day == dateTime2.day &&
+        dateTime1.hour == dateTime2.hour &&
+        dateTime1.minute == dateTime2.minute &&
+        dateTime1.second == dateTime2.second;
   }
 }

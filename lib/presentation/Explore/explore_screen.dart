@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Explore/explore_bloc.dart';
 import 'package:social_media/core/bacground.dart';
+import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Explore/widgets/explore_post_widget.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -27,9 +28,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       body: Background(
         child: SafeArea(
           child: BlocConsumer<ExploreBloc, ExploreState>(
-            listener: (context, state) {
-             
-            },
+            listener: (context, state) {},
             builder: (context, state) {
               return Column(
                 children: [
@@ -37,11 +36,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: BlocBuilder<ExploreBloc, ExploreState>(
                       builder: (context, state) {
                         if (state is FeatchExplorePostLoadingState) {
-                          return const Center(
-                            child:  CircularProgressIndicator(),
-                          );
+                          return const Center(child: ShimmerExploreView());
                         } else if (state is FeatchExplorePostSuccessState) {
-                          return ExplorePostWidget(postList: state.posts,);
+                          return ExplorePostWidget(
+                            postList: state.posts,
+                          );
                         }
                         return const Center(
                           child: Text("Error"),

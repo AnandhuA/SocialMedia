@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,10 +21,8 @@ class AuthenticationRepo {
       http.Response response = await http.post(Uri.parse(baseurl + loginurl),
           body: jsonEncode(user),
           headers: {"Content-Type": 'application/json'});
-      log(response.body);
 
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
-      log(responseBody.toString());
       if (response.statusCode == 200) {
         await setUserLoggedin(
           token: responseBody["user"]["token"],
@@ -36,7 +33,6 @@ class AuthenticationRepo {
         return response;
       }
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -56,7 +52,6 @@ class AuthenticationRepo {
       });
       return responcse;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -76,7 +71,6 @@ class AuthenticationRepo {
       });
       return response;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -87,7 +81,6 @@ class AuthenticationRepo {
           await http.get(Uri.parse("${baseurl + forgotPasswordurl}$email"));
       return response;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -134,7 +127,6 @@ class AuthenticationRepo {
 
       return userCredential;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }

@@ -14,8 +14,9 @@ class ExplorePostWidget extends StatelessWidget {
       itemCount: postList.length,
       crossAxisSpacing: 5,
       mainAxisSpacing: 5,
+      cacheExtent: 10000,
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
+        crossAxisCount: 2,
       ),
       itemBuilder: (context, index) {
         return ClipRRect(

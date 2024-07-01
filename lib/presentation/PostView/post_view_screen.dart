@@ -9,7 +9,6 @@ import 'package:social_media/presentation/CustomWidgets/confirmation_diloge.dart
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/post_widget.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class PostViewScreen extends StatelessWidget {
   final PostModel post;
@@ -17,7 +16,6 @@ class PostViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeAgo = timeago.format(post.date);
     return Scaffold(
       body: Background(
         child: SafeArea(
@@ -41,13 +39,7 @@ class PostViewScreen extends StatelessWidget {
                       backButton: true,
                     ),
                     PostWidget(
-                      postUrl: post.image,
-                      description: post.description,
-                      userName: post.userId.userName,
-                      likeCount: post.likes.length.toString(),
-                      commentCount: "2",
-                      time: timeAgo,
-                      profilePic: post.userId.profilePic,
+                      postModel: post,
                       moreIcon: PopupMenuButton<String>(
                         onSelected: (value) {
                           if (value == 'edit') {

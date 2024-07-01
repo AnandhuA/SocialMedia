@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -78,11 +77,9 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       profilePhoto: event.profilePhoto,
     );
     if (response != null) {
-      log(response.body);
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       switch (response.statusCode) {
         case 200:
-          log(response.body);
           emit(EditUserDetailsSuccessState());
           add(FeatchUserDetailsEvent());
           break;

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,21 +38,12 @@ class AuthenticationBloc
     LoginButtonClickEvent event,
     Emitter<AuthenticationState> emit,
   ) async {
-    log("bloc start");
     emit(LoginLoadingState());
     Response? res = await AuthenticationRepo.userLogin(
       email: event.email,
       password: event.password,
     );
 
-    // if (res != null && res.statusCode == 200) {
-    //   emit(LoginSuccessState());
-    // } else if (res != null) {
-    //   final responseBody = jsonDecode(res.body);
-    //   emit(LoginErrorState(error: responseBody["message"]));
-    // } else {
-    //   emit(LoginErrorState(error: "Server Error"));
-    // }
 
     if (res != null) {
       final responseBody = jsonDecode(res.body);
@@ -100,14 +90,7 @@ FutureOr<void> _signupButtonClickEvent(
   Response? res =
       await AuthenticationRepo.userSignUp(userModel: event.userModel);
 
-  // if (res != null && res.statusCode == 200) {
-  //   emit(SignupSuccessState(model: event.userModel));
-  // } else if (res != null) {
-  //   final responseBody = jsonDecode(res.body);
-  //   emit(SignupErrorState(error: responseBody["message"]));
-  // } else {
-  //   emit(SignupErrorState(error: "Server Error"));
-  // }
+
   if (res != null) {
     final responseBody = jsonDecode(res.body);
     switch (res.statusCode) {
@@ -151,14 +134,7 @@ FutureOr<void> _verificationButtonClickEvent(
     email: event.email,
     otp: event.otp,
   );
-  // if (res != null && res.statusCode == 200) {
-  //   emit(VerificationSuccessState());
-  // } else if (res != null) {
-  //   final responseBody = jsonDecode(res.body);
-  //   emit(VerificationErrorState(error: responseBody["message"]));
-  // } else {
-  //   emit(VerificationErrorState(error: "Server Error"));
-  // }
+
 
   if (res != null) {
     final responseBody = jsonDecode(res.body);
@@ -217,16 +193,6 @@ FutureOr<void> _forgotPasswordSendOtpButtonClick(
   emit(ForgotPasswordLoadingState());
   Response? res = await AuthenticationRepo.forgotPassword(email: event.email);
 
-  // if (res != null && res.statusCode == 200) {
-  //   final responseBody = jsonDecode(res.body);
-  //   if (responseBody["status"] == 200) {
-  //     emit(ForgotPasswordSuccessState());
-  //   } else {
-  //     emit(ForgotPasswordErrorState(error: responseBody["message"]));
-  //   }
-  // } else {
-  //   emit(ForgotPasswordErrorState(error: "Server Error"));
-  // }
   if (res != null) {
     final responseBody = jsonDecode(res.body);
     switch (res.statusCode) {
@@ -272,16 +238,6 @@ FutureOr<void> _forgotPasswordVerificationOtpButtonClick(
     email: event.email,
     otp: event.otp,
   );
-  // if (res != null && res.statusCode == 200) {
-  //   final responseBody = jsonDecode(res.body);
-  //   if (responseBody["status"]) {
-  //     return emit(VerificationSuccessState());
-  //   } else {
-  //     return emit(VerificationErrorState(error: 'invalid OTP'));
-  //   }
-  // } else {
-  //   return emit(VerificationErrorState(error: 'Server error'));
-  // }
 
   if (res != null) {
     final responseBody = jsonDecode(res.body);
@@ -329,14 +285,6 @@ FutureOr<void> _newPasswordSaveButtonClick(
     password: event.password,
   );
 
-  // if (res != null && res.statusCode == 200) {
-  //   return emit(NewPasswordSuccessState());
-  // } else if (res != null) {
-  //   final responseBody = jsonDecode(res.body);
-  //   return emit(NewPasswordErrorState(error: responseBody["message"]));
-  // } else {
-  //   return emit(NewPasswordErrorState(error: 'Server error'));
-  // }
 
   if (res != null) {
     final responseBody = jsonDecode(res.body);
@@ -387,18 +335,7 @@ FutureOr<void> _loginWithGoogle(
     String? email = response.user!.email;
 
     Response? finalResponse = await AuthenticationRepo.googleLogin(email!);
-    //   if (finalResponse != null && finalResponse.statusCode == 200) {
-    //     return emit(LoginSuccessState());
-    //   } else if (finalResponse != null) {
-    //     final errorMessage = jsonDecode(finalResponse.body);
 
-    //     emit(LoginErrorState(error: errorMessage["message"]));
-    //   } else {
-    //     return emit(LoginErrorState(error: 'Server Error'));
-    //   }
-    // } else {
-    //   emit(LoginErrorState(error: 'account not found'));
-    // }
     if (finalResponse != null) {
       final responseBody = jsonDecode(finalResponse.body);
       switch (finalResponse.statusCode) {

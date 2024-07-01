@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +88,6 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         res != null &&
         res.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
-      log(responseBody.toString());
       if (res.body.isNotEmpty) {
         resBody = jsonDecode(res.body);
       } else {

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +25,6 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     emit(FeatchFollowingLoadingState());
 
     final http.Response? responce = await FolloweRepo.fetchFollowing();
-    // if (responce != null && responce.statusCode == 200) {
-
-    // } else {
-    //   emit(
-    //     FeatchFollowingErrorState(error: "Somethig Wrong"),
-    //   );
-    // }
 
     if (responce != null) {
       final responseBody = jsonDecode(responce.body);
@@ -86,13 +78,6 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
 
     final http.Response? responce = await FolloweRepo.fetchFollowers();
 
-    // if (responce != null && responce.statusCode == 200) {
-
-    // } else {
-    //   emit(
-    //     FeatchFollowingErrorState(error: "Somethig Wrong"),
-    //   );
-    // }
 
     if (responce != null) {
       final responseBody = jsonDecode(responce.body);
@@ -142,14 +127,9 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     Emitter<FollowState> emit,
   ) async {
     emit(FollowUserLoadingState());
-    log("follw");
     final http.Response? responce =
         await FolloweRepo.followUser(followId: event.user.id);
-    // if (responce != null && responce.statusCode == 200) {
-      
-    // } else {
-    //   emit(FollowUserErrorState());
-    // }
+  
 
      if (responce != null) {
       final responseBody = jsonDecode(responce.body);
@@ -158,7 +138,6 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
        Map<String, dynamic> responseBody = jsonDecode(responce.body);
 
           List connectionUserId = responseBody['userConnection']["following"];
-          log("follwset");
           emit(FollowUserSuccessState(connectionUserId: connectionUserId));
           break;
         case 400:
@@ -196,19 +175,13 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     UnFollowButtonClickEvent event,
     Emitter<FollowState> emit,
   ) async {
-    log("unfollw");
     final http.Response? response =
         await FolloweRepo.unfollowUser(followId: event.user.id);
-    // if (response != null && response.statusCode == 200) {
-    //   log("unfollwset");
-    // } else {
-    //   emit(UnFollowUserErrorState());
-    // }
+  
      if (response != null) {
       final responseBody = jsonDecode(response.body);
       switch (response.statusCode) {
         case 200:
-          log("unfollwset");
           break;
         case 400:
           emit(UnFollowUserErrorState(

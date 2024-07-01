@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
@@ -304,4 +305,46 @@ class ShimmerPostList extends StatelessWidget {
       child: Icon(icon, color: greyColor),
     );
   }
+}
+
+class ShimmerExploreView extends StatelessWidget {
+  const ShimmerExploreView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.custom(
+      gridDelegate: SliverQuiltedGridDelegate(
+        crossAxisCount: 3,
+        mainAxisSpacing: 1,
+        pattern: [
+          const QuiltedGridTile(2, 2),
+          const QuiltedGridTile(2, 1),
+          const QuiltedGridTile(1, 1),
+          const QuiltedGridTile(1, 1),
+          const QuiltedGridTile(1, 1)
+        ],
+      ),
+      childrenDelegate: SliverChildBuilderDelegate(
+        childCount: 20,
+        (context, index) {
+          return gridItemShimmer();
+        },
+      ),
+    );
+  }
+}
+
+Widget gridItemShimmer() {
+  return Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Container(
+      margin: const EdgeInsets.all(2),
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+      ),
+    ),
+  );
 }

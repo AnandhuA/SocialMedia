@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -24,11 +23,11 @@ class PostRepo {
         final responseData = await response.stream.toBytes();
         final responseString = String.fromCharCodes(responseData);
         final jsonMap = jsonDecode(responseString);
-        log(jsonMap['url']);
+
         return jsonMap['url'];
       }
     } catch (e) {
-      log(e.toString());
+      return e.toString();
     }
   }
 
@@ -66,7 +65,7 @@ class PostRepo {
 
       return response;
     } catch (e) {
-      log(e.toString());
+     
       return null;
     }
   }
@@ -109,7 +108,7 @@ class PostRepo {
 
       return response;
     } catch (e) {
-      log(e.toString());
+
       return null;
     }
   }

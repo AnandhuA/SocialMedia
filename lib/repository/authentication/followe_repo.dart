@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:social_media/core/urls.dart';
@@ -14,7 +13,6 @@ class FolloweRepo {
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -30,7 +28,7 @@ class FolloweRepo {
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {
-      log(e.toString());
+      
       return null;
     }
   }
@@ -47,7 +45,6 @@ class FolloweRepo {
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }
@@ -64,7 +61,6 @@ class FolloweRepo {
           headers: {'Authorization': 'Bearer $token'});
       return response;
     } catch (e) {
-      log(e.toString());
       return null;
     }
   }

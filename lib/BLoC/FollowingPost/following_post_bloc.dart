@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     emit(FeatchFollowingPostLoadingState());
     final responce = await PostRepo.getFollowersPost(page: 1);
     if (responce != null) {
-      log(responce.body);
       final responseBody = jsonDecode(responce.body);
       final List<PostModel> posts = await responseBody
           .map<PostModel>(

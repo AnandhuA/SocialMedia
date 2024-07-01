@@ -126,4 +126,16 @@ class PostRepo {
       return null;
     }
   }
+
+  //fetch explore post
+  static Future<http.Response?> fetchExplorePosts() async {
+    try {
+      final token = await getUsertoken();
+      var response = await http.get(Uri.parse('$baseurl$exploreposturl'),
+          headers: {'Authorization': 'Bearer $token'});
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

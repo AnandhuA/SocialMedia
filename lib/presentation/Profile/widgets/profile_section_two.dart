@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +9,7 @@ import 'package:social_media/presentation/CustomWidgets/custom_snackbar.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/PostView/post_view_screen.dart';
 import 'package:social_media/presentation/Profile/follow_screen.dart';
+import 'package:social_media/presentation/Profile/post_list_screen.dart';
 import 'package:social_media/presentation/Profile/widgets/profile_info_button.dart';
 
 class ProfileSectionTwo extends StatelessWidget {
@@ -36,7 +36,16 @@ class ProfileSectionTwo extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProfileInfoButton(
-                    onTapFun: () {},
+                    onTapFun: () {
+                      state is FeatchAllMyPostSuccessState
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PostListScreen(postList: state.postList),
+                              ))
+                          : null;
+                    },
                     count: state is FeatchAllMyPostSuccessState
                         ? state.postList.length.toString()
                         : "...",
@@ -44,12 +53,10 @@ class ProfileSectionTwo extends StatelessWidget {
                   ),
                   ProfileInfoButton(
                     onTapFun: () {
-                      context
-                          .read<FollowBloc>()
-                          .add(FeatchFollowerListEvent());
+                      context.read<FollowBloc>().add(FeatchFollowerListEvent());
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>  FollowScreen(
+                          builder: (context) => FollowScreen(
                             follwing: false,
                           ),
                         ),
@@ -62,12 +69,10 @@ class ProfileSectionTwo extends StatelessWidget {
                   ),
                   ProfileInfoButton(
                     onTapFun: () {
-                      context
-                          .read<FollowBloc>()
-                          .add(FeatchFollwingListEvent());
+                      context.read<FollowBloc>().add(FeatchFollwingListEvent());
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) =>  FollowScreen(
+                          builder: (context) => FollowScreen(
                             follwing: true,
                           ),
                         ),
@@ -115,6 +120,7 @@ class ProfileSectionTwo extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) => PostViewScreen(
                                             post: state.postList[index],
+                                            
                                           ),
                                         )),
                                     child: Container(

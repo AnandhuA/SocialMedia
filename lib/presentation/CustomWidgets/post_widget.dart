@@ -2,19 +2,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/models/post_model.dart';
+import 'package:social_media/presentation/CustomWidgets/comment_bottomsheet.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
+import 'package:social_media/presentation/Profile/other_user_profile_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
   final PostModel postModel;
+  final Function likeOnTap;
 
   final Widget? moreIcon;
-  const PostWidget({
-    super.key,
-    this.moreIcon,
-    required this.postModel,
-  });
+  const PostWidget(
+      {super.key,
+      this.moreIcon,
+      required this.postModel,
+      required this.likeOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +28,28 @@ class PostWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            CircleAvatar(
-              radius: 25,
-              child: CachedNetworkImage(
-                imageUrl: postModel.userId.profilePic,
-                imageBuilder: (context, imageProvider) => CircleAvatar(
-                  radius: 60,
-                  backgroundImage: imageProvider,
-                ),
-                placeholder: (context, url) => ClipRRect(
-                    borderRadius: BorderRadius.circular(60),
-                    child: imageLoadingShimmer()),
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
+            InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OtherUserProfileScreen(
+                      user: postModel.userId,
+                    ),
+                  )),
+              child: CircleAvatar(
+                radius: 25,
+                child: CachedNetworkImage(
+                  imageUrl: postModel.userId.profilePic,
+                  imageBuilder: (context, imageProvider) => CircleAvatar(
+                    radius: 60,
+                    backgroundImage: imageProvider,
+                  ),
+                  placeholder: (context, url) => ClipRRect(
+                      borderRadius: BorderRadius.circular(60),
+                      child: imageLoadingShimmer()),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                  ),
                 ),
               ),
             ),
@@ -46,9 +58,18 @@ class PostWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  postModel.userId.userName,
-                  style: theme.textTheme.titleLarge,
+                InkWell(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtherUserProfileScreen(
+                          user: postModel.userId,
+                        ),
+                      )),
+                  child: Text(
+                    postModel.userId.userName,
+                    style: theme.textTheme.titleLarge,
+                  ),
                 ),
                 Text(
                   isEdited(
@@ -82,11 +103,22 @@ class PostWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                PostReactionButton(
-                  icon: Icons.favorite,
-                  count: postModel.likes.length.toString(),
+                InkWell(
+                  onTap: () => likeOnTap(),
+                  child: PostReactionButton(
+                    icon: Icons.favorite,
+                    count: postModel.likes.length.toString(),
+                  ),
                 ),
-                const PostReactionButton(icon: Icons.comment, count: ""),
+                InkWell(
+                    onTap: () {
+                      commentBottomSheet(
+                        context: context,
+                        commentController: TextEditingController(),
+                        id: postModel.id,
+                      );
+                    },
+                    child: PostReactionButton(icon: Icons.comment, count: "")),
                 const PostReactionButton(icon: Icons.save, count: "12"),
               ],
             ),

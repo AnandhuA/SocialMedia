@@ -8,7 +8,9 @@ class CustomAppbar extends StatelessWidget {
     super.key,
     required this.title,
     this.backButton = false,
-    this.actionButton = const SizedBox(),
+    this.actionButton = const SizedBox(
+      width: 50,
+    ),
   });
 
   @override

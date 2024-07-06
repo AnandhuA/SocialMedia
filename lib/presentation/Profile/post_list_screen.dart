@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
@@ -24,6 +26,9 @@ class PostListScreen extends StatelessWidget {
                   itemCount: postList.length,
                   itemBuilder: (context, index) {
                     return PostWidget(
+                         likeOnTap: () {
+                        log("like${postList[index].userId.userName}");
+                      },
                       postModel: postList[index],
                       moreIcon: PopupMenuButton<String>(
                         onSelected: (value) {

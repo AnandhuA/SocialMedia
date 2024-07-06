@@ -7,6 +7,7 @@ import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_button.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
+import 'package:social_media/presentation/Profile/other_user_profile_screen.dart';
 
 class FollowingList extends StatelessWidget {
   final FeatchFollowingSuccessState state;
@@ -27,6 +28,13 @@ class FollowingList extends StatelessWidget {
           : ListView.separated(
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtherUserProfileScreen(
+                          user: state.follwingList[index],
+                        ),
+                      )),
                   leading: CircleAvatar(
                     radius: 30,
                     backgroundColor: transparentColor,
@@ -47,7 +55,7 @@ class FollowingList extends StatelessWidget {
                   ),
                   title: Text(state.follwingList[index].userName),
                   trailing: CustomButton(
-                    title: "Remove",
+                    title: "UnFollow",
                     minWidth: 15,
                     color: theme.brightness == Brightness.dark
                         ? darkModeCustomButtonBG

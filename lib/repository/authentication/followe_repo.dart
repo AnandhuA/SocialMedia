@@ -4,7 +4,7 @@ import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class FolloweRepo {
-  //fetch followers
+  //------------fetch followers-------------------
   static Future<http.Response?> fetchFollowers() async {
     try {
       final token = await getUsertoken();
@@ -17,7 +17,7 @@ class FolloweRepo {
     }
   }
 
-  //fetch followers
+  //--------------fetch followers--------------
   static Future<http.Response?> fetchFollowing() async {
     try {
       final token = await getUsertoken();
@@ -33,7 +33,7 @@ class FolloweRepo {
     }
   }
 
-//follow user
+//---------------follow user---------------
   static Future<http.Response?> followUser(
       {required String followId}) async {
     try {
@@ -49,7 +49,7 @@ class FolloweRepo {
     }
   }
 
-  //unfollow user
+  //----------unfollow user------------------
   static Future<http.Response?> unfollowUser(
       {required String followId}) async {
     try {

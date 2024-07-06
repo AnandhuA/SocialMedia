@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
@@ -40,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: state.posts.length,
                         itemBuilder: (context, index) {
                           return PostWidget(
+                            likeOnTap: () {
+                              log("like${state.posts[index].userId.userName}");
+                            },
                             postModel: state.posts[index],
                           );
                         },

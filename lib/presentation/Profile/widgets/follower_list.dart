@@ -4,6 +4,7 @@ import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/core/colors.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
+import 'package:social_media/presentation/Profile/other_user_profile_screen.dart';
 
 class FollowerList extends StatelessWidget {
   final FeatchFollowerSuccessState state;
@@ -24,6 +25,12 @@ class FollowerList extends StatelessWidget {
           : ListView.separated(
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtherUserProfileScreen(
+                            user: state.followerList[index],),
+                      )),
                   leading: CircleAvatar(
                     radius: 30,
                     backgroundColor: transparentColor,

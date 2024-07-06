@@ -5,6 +5,8 @@ import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class UserRepo {
+
+  //-------------fetch user details-----------------
   static Future<http.Response?> fetchLoggedInUserDetails() async {
     try {
       final token = await getUsertoken();
@@ -16,7 +18,7 @@ class UserRepo {
       return null;
     }
   }
-
+//---------------fetch count of following and follower---------
   static Future<http.Response?> fetchCount() async {
     try {
       final token = await getUsertoken();
@@ -30,7 +32,7 @@ class UserRepo {
     }
   }
 
-  //fetchsuggession user
+  //----------fetchsuggession user------------------
   static Future<http.Response?> fetchSuggessionUser() async {
     try {
       final token = await getUsertoken();
@@ -42,7 +44,7 @@ class UserRepo {
     }
   }
 
-//edit user profile
+//--------------edit user profile----------------
   static Future<http.Response?> editProfile({
     required String name,
     required String bio,

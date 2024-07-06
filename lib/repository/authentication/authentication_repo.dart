@@ -9,6 +9,8 @@ import 'package:social_media/models/auth_user_model.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class AuthenticationRepo {
+
+  //----------------user login-----------
   static Future<http.Response?> userLogin({
     required String email,
     required String password,
@@ -36,7 +38,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//----------------signup--------------
   static Future<http.Response?> userSignUp(
       {required AuthUserModel userModel}) async {
     Map<String, String> data = {
@@ -55,7 +57,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//-------------------otp verification--------------
   static Future<http.Response?> otpVerification({
     required String email,
     required String otp,
@@ -74,7 +76,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//-------------------forgot password-------------------------
   static Future<http.Response?> forgotPassword({required String email}) async {
     try {
       http.Response response =
@@ -84,7 +86,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//-------------forgot password otp verification---------------
   static Future<http.Response?> verifyOtpForgotPassword({
     required String email,
     required String otp,
@@ -98,7 +100,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//-------------password reset set new password-----------
   static Future<http.Response?> setNewPassword({
     required String email,
     required String password,
@@ -115,7 +117,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//-----------------sigin with google account-----------------
   static Future<UserCredential?> siginWithGoogle() async {
     try {
       GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -130,7 +132,7 @@ class AuthenticationRepo {
       return null;
     }
   }
-
+//------------------login with google-------------
   static Future<http.Response?> googleLogin(String email) async {
     try {
       final finalEmail = {'email': email};

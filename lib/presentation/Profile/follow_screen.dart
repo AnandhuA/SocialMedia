@@ -68,15 +68,15 @@ class FollowScreen extends StatelessWidget {
                       ],
                     ),
                     constHeight20,
-                    const SizedBox(
-                      height: 50,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: "Search",
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: 50,
+                    //   child: TextField(
+                    //     decoration: InputDecoration(
+                    //       prefixIcon: Icon(Icons.search),
+                    //       hintText: "Search",
+                    //     ),
+                    //   ),
+                    // ),
                     constHeight10,
                     BlocConsumer<FollowBloc, FollowState>(
                       listener: (context, state) {},

@@ -88,9 +88,12 @@ class ProfileSectionOne extends StatelessWidget {
               state.userDetails.name ?? state.userDetails.userName,
               style: theme.textTheme.headlineLarge,
             ),
-            Text(
-              state.userDetails.bio ?? "",
-              style: theme.textTheme.labelLarge,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                state.userDetails.bio ?? "",
+                style: theme.textTheme.labelLarge,
+              ),
             ),
             constHeight30,
             Row(

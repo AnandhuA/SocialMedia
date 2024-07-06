@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else if (state is FeatchFollowingPostSuccessState) {
                       return ListView.builder(
                         cacheExtent: 1000,
-                        itemCount: 3,
+                        itemCount: state.posts.length,
                         itemBuilder: (context, index) {
                           return PostWidget(
                             postModel: state.posts[index],

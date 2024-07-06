@@ -151,14 +151,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ? const LoadingButton()
                               : ElevatedButton(
                                   onPressed: () {
-                                    context.read<UserDetailsBloc>().add(
-                                          EditUserDetailsEvent(
-                                            name: _nameController.text,
-                                            bio: _bioController.text,
-                                            profilePhoto: profilePhoto,
-                                            coverPhoto: coverPhoto,
-                                          ),
-                                        );
+                                    if (_nameController.text.isNotEmpty &&
+                                        _bioController.text.isNotEmpty) {
+                                      context.read<UserDetailsBloc>().add(
+                                            EditUserDetailsEvent(
+                                              name: _nameController.text,
+                                              bio: _bioController.text,
+                                              profilePhoto: profilePhoto,
+                                              coverPhoto: coverPhoto,
+                                            ),
+                                          );
+                                    } else {
+                                      customSnackbar(
+                                          context: context,
+                                          message: "Add Name or Bio",
+                                          color: errorColor);
+                                    }
                                   },
                                   child: const Text("Save"),
                                 );

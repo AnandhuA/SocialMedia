@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +14,12 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
   final PostModel postModel;
- 
 
   final Widget? moreIcon;
   const PostWidget({
     super.key,
     this.moreIcon,
     required this.postModel,
-    
   });
 
   @override
@@ -100,7 +100,7 @@ class PostWidget extends StatelessWidget {
               return SizedBox(height: 300, child: imageLoadingShimmer());
             },
           ),
-          BottomSection( postModel: postModel)
+          BottomSection(postModel: postModel)
         ],
       ),
     );
@@ -122,11 +122,9 @@ class PostWidget extends StatelessWidget {
 class BottomSection extends StatefulWidget {
   const BottomSection({
     super.key,
-   
     required this.postModel,
   });
 
- 
   final PostModel postModel;
 
   @override
@@ -151,12 +149,37 @@ class _BottomSectionState extends State<BottomSection> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          InkWell(
-            onTap: () {},
-            child: PostReactionButton(
-              icon: Icons.favorite,
-              count: widget.postModel.likes.length.toString(),
-            ),
+          BlocBuilder<FollowingPostBloc, FollowingPostState>(
+            builder: (context, state) {
+              return state is LikeLoadingState
+                  ? PostReactionButton(
+                      icon: isLiked ? Icons.favorite : Icons.favorite_border,
+                      count: isLiked
+                          ? ((widget.postModel.likes.length) + 1).toString()
+                          : ((widget.postModel.likes.length) - 1).toString(),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        log("ooo");
+                        setState(() {
+                          isLiked = !isLiked;
+                        });
+                        widget.postModel.isLiked
+                            ? context
+                                .read<FollowingPostBloc>()
+                                .add(UnLikeEvent(post: widget.postModel))
+                            : context
+                                .read<FollowingPostBloc>()
+                                .add(LikeEvent(post: widget.postModel));
+                      },
+                      child: PostReactionButton(
+                        icon: widget.postModel.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        count: widget.postModel.likes.length.toString(),
+                      ),
+                    );
+            },
           ),
           InkWell(
               onTap: () {

@@ -5,7 +5,6 @@ import 'package:social_media/BLoC/Explore/explore_bloc.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
 import 'package:social_media/BLoC/ImageUpload/image_upload_bloc.dart';
-import 'package:social_media/BLoC/Like/like_bloc.dart';
 import 'package:social_media/BLoC/Suggestion/suggestion_bloc_bloc.dart';
 import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
@@ -46,7 +45,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ImageUploadBloc()),
         BlocProvider(create: (context) => FollowingPostBloc()),
         BlocProvider(create: (context) => ExploreBloc()),
-        BlocProvider(create: (context) => LikeBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -41,4 +41,10 @@ final class DeletePostEvent extends UserPostEvent {
   DeletePostEvent({required this.postId});
 }
 
+//----------------featch user post------------
 
+final class FeatchUserPostEvent extends UserPostEvent {
+  final UserModel user;
+
+  FeatchUserPostEvent({required this.user});
+}

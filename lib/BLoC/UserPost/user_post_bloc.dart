@@ -6,6 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media/models/post_model.dart';
+import 'package:social_media/models/saved_post_model.dart';
+import 'package:social_media/models/user_model.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
 import 'package:social_media/repository/authentication/user_repo.dart';
 
@@ -19,6 +21,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     on<FeatchAllMyPostEvent>(_featchMyAllPost);
     on<DeletePostEvent>(_deletePostEvent);
     on<EditPostButtonClickEvent>(_editPostButtonClick);
+    on<FeatchUserPostEvent>(_featchUserPostEvent);
   }
 
   FutureOr<void> _imageSelectedEvent(
@@ -93,25 +96,27 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         savedPostRes.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
       final savedResBody = jsonDecode(savedPostRes.body);
-      log(savedResBody.toString());
+      log("------------------------");
       if (res.body.isNotEmpty) {
         resBody = jsonDecode(res.body);
       } else {
         resBody = {"followersCount": 0, "followingCount": 0};
       }
-
+      log("================");
       // log(resBody.toString());
       final List<PostModel> posts = await responseBody
           .map<PostModel>(
             (json) => PostModel.fromJson(json),
           )
           .toList();
-      final List<PostModel> savedPosts = await savedResBody
-          .map<PostModel>(
-            (json) => PostModel.fromJson(json),
-          )
+      log(";;;;;;;;;;;;;;;;;;;;;;");
+      log(savedResBody.toString());
+
+      final List<SavePostModel> savedPosts = savedResBody
+          .map<SavePostModel>((json) => SavePostModel.fromJson(json))
           .toList();
 
+      print(savedPosts);
       return emit(
         FeatchAllMyPostSuccessState(
           postList: posts,
@@ -229,6 +234,26 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
       }
     } else {
       emit(AddPostErrorState(error: "No response received from server"));
+    }
+  }
+
+  FutureOr<void> _featchUserPostEvent(
+    FeatchUserPostEvent event,
+    Emitter<UserPostState> emit,
+  ) async {
+    log("ok");
+    emit(FeatchUserPostLoadingState());
+    final responce = await PostRepo.fetchUserOtherPosts(userId: event.user.id);
+    if (responce != null && responce.statusCode == 200) {
+      final responseBody = jsonDecode(responce.body);
+      final List<PostModel> posts = await responseBody
+          .map<PostModel>(
+            (json) => PostModel.fromJson(json),
+          )
+          .toList();
+      emit(FeatchUserPostSuccessState(postList: posts));
+    } else {
+      emit(FeatchUserPostErrorState());
     }
   }
 }

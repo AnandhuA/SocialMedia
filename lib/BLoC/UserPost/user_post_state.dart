@@ -29,7 +29,7 @@ final class FeatchAllMyPostSuccessState extends UserPostState {
   final List<PostModel> postList;
   final String followersCount;
   final String followingCount;
-  final List<PostModel> savedPostList;
+  final List<SavePostModel> savedPostList;
 
   FeatchAllMyPostSuccessState({
     required this.postList,
@@ -56,3 +56,13 @@ final class DeletePostErrorState extends UserPostState {
 
   DeletePostErrorState({required this.error});
 }
+
+final class FeatchUserPostLoadingState extends UserPostState {}
+
+final class FeatchUserPostSuccessState extends UserPostState {
+  final List<PostModel> postList;
+
+  FeatchUserPostSuccessState({required this.postList});
+}
+
+final class FeatchUserPostErrorState extends UserPostState {}

@@ -81,6 +81,9 @@ class PostModel {
   final DateTime date;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final int commentCount;
+  final bool isLiked;
+  final bool isSaved;
 
   PostModel({
     required this.id,
@@ -95,6 +98,9 @@ class PostModel {
     required this.date,
     required this.createdAt,
     required this.updatedAt,
+    required this.commentCount,
+    required this.isLiked,
+    required this.isSaved,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
@@ -118,6 +124,9 @@ class PostModel {
       date: DateTime.parse(json['date'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      commentCount: json['commentCount'] as int,
+      isLiked: json['isLiked'] ?? false,
+      isSaved: json['isSaved'] ?? false,
     );
   }
 
@@ -135,6 +144,11 @@ class PostModel {
       'date': date.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      'commentCount': commentCount,
+      'isLiked': isLiked,
+      'isSaved': isSaved,
     };
   }
 }
+
+

@@ -21,13 +21,12 @@ class SuggestionBloc extends Bloc<SuggestionBlocEvent, SuggestionBlocState> {
   ) async {
     emit(SuggestionLoadingState());
     final Response? response = await UserRepo.fetchSuggessionUser();
+    // log(response!.body);
 
-      if (response != null) {
+    if (response != null) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       switch (response.statusCode) {
         case 200:
-       
-
           final List<dynamic> suggestionModelJson = responseBody['data'];
           final List<UserModel> suggestionModelList = suggestionModelJson
               .map((json) => UserModel.fromJson(json))
@@ -44,12 +43,12 @@ class SuggestionBloc extends Bloc<SuggestionBlocEvent, SuggestionBlocState> {
               error: "Unauthorized - ${responseBody["message"]}"));
           break;
         case 403:
-          emit(
-              SuggestionErrorState(error: "Forbidden - ${responseBody["message"]}"));
+          emit(SuggestionErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
           break;
         case 404:
-          emit(
-              SuggestionErrorState(error: "Not found - ${responseBody["message"]}"));
+          emit(SuggestionErrorState(
+              error: "Not found - ${responseBody["message"]}"));
           break;
         case 500:
           emit(SuggestionErrorState(

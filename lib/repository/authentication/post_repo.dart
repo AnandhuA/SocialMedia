@@ -6,7 +6,6 @@ import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class PostRepo {
-
   //----------------upload image--------------
   static Future uploadImage(imagePath) async {
     String filePath = imagePath;
@@ -259,6 +258,22 @@ class PostRepo {
       http.Response response = await http.get(
           Uri.parse('$baseurl$savedposturl'),
           headers: {'Authorization': 'Bearer $token'});
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //-----------featch other user post-----------
+
+  static Future<http.Response?> fetchUserOtherPosts(
+      {required String userId}) async {
+    try {
+      var response = await http
+          .get(Uri.parse('$baseurl$fetchuserposturl/$userId'));
+
+      // debugPrint(response.statusCode.toString());
+      // debugPrint(response.body);
       return response;
     } catch (e) {
       return null;

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
+import 'package:social_media/BLoC/SavePost/save_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Home/widgets/home_app_bar.dart';
@@ -24,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
     return Scaffold(
       body: Background(
         child: SafeArea(
@@ -38,25 +38,32 @@ class _HomeScreenState extends State<HomeScreen> {
                       return const ShimmerPostList();
                     } else if (state is FeatchFollowingPostSuccessState) {
                       return ListView.builder(
-                        cacheExtent: 1000,
                         itemCount: state.posts.length,
                         itemBuilder: (context, index) {
-                          return PostWidget(
-                            likeOnTap: () {
-                              log("like${state.posts[index].userId.userName}");
-                            },
-                            postModel: state.posts[index],
+                          return BlocProvider.value(
+                            value: context.read<SavePostBloc>(),
+                            child: BlocBuilder<SavePostBloc, SavePostState>(
+                              
+                              builder: (context, saveState) {
+                                return PostWidget(
+                                  likeOnTap: () {
+                                    log("like ${state.posts[index].userId.userName}");
+                                  },
+                                  postModel: state.posts[index],
+                                );
+                              },
+                            ),
                           );
                         },
                       );
                     } else {
                       return const Center(
-                        child: Text("data"),
+                        child: Text("No data"),
                       );
                     }
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

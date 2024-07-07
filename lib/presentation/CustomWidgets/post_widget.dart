@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
+import 'package:social_media/BLoC/SavePost/save_post_bloc.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/presentation/CustomWidgets/comment_bottomsheet.dart';
@@ -13,11 +18,12 @@ class PostWidget extends StatelessWidget {
   final Function likeOnTap;
 
   final Widget? moreIcon;
-  const PostWidget(
-      {super.key,
-      this.moreIcon,
-      required this.postModel,
-      required this.likeOnTap});
+  const PostWidget({
+    super.key,
+    this.moreIcon,
+    required this.postModel,
+    required this.likeOnTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -118,8 +124,46 @@ class PostWidget extends StatelessWidget {
                         id: postModel.id,
                       );
                     },
-                    child: PostReactionButton(icon: Icons.comment, count: "")),
-                const PostReactionButton(icon: Icons.save, count: "12"),
+                    child: const PostReactionButton(
+                      icon: Icons.comment,
+                      count: "",
+                    )),
+                BlocConsumer<SavePostBloc, SavePostState>(
+                    buildWhen: (previous, current) {
+                      return current is SavePostSuccessState;
+                    },
+                    listenWhen: (previous, current) {
+                      return current is SavePostSuccessState ||
+                          current is SavePostLoadingState;
+                    },
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      log("${postModel.isSaved.toString()}__${postModel.id}");
+
+                      return state is SavePostLoadingState
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                log("message1");
+                                postModel.isSaved
+                                    ? context.read<SavePostBloc>().add(
+                                        UnSaveButtonClickEvent(post: postModel))
+                                    : context.read<SavePostBloc>().add(
+                                        SaveButtonClickEvent(post: postModel));
+                              },
+                              child: postModel.isSaved
+                                  ? const PostReactionButton(
+                                      icon: Icons.bookmark,
+                                      count: "",
+                                    )
+                                  : const PostReactionButton(
+                                      icon: Icons.bookmark_border_outlined,
+                                      count: "",
+                                    ),
+                            );
+                    }),
               ],
             ),
           )

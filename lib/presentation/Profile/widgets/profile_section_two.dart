@@ -120,6 +120,7 @@ class ProfileSectionTwo extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) => PostViewScreen(
                                             post: state.postList[index],
+                                            editpost: true,
                                           ),
                                         )),
                                     child: Container(

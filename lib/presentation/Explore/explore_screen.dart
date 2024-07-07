@@ -36,7 +36,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: BlocBuilder<ExploreBloc, ExploreState>(
                       builder: (context, state) {
                         if (state is FeatchExplorePostLoadingState) {
-                          return const Center(child: ShimmerExploreView());
+                          return const Center(
+                            child: ShimmerExploreView(),
+                          );
                         } else if (state is FeatchExplorePostSuccessState) {
                           return ExplorePostWidget(
                             postList: state.posts,

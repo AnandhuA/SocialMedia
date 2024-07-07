@@ -12,7 +12,8 @@ import 'package:social_media/presentation/CustomWidgets/post_widget.dart';
 
 class PostViewScreen extends StatelessWidget {
   final PostModel post;
-  const PostViewScreen({super.key, required this.post});
+  bool editpost;
+  PostViewScreen({super.key, required this.post, this.editpost = false});
 
   @override
   Widget build(BuildContext context) {
@@ -38,50 +39,55 @@ class PostViewScreen extends StatelessWidget {
                       title: "",
                       backButton: true,
                     ),
-                    PostWidget(
-                      postModel: post,
-                      moreIcon: PopupMenuButton<String>(
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddPostScreen(
-                                  editpost: true,
-                                  postModel: post,
-                                ),
+                    editpost
+                        ? PostWidget(
+                            postModel: post,
+                            moreIcon: PopupMenuButton<String>(
+                              onSelected: (value) {
+                                if (value == 'edit') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddPostScreen(
+                                        editpost: true,
+                                        postModel: post,
+                                      ),
+                                    ),
+                                  );
+                                } else if (value == 'delete') {
+                                  confirmationDiloge(
+                                      context: context,
+                                      title: "Delete Post",
+                                      confirmBtn: () {
+                                        context.read<UserPostBloc>().add(
+                                              DeletePostEvent(postId: post.id),
+                                            );
+                                        Navigator.pop(context);
+                                      },
+                                      content:
+                                          "Do you want to delete this post?");
+                                }
+                              },
+                              itemBuilder: (BuildContext context) {
+                                return [
+                                  const PopupMenuItem<String>(
+                                    value: 'edit',
+                                    child: Text('Edit'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'delete',
+                                    child: Text('Delete'),
+                                  ),
+                                ];
+                              },
+                              icon: const Icon(
+                                Icons.more_vert_outlined,
                               ),
-                            );
-                          } else if (value == 'delete') {
-                            confirmationDiloge(
-                                context: context,
-                                title: "Delete Post",
-                                confirmBtn: () {
-                                  context.read<UserPostBloc>().add(
-                                        DeletePostEvent(postId: post.id),
-                                      );
-                                  Navigator.pop(context);
-                                },
-                                content: "Do you want to delete this post?");
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            const PopupMenuItem<String>(
-                              value: 'edit',
-                              child: Text('Edit'),
                             ),
-                            const PopupMenuItem<String>(
-                              value: 'delete',
-                              child: Text('Delete'),
-                            ),
-                          ];
-                        },
-                        icon: const Icon(
-                          Icons.more_vert_outlined,
-                        ),
-                      ),
-                    )
+                          )
+                        : PostWidget(
+                            postModel: post,
+                          )
                   ],
                 );
               },

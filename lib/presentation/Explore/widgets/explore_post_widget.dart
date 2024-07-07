@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
+import 'package:social_media/presentation/PostView/post_view_screen.dart';
 
 class ExplorePostWidget extends StatelessWidget {
   final List<PostModel> postList;
@@ -19,16 +20,23 @@ class ExplorePostWidget extends StatelessWidget {
         crossAxisCount: 2,
       ),
       itemBuilder: (context, index) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: CachedNetworkImage(
-            imageUrl: postList[index].image,
-            placeholder: (context, url) {
-              return Center(
-                child: imageLoadingShimmer(),
-              );
-            },
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+        return InkWell(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PostViewScreen(post: postList[index]),
+              )),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: CachedNetworkImage(
+              imageUrl: postList[index].image,
+              placeholder: (context, url) {
+                return Center(
+                  child: imageLoadingShimmer(),
+                );
+              },
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
           ),
         );
       },

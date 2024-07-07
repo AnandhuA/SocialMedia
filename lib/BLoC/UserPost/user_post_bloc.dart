@@ -93,7 +93,10 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         res != null &&
         res.statusCode == 200 &&
         savedPostRes != null &&
-        savedPostRes.statusCode == 200) {
+        savedPostRes.statusCode == 200 &&
+        response.body.isNotEmpty &&
+        res.body.isNotEmpty &&
+        savedPostRes.body.isNotEmpty) {
       final responseBody = jsonDecode(response.body);
       final savedResBody = jsonDecode(savedPostRes.body);
       log("------------------------");

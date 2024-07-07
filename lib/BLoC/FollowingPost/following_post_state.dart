@@ -18,3 +18,21 @@ final class FeatchFollowingPostErrorState extends FollowingPostState {
 
   FeatchFollowingPostErrorState({required this.error});
 }
+
+
+
+
+final class SavePostLoadingState extends FollowingPostState {}
+final class UnSavePostLoadingState extends FollowingPostState {}
+
+final class SavePostSuccessState extends FollowingPostState {
+  final String postId;
+
+  SavePostSuccessState({required this.postId});
+}
+
+final class SavePostErrorState extends FollowingPostState {
+  final String error;
+
+  SavePostErrorState({required this.error});
+}

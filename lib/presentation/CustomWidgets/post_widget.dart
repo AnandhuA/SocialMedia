@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
-import 'package:social_media/BLoC/SavePost/save_post_bloc.dart';
 import 'package:social_media/core/size.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/presentation/CustomWidgets/comment_bottomsheet.dart';
@@ -15,14 +12,14 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
   final PostModel postModel;
-  final Function likeOnTap;
+ 
 
   final Widget? moreIcon;
   const PostWidget({
     super.key,
     this.moreIcon,
     required this.postModel,
-    required this.likeOnTap,
+    
   });
 
   @override
@@ -103,70 +100,7 @@ class PostWidget extends StatelessWidget {
               return SizedBox(height: 300, child: imageLoadingShimmer());
             },
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () => likeOnTap(),
-                  child: PostReactionButton(
-                    icon: Icons.favorite,
-                    count: postModel.likes.length.toString(),
-                  ),
-                ),
-                InkWell(
-                    onTap: () {
-                      commentBottomSheet(
-                        context: context,
-                        commentController: TextEditingController(),
-                        id: postModel.id,
-                      );
-                    },
-                    child: const PostReactionButton(
-                      icon: Icons.comment,
-                      count: "",
-                    )),
-                BlocConsumer<SavePostBloc, SavePostState>(
-                    buildWhen: (previous, current) {
-                      return current is SavePostSuccessState;
-                    },
-                    listenWhen: (previous, current) {
-                      return current is SavePostSuccessState ||
-                          current is SavePostLoadingState;
-                    },
-                    listener: (context, state) {},
-                    builder: (context, state) {
-                      log("${postModel.isSaved.toString()}__${postModel.id}");
-
-                      return state is SavePostLoadingState
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : InkWell(
-                              onTap: () {
-                                log("message1");
-                                postModel.isSaved
-                                    ? context.read<SavePostBloc>().add(
-                                        UnSaveButtonClickEvent(post: postModel))
-                                    : context.read<SavePostBloc>().add(
-                                        SaveButtonClickEvent(post: postModel));
-                              },
-                              child: postModel.isSaved
-                                  ? const PostReactionButton(
-                                      icon: Icons.bookmark,
-                                      count: "",
-                                    )
-                                  : const PostReactionButton(
-                                      icon: Icons.bookmark_border_outlined,
-                                      count: "",
-                                    ),
-                            );
-                    }),
-              ],
-            ),
-          )
+          BottomSection( postModel: postModel)
         ],
       ),
     );
@@ -182,5 +116,103 @@ class PostWidget extends StatelessWidget {
         dateTime1.hour == dateTime2.hour &&
         dateTime1.minute == dateTime2.minute &&
         dateTime1.second == dateTime2.second;
+  }
+}
+
+class BottomSection extends StatefulWidget {
+  const BottomSection({
+    super.key,
+   
+    required this.postModel,
+  });
+
+ 
+  final PostModel postModel;
+
+  @override
+  State<BottomSection> createState() => _BottomSectionState();
+}
+
+class _BottomSectionState extends State<BottomSection> {
+  late bool isSaved;
+  late bool isLiked;
+  @override
+  void initState() {
+    isSaved = widget.postModel.isSaved;
+    isLiked = widget.postModel.isLiked;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          InkWell(
+            onTap: () {},
+            child: PostReactionButton(
+              icon: Icons.favorite,
+              count: widget.postModel.likes.length.toString(),
+            ),
+          ),
+          InkWell(
+              onTap: () {
+                commentBottomSheet(
+                  context: context,
+                  commentController: TextEditingController(),
+                  id: widget.postModel.id,
+                );
+              },
+              child: const PostReactionButton(
+                icon: Icons.comment,
+                count: "",
+              )),
+          BlocBuilder<FollowingPostBloc, FollowingPostState>(
+            builder: (context, state) {
+              return state is SavePostLoadingState
+                  ? isSaved
+                      ? const PostReactionButton(
+                          icon: Icons.bookmark,
+                          count: "",
+                        )
+                      : const PostReactionButton(
+                          icon: Icons.bookmark_border_outlined,
+                          count: "",
+                        )
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          isSaved = !isSaved;
+                        });
+                        widget.postModel.isSaved
+                            ? context.read<FollowingPostBloc>().add(
+                                  UnSaveButtonClickEvent(
+                                    post: widget.postModel,
+                                  ),
+                                )
+                            : context.read<FollowingPostBloc>().add(
+                                  SaveButtonClickEvent(
+                                    post: widget.postModel,
+                                  ),
+                                );
+                      },
+                      child: widget.postModel.isSaved
+                          ? const PostReactionButton(
+                              icon: Icons.bookmark,
+                              count: "",
+                            )
+                          : const PostReactionButton(
+                              icon: Icons.bookmark_border_outlined,
+                              count: "",
+                            ),
+                    );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -19,3 +19,5 @@ final class EditUserDetailsEvent extends UserDetailsEvent {
     required this.coverPhoto,
   });
 }
+
+

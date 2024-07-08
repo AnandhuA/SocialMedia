@@ -30,3 +30,4 @@ final class EditUserDetailsErrorState extends UserDetailsState {
 
   EditUserDetailsErrorState({required this.error});
 }
+

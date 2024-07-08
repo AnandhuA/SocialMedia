@@ -18,3 +18,9 @@ final class UnFollowButtonClickEvent extends FollowEvent {
 
   UnFollowButtonClickEvent({required this.user});
 }
+
+final class IsfollowingEvent extends FollowEvent {
+  final UserModel user;
+
+  IsfollowingEvent({required this.user});
+}

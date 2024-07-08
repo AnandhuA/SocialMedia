@@ -5,7 +5,6 @@ import 'package:social_media/core/urls.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class UserRepo {
-
   //-------------fetch user details-----------------
   static Future<http.Response?> fetchLoggedInUserDetails() async {
     try {
@@ -18,6 +17,7 @@ class UserRepo {
       return null;
     }
   }
+
 //---------------fetch count of following and follower---------
   static Future<http.Response?> fetchCount() async {
     try {
@@ -58,7 +58,6 @@ class UserRepo {
         "bio": bio,
         "image": profilePhoto,
         "backGroundImage": coverPhoto,
-       
       };
       var response = await http.put(Uri.parse('$baseurl$editprofileurl'),
           body: jsonEncode(details),
@@ -72,4 +71,8 @@ class UserRepo {
       return null;
     }
   }
+
+  //----------------get single user details-----------------
+
+ 
 }

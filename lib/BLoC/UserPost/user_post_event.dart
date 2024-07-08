@@ -48,3 +48,4 @@ final class FeatchUserPostEvent extends UserPostEvent {
 
   FeatchUserPostEvent({required this.user});
 }
+

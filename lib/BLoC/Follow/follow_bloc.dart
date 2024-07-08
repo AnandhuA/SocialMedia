@@ -16,6 +16,7 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     on<FeatchFollowerListEvent>(_featchFollowerListEvent);
     on<FollowButtonClickEvent>(_followButtonClickEvent);
     on<UnFollowButtonClickEvent>(_unFollowButtonClickEvent);
+    on<IsfollowingEvent>(_isFollwowingEvent);
   }
 
   FutureOr<void> _featchFollwingListEvent(
@@ -78,7 +79,6 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
 
     final http.Response? responce = await FolloweRepo.fetchFollowers();
 
-
     if (responce != null) {
       final responseBody = jsonDecode(responce.body);
       switch (responce.statusCode) {
@@ -129,16 +129,21 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
     emit(FollowUserLoadingState());
     final http.Response? responce =
         await FolloweRepo.followUser(followId: event.user.id);
-  
+    final isFollwingResponce =
+        await FolloweRepo.isFollowing(userid: event.user.id);
 
-     if (responce != null) {
+    if (responce != null && isFollwingResponce != null) {
       final responseBody = jsonDecode(responce.body);
+      final isFollowingResponseBody = jsonDecode(isFollwingResponce.body);
       switch (responce.statusCode) {
         case 200:
-       Map<String, dynamic> responseBody = jsonDecode(responce.body);
+          Map<String, dynamic> responseBody = jsonDecode(responce.body);
 
           List connectionUserId = responseBody['userConnection']["following"];
-          emit(FollowUserSuccessState(connectionUserId: connectionUserId));
+          emit(FollowUserSuccessState(
+            connectionUserId: connectionUserId,
+            isFollowing: isFollowingResponseBody,
+          ));
           break;
         case 400:
           emit(FollowUserErrorState(
@@ -177,11 +182,14 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
   ) async {
     final http.Response? response =
         await FolloweRepo.unfollowUser(followId: event.user.id);
-  
-     if (response != null) {
+    final isFollwingResponce =
+        await FolloweRepo.isFollowing(userid: event.user.id);
+    if (response != null && isFollwingResponce != null) {
       final responseBody = jsonDecode(response.body);
+      final isFollowingResponseBody = jsonDecode(isFollwingResponce.body);
       switch (response.statusCode) {
         case 200:
+          emit(UnFollowUserSuccessState(isFollowing: isFollowingResponseBody));
           break;
         case 400:
           emit(UnFollowUserErrorState(
@@ -209,8 +217,50 @@ class FollowBloc extends Bloc<FollowEvent, FollowState> {
           break;
       }
     } else {
-      emit(
-          UnFollowUserErrorState(error: "No response received from server"));
+      emit(UnFollowUserErrorState(error: "No response received from server"));
+    }
+  }
+
+  FutureOr<void> _isFollwowingEvent(
+    IsfollowingEvent event,
+    Emitter<FollowState> emit,
+  ) async {
+    emit(IsFollowingLoadingState());
+    final response = await FolloweRepo.isFollowing(userid: event.user.id);
+
+    if (response != null) {
+      final responseBody = jsonDecode(response.body);
+      switch (response.statusCode) {
+        case 200:
+          emit(IsFollowingSuccessState(isFollowing: responseBody));
+          break;
+        case 400:
+          emit(IsFollowingErrorState(
+              error: "Bad request - ${responseBody["message"]}"));
+          break;
+        case 401:
+          emit(IsFollowingErrorState(
+              error: "Unauthorized - ${responseBody["message"]}"));
+          break;
+        case 403:
+          emit(IsFollowingErrorState(
+              error: "Forbidden - ${responseBody["message"]}"));
+          break;
+        case 404:
+          emit(IsFollowingErrorState(
+              error: "Not found - ${responseBody["message"]}"));
+          break;
+        case 500:
+          emit(IsFollowingErrorState(
+              error: "Internal server error - ${responseBody["message"]}"));
+          break;
+        default:
+          emit(IsFollowingErrorState(
+              error: "HTTP Error - ${responseBody["message"]}"));
+          break;
+      }
+    } else {
+      emit(IsFollowingErrorState(error: "No response received from server"));
     }
   }
 }

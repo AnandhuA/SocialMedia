@@ -117,4 +117,5 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
           EditUserDetailsErrorState(error: "No response received from server"));
     }
   }
+
 }

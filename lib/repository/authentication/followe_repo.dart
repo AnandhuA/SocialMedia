@@ -64,4 +64,20 @@ class FolloweRepo {
       return null;
     }
   }
+
+  //------------isFollowed-------------------
+
+   static Future<http.Response?> isFollowing({required String userid}) async {
+    try {
+      final token = await getUsertoken();
+      http.Response response = await http
+          .get(Uri.parse('$baseurl$isfollowingurl/$userid'), headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      });
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

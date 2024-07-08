@@ -62,7 +62,9 @@ final class FeatchUserPostLoadingState extends UserPostState {}
 final class FeatchUserPostSuccessState extends UserPostState {
   final List<PostModel> postList;
 
+
   FeatchUserPostSuccessState({required this.postList});
 }
 
 final class FeatchUserPostErrorState extends UserPostState {}
+

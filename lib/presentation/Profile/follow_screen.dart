@@ -79,7 +79,16 @@ class FollowScreen extends StatelessWidget {
                     // ),
                     constHeight10,
                     BlocConsumer<FollowBloc, FollowState>(
-                      listener: (context, state) {},
+                      listenWhen: (previous, current) {
+                        return current is UnFollowUserSuccessState;
+                      },
+                      listener: (context, state) {
+                        if (state is UnFollowUserSuccessState) {
+                          context
+                              .read<FollowBloc>()
+                              .add(FeatchFollwingListEvent());
+                        }
+                      },
                       builder: (context, state) {
                         if (state is FeatchFollowerSuccessState) {
                           return FollowerList(state: state);
@@ -87,7 +96,10 @@ class FollowScreen extends StatelessWidget {
                           return FollowingList(state: state);
                         } else if (state is FeatchFollowingLoadingState) {
                           return followingListLoading(iteamCount: 10);
+                        } else {
+                          print(state);
                         }
+
                         return Container(
                           color: errorColor,
                           child: const Center(

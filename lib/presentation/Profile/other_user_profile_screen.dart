@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
-import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/core/colors.dart';

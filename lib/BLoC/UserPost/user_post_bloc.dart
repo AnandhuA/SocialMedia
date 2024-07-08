@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/models/saved_post_model.dart';
 import 'package:social_media/models/user_model.dart';
-import 'package:social_media/repository/authentication/followe_repo.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
 import 'package:social_media/repository/authentication/user_repo.dart';
 
@@ -245,7 +244,6 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     // final response = await FolloweRepo.isFollowing(userid: event.user.id);
     if (responce != null &&
         responce.statusCode == 200 &&
-       
         responce.body.isNotEmpty) {
       final responseBody = jsonDecode(responce.body);
       // log(responseBody.toString());
@@ -255,9 +253,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           )
           .toList();
 
-      
-      emit(FeatchUserPostSuccessState(
-          postList: posts));
+      emit(FeatchUserPostSuccessState(postList: posts));
     } else {
       emit(FeatchUserPostErrorState());
     }

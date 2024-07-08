@@ -60,7 +60,7 @@ class FollowingList extends StatelessWidget {
                     color: theme.brightness == Brightness.dark
                         ? darkModeCustomButtonBG
                         : lightModeCustomButtonBG,
-                    onTap: () {
+                    onTap: ()  {
                       context.read<FollowBloc>().add(
                             UnFollowButtonClickEvent(
                               user: state.follwingList[index],

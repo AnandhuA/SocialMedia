@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +43,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     SaveButtonClickEvent event,
     Emitter<FollowingPostState> emit,
   ) async {
-    log("save");
     emit(SavePostLoadingState());
 
     Response? saveResponce = await PostRepo.savePost(postId: event.post.id);
@@ -53,8 +51,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
       final saveResponceBody = jsonDecode(saveResponce.body);
       switch (saveResponce.statusCode) {
         case 200:
-          log(saveResponce.body);
-
           if (postListResponce != null && postListResponce.body.isNotEmpty) {
             final postListresponcBody = jsonDecode(postListResponce.body);
             // log(responseBody.toString());
@@ -63,7 +59,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
                   (json) => PostModel.fromJson(json),
                 )
                 .toList();
-            log("set mone un");
             emit(FeatchFollowingPostSuccessState(posts: posts));
             // emit(SavePostSuccessState(postId: saveResponceBody["postId"]));
           } else {
@@ -104,7 +99,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     UnSaveButtonClickEvent event,
     Emitter<FollowingPostState> emit,
   ) async {
-    log("unsave");
     emit(SavePostLoadingState());
     Response? saveResponce =
         await PostRepo.removeSavedPost(postId: event.post.id);
@@ -121,7 +115,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
                   (json) => PostModel.fromJson(json),
                 )
                 .toList();
-            log("set mone");
             emit(FeatchFollowingPostSuccessState(posts: posts));
             // emit(SavePostSuccessState(postId: saveResponceBody["postId"]));
           } else {
@@ -178,7 +171,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
                   (json) => PostModel.fromJson(json),
                 )
                 .toList();
-            log("set mone");
             emit(FeatchFollowingPostSuccessState(posts: posts));
             // emit(SavePostSuccessState(postId: saveResponceBody["postId"]));
           } else {
@@ -235,7 +227,6 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
                   (json) => PostModel.fromJson(json),
                 )
                 .toList();
-            log("set mone");
             emit(FeatchFollowingPostSuccessState(posts: posts));
             // emit(SavePostSuccessState(postId: saveResponceBody["postId"]));
           } else {

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -99,21 +98,17 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
         savedPostRes.body.isNotEmpty) {
       final responseBody = jsonDecode(response.body);
       final savedResBody = jsonDecode(savedPostRes.body);
-      log("------------------------");
       if (res.body.isNotEmpty) {
         resBody = jsonDecode(res.body);
       } else {
         resBody = {"followersCount": 0, "followingCount": 0};
       }
-      log("================");
       // log(resBody.toString());
       final List<PostModel> posts = await responseBody
           .map<PostModel>(
             (json) => PostModel.fromJson(json),
           )
           .toList();
-      log(";;;;;;;;;;;;;;;;;;;;;;");
-      log(savedResBody.toString());
 
       final List<SavePostModel> savedPosts = savedResBody
           .map<SavePostModel>((json) => SavePostModel.fromJson(json))
@@ -244,7 +239,6 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     FeatchUserPostEvent event,
     Emitter<UserPostState> emit,
   ) async {
-    log("ok");
     emit(FeatchUserPostLoadingState());
     final responce = await PostRepo.fetchUserOtherPosts(userId: event.user.id);
     if (responce != null && responce.statusCode == 200) {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
@@ -6,13 +7,13 @@ import 'package:social_media/core/size.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/presentation/CustomWidgets/confirmation_diloge.dart';
 
-Future<dynamic> commentBottomSheet({
-  required BuildContext context,
-  required TextEditingController commentController,
-  // required GlobalKey<FormState> formkey,
-  required PostModel post,
-  required String id,
-}) {
+Future<dynamic> commentBottomSheet(
+    {required BuildContext context,
+    required TextEditingController commentController,
+    // required GlobalKey<FormState> formkey,
+    required PostModel post,
+    required String id,
+    required String profilePic}) {
   final theme = Theme.of(context);
 
   return showModalBottomSheet(
@@ -27,7 +28,9 @@ Future<dynamic> commentBottomSheet({
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundImage: NetworkImage(post.userId.profilePic),
+                backgroundImage: CachedNetworkImageProvider(
+                  profilePic,
+                ),
               ),
               constWidth10,
               Expanded(
@@ -80,7 +83,7 @@ Future<dynamic> commentBottomSheet({
                         children: [
                           CircleAvatar(
                             radius: 18,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: CachedNetworkImageProvider(
                               state.comments[index].userId.profilePic,
                             ),
                           ),

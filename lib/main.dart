@@ -14,9 +14,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/bottomNavigation/bottom_navigation_cubit.dart';
 import 'package:social_media/firebase_options.dart';
 import 'package:social_media/presentation/SplashScreen/splash_screen.dart';
+import 'package:social_media/repository/authentication/shared_preferences.dart';
 
+late String userProfilePic;
+late String userName;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+   userProfilePic = await getUserProfilePic() ??
+      "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png";
+      userName = await getUserName()?? "Anonymous";
   if (defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS ||
       defaultTargetPlatform == TargetPlatform.macOS ||

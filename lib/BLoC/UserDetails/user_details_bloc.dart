@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media/main.dart';
 import 'package:social_media/models/user_model.dart';
+import 'package:social_media/repository/authentication/shared_preferences.dart';
 import 'package:social_media/repository/authentication/user_repo.dart';
 
 part 'user_details_event.dart';
@@ -80,6 +82,8 @@ class UserDetailsBloc extends Bloc<UserDetailsEvent, UserDetailsState> {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       switch (response.statusCode) {
         case 200:
+          changeProfilePic(event.profilePhoto);
+          userProfilePic = event.profilePhoto;
           emit(EditUserDetailsSuccessState());
           add(FeatchUserDetailsEvent());
           break;

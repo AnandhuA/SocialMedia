@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     context.read<FollowingPostBloc>().add(FeatchAllFollowingPostEvent());
+
     super.initState();
   }
 
@@ -33,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: BlocConsumer<FollowingPostBloc, FollowingPostState>(
                   listener: (context, state) {},
-               
                   buildWhen: (previous, current) {
                     return current is FeatchFollowingPostSuccessState ||
                         current is SavePostSuccessState ||
@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: state.posts.length,
                         itemBuilder: (context, index) {
                           return PostWidget(
-                           
                             postModel: state.posts[index],
                           );
                         },

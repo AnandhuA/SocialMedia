@@ -54,3 +54,16 @@ Future<String?> getUserProfilePic() async {
   final userid = sharedpreference.getString(userProfilePickey);
   return userid;
 }
+
+//----------get user name-----------
+Future<String?> getUserName() async {
+  final sharedpreference = await SharedPreferences.getInstance();
+  final userid = sharedpreference.getString(userNamekey);
+  return userid;
+}
+//----------Change profilepic-----------
+
+Future<void> changeProfilePic(String profilePic) async {
+  final sharedpreference = await SharedPreferences.getInstance();
+  await sharedpreference.setString(userProfilePickey, profilePic);
+}

@@ -21,9 +21,10 @@ class SuggestionBloc extends Bloc<SuggestionBlocEvent, SuggestionBlocState> {
   ) async {
     emit(SuggestionLoadingState());
     final Response? response = await UserRepo.fetchSuggessionUser();
-    // log(response!.body);
 
     if (response != null) {
+    // log(response.body);
+
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
       switch (response.statusCode) {
         case 200:

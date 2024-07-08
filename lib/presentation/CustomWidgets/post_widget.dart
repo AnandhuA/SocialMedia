@@ -8,6 +8,7 @@ import 'package:social_media/presentation/CustomWidgets/comment_bottomsheet.dart
 import 'package:social_media/presentation/CustomWidgets/shimmer_widgets.dart';
 import 'package:social_media/presentation/Home/widgets/post_reaction_button.dart';
 import 'package:social_media/presentation/Profile/other_user_profile_screen.dart';
+import 'package:social_media/repository/authentication/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostWidget extends StatelessWidget {
@@ -179,16 +180,18 @@ class _BottomSectionState extends State<BottomSection> {
             },
           ),
           InkWell(
-              onTap: () {
+              onTap: () async {
+                final String? profilePic = await getUserProfilePic();
                 context
                     .read<FollowingPostBloc>()
                     .add(CommentButtonClickEvent(post: widget.postModel));
                 commentBottomSheet(
-                  context: context,
-                  commentController: TextEditingController(),
-                  id: widget.postModel.id,
-                  post: widget.postModel,
-                );
+                    context: context,
+                    commentController: TextEditingController(),
+                    id: widget.postModel.id,
+                    post: widget.postModel,
+                    profilePic: profilePic ??
+                        "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",);
               },
               child: PostReactionButton(
                 icon: Icons.comment,

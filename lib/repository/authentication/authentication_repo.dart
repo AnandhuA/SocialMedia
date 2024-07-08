@@ -9,7 +9,6 @@ import 'package:social_media/models/auth_user_model.dart';
 import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 class AuthenticationRepo {
-
   //----------------user login-----------
   static Future<http.Response?> userLogin({
     required String email,
@@ -29,6 +28,8 @@ class AuthenticationRepo {
         await setUserLoggedin(
           token: responseBody["user"]["token"],
           userid: responseBody['user']['_id'],
+          userName: responseBody['user']['userName'],
+          userprofilePic: responseBody['user']['profilePic'],
         );
         return response;
       } else {
@@ -38,6 +39,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //----------------signup--------------
   static Future<http.Response?> userSignUp(
       {required AuthUserModel userModel}) async {
@@ -57,6 +59,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //-------------------otp verification--------------
   static Future<http.Response?> otpVerification({
     required String email,
@@ -76,6 +79,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //-------------------forgot password-------------------------
   static Future<http.Response?> forgotPassword({required String email}) async {
     try {
@@ -86,6 +90,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //-------------forgot password otp verification---------------
   static Future<http.Response?> verifyOtpForgotPassword({
     required String email,
@@ -100,6 +105,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //-------------password reset set new password-----------
   static Future<http.Response?> setNewPassword({
     required String email,
@@ -117,6 +123,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //-----------------sigin with google account-----------------
   static Future<UserCredential?> siginWithGoogle() async {
     try {
@@ -132,6 +139,7 @@ class AuthenticationRepo {
       return null;
     }
   }
+
 //------------------login with google-------------
   static Future<http.Response?> googleLogin(String email) async {
     try {
@@ -147,6 +155,8 @@ class AuthenticationRepo {
         await setUserLoggedin(
           token: responseBody['user']['token'],
           userid: responseBody['user']['_id'],
+          userName: responseBody['user']['userName'],
+          userprofilePic: responseBody['user']['profilePic'],
         );
       }
       return response;

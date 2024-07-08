@@ -119,7 +119,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
           .map<SavePostModel>((json) => SavePostModel.fromJson(json))
           .toList();
 
-      print(savedPosts);
+      // print(savedPosts);
       return emit(
         FeatchAllMyPostSuccessState(
           postList: posts,
@@ -249,6 +249,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     final responce = await PostRepo.fetchUserOtherPosts(userId: event.user.id);
     if (responce != null && responce.statusCode == 200) {
       final responseBody = jsonDecode(responce.body);
+      // log(responseBody.toString());
       final List<PostModel> posts = await responseBody
           .map<PostModel>(
             (json) => PostModel.fromJson(json),

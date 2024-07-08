@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -160,7 +158,6 @@ class _BottomSectionState extends State<BottomSection> {
                     )
                   : InkWell(
                       onTap: () {
-                        log("ooo");
                         setState(() {
                           isLiked = !isLiked;
                         });
@@ -183,15 +180,19 @@ class _BottomSectionState extends State<BottomSection> {
           ),
           InkWell(
               onTap: () {
+                context
+                    .read<FollowingPostBloc>()
+                    .add(CommentButtonClickEvent(post: widget.postModel));
                 commentBottomSheet(
                   context: context,
                   commentController: TextEditingController(),
                   id: widget.postModel.id,
+                  post: widget.postModel,
                 );
               },
-              child: const PostReactionButton(
+              child: PostReactionButton(
                 icon: Icons.comment,
-                count: "",
+                count: widget.postModel.commentCount.toString(),
               )),
           BlocBuilder<FollowingPostBloc, FollowingPostState>(
             builder: (context, state) {

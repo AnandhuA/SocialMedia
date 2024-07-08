@@ -26,9 +26,18 @@ final class LikeEvent extends FollowingPostEvent {
 
   LikeEvent({required this.post});
 }
+
 //----------unLikeButtonClickEvent----------
 final class UnLikeEvent extends FollowingPostEvent {
   final PostModel post;
 
   UnLikeEvent({required this.post});
+}
+
+//----------commentButtonClickEvent----------
+
+final class CommentButtonClickEvent extends FollowingPostEvent {
+  final PostModel post;
+
+  CommentButtonClickEvent({required this.post});
 }

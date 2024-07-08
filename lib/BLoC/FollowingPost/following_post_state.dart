@@ -21,10 +21,10 @@ final class FeatchFollowingPostErrorState extends FollowingPostState {
   FeatchFollowingPostErrorState({required this.error});
 }
 
-
 //---------------save post state---------------
 
 final class SavePostLoadingState extends FollowingPostState {}
+
 final class UnSavePostLoadingState extends FollowingPostState {}
 
 final class SavePostSuccessState extends FollowingPostState {
@@ -41,9 +41,20 @@ final class SavePostErrorState extends FollowingPostState {
 
 //---------------like post state---------------
 
-
 final class LikeLoadingState extends FollowingPostState {}
 
 final class LikeSuccessState extends FollowingPostState {}
 
 final class LikeErrorState extends FollowingPostState {}
+
+//---------------featch comments state---------------
+
+final class FeatchCommentsLoadingState extends FollowingPostState {}
+
+final class FeatchCommentsSuccessState extends FollowingPostState {
+  final List<CommentModel> comments;
+
+  FeatchCommentsSuccessState({required this.comments});
+}
+
+final class FeatchCommentsErrorState extends FollowingPostState {}

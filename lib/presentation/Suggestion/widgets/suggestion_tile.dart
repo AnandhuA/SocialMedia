@@ -123,7 +123,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
                     height: 30,
                     width: 150,
                     child: CustomButton(
-                      title: "Remove",
+                      title: "UnFollow",
                       minWidth: 5,
                       color: theme.brightness == Brightness.dark
                           ? darkModeCustomButtonBG

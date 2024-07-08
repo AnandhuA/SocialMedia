@@ -166,15 +166,18 @@ class ProfileSectionTwo extends StatelessWidget {
                                 ),
                                 itemCount: state.savedPostList.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          state.savedPostList[index].image,
+                                  return InkWell(
+                                    // onTap: () => Navigator.push(context,MaterialPageRoute(builder: (context) => PostViewScreen(post: state.savedPostList[index]),)),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            state.savedPostList[index].image,
+                                          ),
+                                          fit: BoxFit.cover,
                                         ),
-                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   );
@@ -192,8 +195,3 @@ class ProfileSectionTwo extends StatelessWidget {
   }
 }
 
-// List dummylistsave = [
-//   "https://media.istockphoto.com/id/1317323736/photo/a-view-up-into-the-trees-direction-sky.jpg?s=612x612&w=0&k=20&c=i4HYO7xhao7CkGy7Zc_8XSNX_iqG0vAwNsrH1ERmw2Q=",
-//   "https://media.istockphoto.com/id/1296344118/photo/beautiful-happy-woman-enjoying-the-warm-sunlight-in-a-tropical-public-park.jpg?s=612x612&w=0&k=20&c=Z0h4uIzZd4cxhkT_CSl9-1wFbnbuqEWYrp5heM9uDuQ=",
-//   "https://media.istockphoto.com/id/1314559532/photo/relaxed-woman-breathing-fresh-air-in-a-green-forest.jpg?s=612x612&w=0&k=20&c=_LPHSLjVO_ZDMatEHl_62i6RW-6IpnHgjoG3aIDPY2A="
-// ];

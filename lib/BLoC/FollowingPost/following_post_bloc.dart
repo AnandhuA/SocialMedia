@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:social_media/models/comment_model.dart';
 import 'package:social_media/models/post_model.dart';
 import 'package:social_media/repository/authentication/post_repo.dart';
 
@@ -18,6 +19,7 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     on<UnSaveButtonClickEvent>(_unSaveButtonClickEvent);
     on<LikeEvent>(_likeEvent);
     on<UnLikeEvent>(_unLikeEvent);
+    on<CommentButtonClickEvent>(_commentButtonClickEvent);
   }
 
   FutureOr<void> _featchAllFollowingPostEvent(
@@ -161,7 +163,8 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     Emitter<FollowingPostState> emit,
   ) async {
     emit(LikeLoadingState());
-   final Response? likeResponce = await PostRepo.likePost(postId: event.post.id);
+    final Response? likeResponce =
+        await PostRepo.likePost(postId: event.post.id);
     final postListresponc = await PostRepo.getFollowersPost(page: 1);
     if (likeResponce != null && likeResponce.body.isNotEmpty) {
       final likeResponceBody = jsonDecode(likeResponce.body);
@@ -217,7 +220,8 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     Emitter<FollowingPostState> emit,
   ) async {
     emit(LikeLoadingState());
-    final Response? unLikeResponce = await PostRepo.unlikePost(postId: event.post.id);
+    final Response? unLikeResponce =
+        await PostRepo.unlikePost(postId: event.post.id);
     final postListresponc = await PostRepo.getFollowersPost(page: 1);
     if (unLikeResponce != null && unLikeResponce.body.isNotEmpty) {
       final unLikeResponceBody = jsonDecode(unLikeResponce.body);
@@ -256,11 +260,65 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
           break;
         case 500:
           emit(SavePostErrorState(
-              error: "Internal server error - ${unLikeResponceBody["message"]}"));
+              error:
+                  "Internal server error - ${unLikeResponceBody["message"]}"));
           break;
         default:
           emit(SavePostErrorState(
               error: "HTTP Error - ${unLikeResponceBody["message"]}"));
+          break;
+      }
+    } else {
+      emit(SavePostErrorState(error: "No response received from server"));
+    }
+  }
+
+  FutureOr<void> _commentButtonClickEvent(
+    CommentButtonClickEvent event,
+    Emitter<FollowingPostState> emit,
+  ) async {
+    emit(FeatchCommentsLoadingState());
+    final Response? commentResponce =
+        await PostRepo.getAllComments(postId: event.post.id);
+    if (commentResponce != null && commentResponce.body.isNotEmpty) {
+      // log(commentResponce.body.toString());
+      final commentResponceBody = jsonDecode(commentResponce.body);
+      switch (commentResponce.statusCode) {
+        case 200:
+          // log(commentResponceBody.toString());
+          List<CommentModel> comments = (commentResponceBody['comments']
+                  as List<dynamic>)
+              .map(
+                  (json) => CommentModel.fromJson(json as Map<String, dynamic>))
+              .toList();
+          emit(FeatchCommentsSuccessState(comments: comments));
+
+          // log(comments.toString());
+          break;
+        case 400:
+          emit(SavePostErrorState(
+              error: "Bad request - ${commentResponceBody["message"]}"));
+          break;
+        case 401:
+          emit(SavePostErrorState(
+              error: "Unauthorized - ${commentResponceBody["message"]}"));
+          break;
+        case 403:
+          emit(SavePostErrorState(
+              error: "Forbidden - ${commentResponceBody["message"]}"));
+          break;
+        case 404:
+          emit(SavePostErrorState(
+              error: "Not found - ${commentResponceBody["message"]}"));
+          break;
+        case 500:
+          emit(SavePostErrorState(
+              error:
+                  "Internal server error - ${commentResponceBody["message"]}"));
+          break;
+        default:
+          emit(SavePostErrorState(
+              error: "HTTP Error - ${commentResponceBody["message"]}"));
           break;
       }
     } else {

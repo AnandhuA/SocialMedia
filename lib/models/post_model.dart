@@ -73,7 +73,7 @@ class PostModel {
   final UserModel userId;
   final String image;
   final String description;
-  final List<String> likes;
+  final List<dynamic> likes;
   final bool hidden;
   final bool blocked;
   final List<String> tags;
@@ -104,13 +104,28 @@ class PostModel {
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
+    List<dynamic> likesData = json['likes'] as List<dynamic>;
+
+    // Determine the type of the items in the likes list
+    List<dynamic> parsedLikes;
+    if (likesData.isNotEmpty && likesData.first is Map<String, dynamic>) {
+      parsedLikes = likesData
+          .map((e) => UserModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } else {
+      parsedLikes = List<String>.from(likesData);
+    }
     return PostModel(
       id: json['_id'] as String,
       userId: UserModel.fromJson(json['userId'] as Map<String, dynamic>),
       image: json['image'] as String,
       description: json['description'] as String,
-      likes: (json['likes'] as List<dynamic>).map((e) => e.toString()).toList(),
+      // likes: (json['likes'] as List<dynamic>)
+      //     .map((e) => UserModel.fromJson(e as Map<String, dynamic>))
+      //     .toList(),
       // likes: List<String>.from(json['likes'] as List),
+      likes: parsedLikes,
+
       hidden: json['hidden'] as bool,
       blocked: json['blocked'] as bool,
       tags: (json['tags'] as List<dynamic>)
@@ -150,5 +165,3 @@ class PostModel {
     };
   }
 }
-
-

@@ -19,6 +19,8 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     on<LikeEvent>(_likeEvent);
     on<UnLikeEvent>(_unLikeEvent);
     on<CommentButtonClickEvent>(_commentButtonClickEvent);
+    on<AddNewCommentEvent>(_addNewCommentEvent);
+    on<DeleteCommentEvent>(_deleteCommentEvent);
   }
 
   FutureOr<void> _featchAllFollowingPostEvent(
@@ -314,6 +316,136 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
       }
     } else {
       emit(SavePostErrorState(error: "No response received from server"));
+    }
+  }
+
+  FutureOr<void> _addNewCommentEvent(
+    AddNewCommentEvent event,
+    Emitter<FollowingPostState> emit,
+  ) async {
+    emit(AddNewCommentLoadingState());
+    final Response? commentResponce = await PostRepo.commentPost(
+      postId: event.post.id,
+      userName: event.post.userId.userName,
+      content: event.comment,
+    );
+    if (commentResponce != null && commentResponce.body.isNotEmpty) {
+      final commentResponceBody = jsonDecode(commentResponce.body);
+      switch (commentResponce.statusCode) {
+        case 200:
+          final Response? featchCommentResponce =
+              await PostRepo.getAllComments(postId: event.post.id);
+          if (featchCommentResponce != null &&
+              featchCommentResponce.body.isNotEmpty &&
+              featchCommentResponce.statusCode == 200) {
+            // log(commentResponce.body.toString());
+            final featchCommentResponceBody =
+                jsonDecode(featchCommentResponce.body);
+            List<CommentModel> comments =
+                (featchCommentResponceBody['comments'] as List<dynamic>)
+                    .map((json) =>
+                        CommentModel.fromJson(json as Map<String, dynamic>))
+                    .toList();
+            emit(FeatchCommentsSuccessState(comments: comments));
+          } else {
+            emit(AddNewCommentErrorState(
+                error: "No response received from server"));
+          }
+          // // log(commentResponceBody.toString());
+          // List<CommentModel> comments = (commentResponceBody['comments']
+          //         as List<dynamic>)
+          //     .map(
+          //         (json) => CommentModel.fromJson(json as Map<String, dynamic>))
+          //     .toList();
+          // emit(FeatchCommentsSuccessState(comments: comments));
+
+          // log(comments.toString());
+          break;
+        case 400:
+          emit(AddNewCommentErrorState(
+              error: "Bad request - ${commentResponceBody["message"]}"));
+          break;
+        case 401:
+          emit(AddNewCommentErrorState(
+              error: "Unauthorized - ${commentResponceBody["message"]}"));
+          break;
+        case 403:
+          emit(AddNewCommentErrorState(
+              error: "Forbidden - ${commentResponceBody["message"]}"));
+          break;
+        case 404:
+          emit(AddNewCommentErrorState(
+              error: "Not found - ${commentResponceBody["message"]}"));
+          break;
+        case 500:
+          emit(AddNewCommentErrorState(
+              error:
+                  "Internal server error - ${commentResponceBody["message"]}"));
+          break;
+        default:
+          emit(AddNewCommentErrorState(
+              error: "HTTP Error - ${commentResponceBody["message"]}"));
+          break;
+      }
+    }
+  }
+
+  FutureOr<void> _deleteCommentEvent(
+    DeleteCommentEvent event,
+    Emitter<FollowingPostState> emit,
+  ) async {
+    emit(DeleteCommentLoadingState());
+    final Response? deleteResponce =
+        await PostRepo.deleteComment(commentId: event.comment.id);
+    if (deleteResponce != null && deleteResponce.body.isNotEmpty) {
+      final deleteResponceBody = jsonDecode(deleteResponce.body);
+      switch (deleteResponce.statusCode) {
+        case 200:
+          final Response? featchCommentResponce =
+              await PostRepo.getAllComments(postId: event.post.id);
+          if (featchCommentResponce != null &&
+              featchCommentResponce.body.isNotEmpty &&
+              featchCommentResponce.statusCode == 200) {
+            // log(commentResponce.body.toString());
+            final featchCommentResponceBody =
+                jsonDecode(featchCommentResponce.body);
+            List<CommentModel> comments =
+                (featchCommentResponceBody['comments'] as List<dynamic>)
+                    .map((json) =>
+                        CommentModel.fromJson(json as Map<String, dynamic>))
+                    .toList();
+            emit(FeatchCommentsSuccessState(comments: comments));
+          }else{
+            emit(DeleteCommentErrorState(
+                error: "No response received from server"));
+          }
+          break;
+        case 400:
+          emit(AddNewCommentErrorState(
+              error: "Bad request - ${deleteResponceBody["message"]}"));
+          break;
+        case 401:
+          emit(AddNewCommentErrorState(
+              error: "Unauthorized - ${deleteResponceBody["message"]}"));
+          break;
+        case 403:
+          emit(AddNewCommentErrorState(
+              error: "Forbidden - ${deleteResponceBody["message"]}"));
+          break;
+        case 404:
+          emit(AddNewCommentErrorState(
+              error: "Not found - ${deleteResponceBody["message"]}"));
+          break;
+        case 500:
+          emit(AddNewCommentErrorState(
+              error:
+                  "Internal server error - ${deleteResponceBody["message"]}"));
+          break;
+        default:
+          emit(AddNewCommentErrorState(
+              error: "HTTP Error - ${deleteResponceBody["message"]}"));
+          break;
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,6 +135,7 @@ class BottomSection extends StatefulWidget {
 class _BottomSectionState extends State<BottomSection> {
   late bool isSaved;
   late bool isLiked;
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     isSaved = widget.postModel.isSaved;
@@ -181,21 +184,24 @@ class _BottomSectionState extends State<BottomSection> {
           ),
           InkWell(
               onTap: () async {
+                log(widget.postModel.commentCount.toString());
                 final String? profilePic = await getUserProfilePic();
                 context
                     .read<FollowingPostBloc>()
                     .add(CommentButtonClickEvent(post: widget.postModel));
                 commentBottomSheet(
-                    context: context,
-                    commentController: TextEditingController(),
-                    id: widget.postModel.id,
-                    post: widget.postModel,
-                    profilePic: profilePic ??
-                        "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",);
+                  formkey: _formKey,
+                  context: context,
+                  commentController: TextEditingController(),
+                  id: widget.postModel.id,
+                  post: widget.postModel,
+                  profilePic: profilePic ??
+                      "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
+                );
               },
-              child: PostReactionButton(
+              child: const PostReactionButton(
                 icon: Icons.comment,
-                count: widget.postModel.commentCount.toString(),
+                count: "",
               )),
           BlocBuilder<FollowingPostBloc, FollowingPostState>(
             builder: (context, state) {

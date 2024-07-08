@@ -41,3 +41,21 @@ final class CommentButtonClickEvent extends FollowingPostEvent {
 
   CommentButtonClickEvent({required this.post});
 }
+
+//------------AddCommentEvent----------
+
+final class AddNewCommentEvent extends FollowingPostEvent {
+  final PostModel post;
+  final String comment;
+
+  AddNewCommentEvent({required this.post, required this.comment});
+}
+
+//------------DeleteCommentEvent----------
+
+final class DeleteCommentEvent extends FollowingPostEvent {
+  final CommentModel comment;
+    final PostModel post;
+
+  DeleteCommentEvent({required this.comment,required this.post});
+}

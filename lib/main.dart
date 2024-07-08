@@ -18,11 +18,13 @@ import 'package:social_media/repository/authentication/shared_preferences.dart';
 
 late String userProfilePic;
 late String userName;
+late String userId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    userProfilePic = await getUserProfilePic() ??
       "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png";
       userName = await getUserName()?? "Anonymous";
+      userId = await getUserId()?? "Anonymous";
   if (defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS ||
       defaultTargetPlatform == TargetPlatform.macOS ||

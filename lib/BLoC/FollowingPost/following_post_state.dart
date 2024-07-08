@@ -58,3 +58,23 @@ final class FeatchCommentsSuccessState extends FollowingPostState {
 }
 
 final class FeatchCommentsErrorState extends FollowingPostState {}
+
+//-----------------add new comment state---------------
+
+final class AddNewCommentLoadingState extends FollowingPostState {}
+
+final class AddNewCommentSuccesState extends FollowingPostState {}
+
+final class AddNewCommentErrorState extends FollowingPostState {
+  final String error;
+
+  AddNewCommentErrorState({required this.error});
+}
+//-----------------delete comment state---------------
+final class DeleteCommentLoadingState extends FollowingPostState {}
+final class DeleteCommentSuccessState extends FollowingPostState {}
+final class DeleteCommentErrorState extends FollowingPostState {
+  final String error;
+
+  DeleteCommentErrorState({required this.error});
+}

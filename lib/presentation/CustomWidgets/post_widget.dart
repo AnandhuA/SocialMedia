@@ -199,9 +199,9 @@ class _BottomSectionState extends State<BottomSection> {
                       "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                 );
               },
-              child: const PostReactionButton(
+              child: PostReactionButton(
                 icon: Icons.comment,
-                count: "",
+                count: widget.postModel.commentCount.toString(),
               )),
           BlocBuilder<FollowingPostBloc, FollowingPostState>(
             builder: (context, state) {

@@ -21,7 +21,9 @@ class CustomAppbar extends StatelessWidget {
         height: 60,
         width: double.infinity,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: backButton
+              ? MainAxisAlignment.spaceBetween
+              : MainAxisAlignment.center,
           children: [
             backButton
                 ? IconButton(
@@ -30,7 +32,9 @@ class CustomAppbar extends StatelessWidget {
                     },
                     icon: const Icon(Icons.arrow_back),
                   )
-                : const SizedBox(),
+                : const SizedBox(
+                    width: 50,
+                  ),
             Text(
               title,
               style: theme.textTheme.headlineLarge,

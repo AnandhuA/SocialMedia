@@ -94,12 +94,16 @@ class PostWidget extends StatelessWidget {
             style: theme.textTheme.titleMedium,
           ),
           constHeight10,
-          CachedNetworkImage(
-            imageUrl: postModel.image,
-            fit: BoxFit.cover,
-            placeholder: (context, url) {
-              return SizedBox(height: 300, child: imageLoadingShimmer());
-            },
+          SizedBox(
+            height: 350,
+            width: double.infinity,
+            child: CachedNetworkImage(
+              imageUrl: postModel.image,
+              fit: BoxFit.cover,
+              placeholder: (context, url) {
+                return SizedBox(height: 300, child: imageLoadingShimmer());
+              },
+            ),
           ),
           BottomSection(postModel: postModel)
         ],
@@ -229,6 +233,7 @@ class _BottomSectionState extends State<BottomSection> {
                             : context.read<FollowingPostBloc>().add(
                                   SaveButtonClickEvent(
                                     post: widget.postModel,
+                                    
                                   ),
                                 );
                       },

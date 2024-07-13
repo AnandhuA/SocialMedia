@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  custom_refresh_indicator:
+    dependency: "direct main"
+    description:
+      name: custom_refresh_indicator
+      sha256: "31cb83e520f7a6794184869f2dfc77b822e17788c0f1bec336330dcff34eef5f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   dotted_border:
     dependency: "direct main"
     description:

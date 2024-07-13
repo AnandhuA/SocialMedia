@@ -43,13 +43,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (state is FeatchFollowingPostLoadingState) {
                       return const ShimmerPostList();
                     } else if (state is FeatchFollowingPostSuccessState) {
-                      return ListView.builder(
-                        itemCount: state.posts.length,
-                        itemBuilder: (context, index) {
-                          return PostWidget(
-                            postModel: state.posts[index],
-                          );
-                        },
+                      return RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        child: ListView.builder(
+                          itemCount: state.posts.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < state.posts.length) {
+                               return PostWidget(
+                                postModel: state.posts[index],
+                              );
+                            }else{
+                              
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            
+                          },
+                        ),
                       );
                     } else {
                       log(state.toString());
@@ -66,5 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    log("message");
+    // Trigger a re-fetch of the posts
+    context.read<FollowingPostBloc>().add(FeatchAllFollowingPostEvent());
   }
 }

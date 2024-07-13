@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media/BLoC/Chat/chat_bloc.dart';
 import 'package:social_media/BLoC/Explore/explore_bloc.dart';
 import 'package:social_media/BLoC/Follow/follow_bloc.dart';
 import 'package:social_media/BLoC/FollowingPost/following_post_bloc.dart';
@@ -21,10 +22,10 @@ late String userName;
 late String userId;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   userProfilePic = await getUserProfilePic() ??
+  userProfilePic = await getUserProfilePic() ??
       "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png";
-      userName = await getUserName()?? "Anonymous";
-      userId = await getUserId()?? "Anonymous";
+  userName = await getUserName() ?? "";
+  userId = await getUserId() ?? "Anonymous";
   if (defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS ||
       defaultTargetPlatform == TargetPlatform.macOS ||
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ImageUploadBloc()),
         BlocProvider(create: (context) => FollowingPostBloc()),
         BlocProvider(create: (context) => ExploreBloc()),
+        BlocProvider(create: (context) => ChatBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

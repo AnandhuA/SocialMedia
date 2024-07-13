@@ -1,9 +1,10 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_media/main.dart';
 
 const String authKey = "AUTHKEY";
 const String tokenKey = "TOKEN";
-const String userId = "USERID";
+const String id = "USERID";
 const String userNamekey = "USERNAME";
 const String userProfilePickey = "USERPROFILEPIC";
 
@@ -17,9 +18,14 @@ setUserLoggedin({
   final sharedPref = await SharedPreferences.getInstance();
   await sharedPref.setBool(authKey, true);
   await sharedPref.setString(tokenKey, token);
-  await sharedPref.setString(userId, userid);
+  await sharedPref.setString(id, userid);
   await sharedPref.setString(userNamekey, userName);
   await sharedPref.setString(userProfilePickey, userprofilePic);
+
+  userProfilePic = await getUserProfilePic() ??
+      "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png";
+  userName = await getUserName() ?? "";
+  userId = await getUserId() ?? "Anonymous";
 }
 
 //--------clear cerdentional-------
@@ -28,7 +34,7 @@ clearUserSession() async {
   final sharedprefs = await SharedPreferences.getInstance();
   await sharedprefs.remove(authKey);
   await sharedprefs.remove(tokenKey);
-  await sharedprefs.remove(userId);
+  await sharedprefs.remove(id);
   await sharedprefs.remove(userNamekey);
   await sharedprefs.remove(userProfilePickey);
   await googleSignIn.signOut();
@@ -44,7 +50,7 @@ Future<String?> getUsertoken() async {
 //----------get user id-----------
 Future<String?> getUserId() async {
   final sharedpreference = await SharedPreferences.getInstance();
-  final userid = sharedpreference.getString(userId);
+  final userid = sharedpreference.getString(id);
   return userid;
 }
 

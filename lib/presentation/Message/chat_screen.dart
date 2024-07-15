@@ -4,6 +4,7 @@ import 'package:social_media/BLoC/Chat/chat_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
+import 'package:social_media/presentation/Message/widgets/chat_widget.dart';
 
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
@@ -12,6 +13,8 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Background(
         child: SafeArea(
@@ -28,8 +31,10 @@ class ChatScreen extends StatelessWidget {
                       reverse: true,
                       itemBuilder: (context, index) => Container(
                         margin: const EdgeInsets.all(10),
-                        height: 50,
-                        child: Text(state.chatList[(list.length - 1) - index]),
+                        child: ChatWidget(
+                          message: state.chatList[(list.length - 1) - index],
+                          isMe: true,
+                        ),
                       ),
                     );
                   }
@@ -43,6 +48,7 @@ class ChatScreen extends StatelessWidget {
               height: 80,
               child: TextField(
                 controller: _messageController,
+                style: theme.textTheme.titleLarge,
                 decoration: InputDecoration(
                   hintText: "Message",
                   suffixIcon: IconButton(
@@ -50,7 +56,8 @@ class ChatScreen extends StatelessWidget {
                       if (_messageController.text.isNotEmpty) {
                         context.read<ChatBloc>().add(
                               SendMessageEvent(
-                                  message: _messageController.text),
+                                message: _messageController.text,
+                              ),
                             );
                         _messageController.clear();
                       }

@@ -72,7 +72,4 @@ class UserRepo {
     }
   }
 
-  //----------------get single user details-----------------
-
- 
 }

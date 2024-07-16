@@ -14,3 +14,13 @@ final class ChatSuccessState extends ChatState {
 }
 
 final class ChatErrorState extends ChatState {}
+
+final class FeatchMessageListLoadingState extends ChatState {}
+
+final class FetchMessageListSuccessState extends ChatState {}
+
+final class FetchMessageListErrorState extends ChatState {
+  final String errorMessage;
+
+  FetchMessageListErrorState({required this.errorMessage});
+}

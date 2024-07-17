@@ -56,7 +56,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
                       ),
                       image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                          widget.suggessionUser.backGroundImage,
+                          widget.suggessionUser.backGroundImage??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600",
                         ),
                         fit: BoxFit.fill,
                       ),
@@ -66,7 +66,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
                         top: Radius.circular(10),
                       ),
                       child: CachedNetworkImage(
-                        imageUrl: widget.suggessionUser.backGroundImage,
+                        imageUrl: widget.suggessionUser.backGroundImage??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600",
                         fit: BoxFit.cover,
                         placeholder: (context, url) {
                           return Center(
@@ -85,7 +85,7 @@ class _SuggestionTileState extends State<SuggestionTile> {
                     child: CircleAvatar(
                       radius: avatarRadius,
                       child: CachedNetworkImage(
-                        imageUrl: widget.suggessionUser.profilePic,
+                        imageUrl: widget.suggessionUser.profilePic??"https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           radius: 50,
                           backgroundImage: imageProvider,

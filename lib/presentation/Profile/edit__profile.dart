@@ -34,8 +34,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _nameController.text = widget.userDetails.name ?? "";
     _phoneController.text = widget.userDetails.phone ?? "";
     _bioController.text = widget.userDetails.bio ?? "";
-    coverPhoto = widget.userDetails.backGroundImage;
-    profilePhoto = widget.userDetails.profilePic;
+    coverPhoto = widget.userDetails.backGroundImage ??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600";
+    profilePhoto = widget.userDetails.profilePic ?? "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png";
     super.initState();
   }
 

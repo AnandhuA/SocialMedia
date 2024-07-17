@@ -35,7 +35,7 @@ class FollowerList extends StatelessWidget {
                     radius: 30,
                     backgroundColor: transparentColor,
                     child: CachedNetworkImage(
-                      imageUrl: state.followerList[index].profilePic,
+                      imageUrl: state.followerList[index].profilePic??"https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                       imageBuilder: (context, imageProvider) => CircleAvatar(
                         radius: 30,
                         backgroundImage: imageProvider,

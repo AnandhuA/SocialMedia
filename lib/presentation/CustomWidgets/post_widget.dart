@@ -43,7 +43,7 @@ class PostWidget extends StatelessWidget {
               child: CircleAvatar(
                 radius: 25,
                 child: CachedNetworkImage(
-                  imageUrl: postModel.userId.profilePic,
+                  imageUrl: postModel.userId.profilePic??"https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                   imageBuilder: (context, imageProvider) => CircleAvatar(
                     radius: 60,
                     backgroundImage: imageProvider,

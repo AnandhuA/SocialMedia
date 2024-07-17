@@ -46,7 +46,7 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                     children: [
                       Positioned.fill(
                         child: CachedNetworkImage(
-                          imageUrl: widget.user.backGroundImage,
+                          imageUrl: widget.user.backGroundImage??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600",
                           fit: BoxFit.cover,
                           placeholder: (context, url) => imageLoadingShimmer(),
                           errorWidget: (context, url, error) =>
@@ -64,7 +64,7 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                             radius: 60,
                             backgroundColor: Colors.transparent,
                             backgroundImage: CachedNetworkImageProvider(
-                              widget.user.profilePic,
+                              widget.user.profilePic ??"https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                             ),
                           ),
                         ),

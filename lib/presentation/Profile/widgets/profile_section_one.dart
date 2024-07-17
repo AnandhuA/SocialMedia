@@ -38,13 +38,13 @@ class ProfileSectionOne extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: CachedNetworkImageProvider(
-                        state.userDetails.backGroundImage,
+                        state.userDetails.backGroundImage??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600",
                       ),
                       fit: BoxFit.fill,
                     ),
                   ),
                   child: CachedNetworkImage(
-                    imageUrl: state.userDetails.backGroundImage,
+                    imageUrl: state.userDetails.backGroundImage??"https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=600",
                     fit: BoxFit.cover,
                     placeholder: (context, url) {
                       return Center(
@@ -66,7 +66,7 @@ class ProfileSectionOne extends StatelessWidget {
                       radius: 60,
                       backgroundColor: transparentColor,
                       child: CachedNetworkImage(
-                        imageUrl: state.userDetails.profilePic,
+                        imageUrl: state.userDetails.profilePic??"https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           radius: 60,
                           backgroundImage: imageProvider,

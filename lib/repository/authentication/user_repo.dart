@@ -72,4 +72,19 @@ class UserRepo {
     }
   }
 
+  //--------------getSingleUser by id----------------
+
+    static Future<http.Response?> getSingleUser({required String userid}) async {
+    try {
+      final token = await getUsertoken();
+      http.Response response = await http.get(
+          Uri.parse(
+              '$baseurl$getSingleuserurl/$userid'),
+          headers: {'Authorization': 'Bearer $token'});
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
 }

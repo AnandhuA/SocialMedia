@@ -99,7 +99,8 @@ Future<dynamic> commentBottomSheet(
                                 CircleAvatar(
                                   radius: 18,
                                   backgroundImage: CachedNetworkImageProvider(
-                                    state.comments[index].userId.profilePic,
+                                    state.comments[index].userId.profilePic ??
+                                        "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                                   ),
                                 ),
                                 constWidth10,

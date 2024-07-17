@@ -17,7 +17,15 @@ final class ChatErrorState extends ChatState {}
 
 final class FeatchMessageListLoadingState extends ChatState {}
 
-final class FetchMessageListSuccessState extends ChatState {}
+final class FetchMessageListSuccessState extends ChatState {
+  final List<Conversation> chatList;
+  final List<UserModel> userList;
+
+  FetchMessageListSuccessState({
+    required this.chatList,
+    required this.userList,
+  });
+}
 
 final class FetchMessageListErrorState extends ChatState {
   final String errorMessage;

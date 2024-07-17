@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Chat/chat_bloc.dart';
 import 'package:social_media/core/bacground.dart';
+import 'package:social_media/core/colors.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/Message/chat_screen.dart';
 
@@ -34,7 +35,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 if (state is FetchMessageListSuccessState) {
                   return Expanded(
                     child: ListView.separated(
-                      itemCount: 32,
+                      itemCount: state.userList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () => Navigator.push(
@@ -43,41 +44,27 @@ class _MessageScreenState extends State<MessageScreen> {
                               builder: (context) => ChatScreen(),
                             ),
                           ),
-                          leading: const CircleAvatar(
+                          leading: CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(
-                              "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                              state.userList[index].profilePic ??
+                                  "https://res.cloudinary.com/di9yf5j0d/image/upload/v1695795823/om0qyogv6dejgjseakej.png",
                             ),
                           ),
-                          title: Text("name$index"),
+                          title: Text(
+                            state.userList[index].name ??
+                                state.userList[index].userName,
+                          ),
                         );
                       },
-                      separatorBuilder: (context, index) => const Divider(),
+                      separatorBuilder: (context, index) => const Divider(
+                        color: greyColor,
+                      ),
                     ),
                   );
                 }
-                return Expanded(
-                  child: ListView.separated(
-                    itemCount: 32,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatScreen(),
-                          ),
-                        ),
-                        leading: const CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                            "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                          ),
-                        ),
-                        title: Text("name$index"),
-                      );
-                    },
-                    separatorBuilder: (context, index) => const Divider(),
-                  ),
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
               },
             )

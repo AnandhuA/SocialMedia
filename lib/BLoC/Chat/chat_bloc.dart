@@ -14,21 +14,13 @@ import 'package:social_media/repository/authentication/user_repo.dart';
 part 'chat_event.dart';
 part 'chat_state.dart';
 
-List<String> list = [];
+List<Message> list = [];
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc() : super(ChatInitial()) {
     on<SendMessageEvent>(_sendMessage);
     on<FeatchMessageListEvent>(_featchMessageList);
-  }
-
-  FutureOr<void> _sendMessage(
-    SendMessageEvent event,
-    Emitter<ChatState> emit,
-  ) async {
-    emit(ChatLoadingState());
-    list.add(event.message);
-    emit(ChatSuccessState(chatList: list));
+    on<ClickUserEvent>(_clickUserEvent);
   }
 
   FutureOr<void> _featchMessageList(
@@ -48,20 +40,58 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       final List<String> userIdList =
           chatList.expand((conversation) => conversation.members).toList();
       final List<UserModel> userList = [];
+
       for (String id in userIdList) {
-        final Response? getUserResponse =
-            await UserRepo.getSingleUser(userid: id);
-        if (getUserResponse != null && getUserResponse.statusCode == 200) {
-          final decodedGetUserResponce = jsonDecode(getUserResponse.body);
+        if (id != userId) {
+          final Response? getUserResponse =
+              await UserRepo.getSingleUser(userid: id);
+          if (getUserResponse != null && getUserResponse.statusCode == 200) {
+            final decodedGetUserResponce = jsonDecode(getUserResponse.body);
 
-          UserModel user = UserModel.fromJson(decodedGetUserResponce);
+            UserModel user = UserModel.fromJson(decodedGetUserResponce);
 
-          userList.add(user);
+            userList.add(user);
+          }
         }
       }
 
       emit(
           FetchMessageListSuccessState(chatList: chatList, userList: userList));
+    }
+  }
+
+  FutureOr<void> _sendMessage(
+    SendMessageEvent event,
+    Emitter<ChatState> emit,
+  ) async {
+    final Response? sendMessageResponse = await ChatRepo.addMessage(
+      recieverId: event.receiverId,
+      text: event.message,
+      conversationId: event.conversationId,
+      senderId: userId,
+    );
+    log(sendMessageResponse!.body.toString());
+    add(ClickUserEvent(conversationId: event.conversationId));
+  }
+
+  FutureOr<void> _clickUserEvent(
+    ClickUserEvent event,
+    Emitter<ChatState> emit,
+  ) async {
+    final Response? getUserChatResponce =
+        await ChatRepo.getAllMessages(conversationId: event.conversationId);
+
+    if (getUserChatResponce != null && getUserChatResponce.statusCode == 200) {
+      final getChatlistResponseDecoded = jsonDecode(getUserChatResponce.body);
+      final List<Message> chatList =
+          (getChatlistResponseDecoded['data'] as List)
+              .map((json) => Message.fromJson(json))
+              .toList();
+
+      return emit(
+          FeatchMessagesSuccessState(messageList: chatList, userId: userId));
+    } else {
+      return emit(FeatchMessagesErrorState(errorMessage: "ennjdjasf"));
     }
   }
 }

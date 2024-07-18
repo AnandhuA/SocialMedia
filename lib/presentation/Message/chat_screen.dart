@@ -2,14 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Chat/chat_bloc.dart';
 import 'package:social_media/core/bacground.dart';
+import 'package:social_media/main.dart';
 
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/Message/widgets/chat_widget.dart';
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+class ChatScreen extends StatefulWidget {
+
+  final String receiverId;
+  final String conversationId;
+  const ChatScreen({
+    super.key,
+ 
+    required this.receiverId,
+    required this.conversationId,
+  });
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
+
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    context
+        .read<ChatBloc>()
+        .add(ClickUserEvent(conversationId: widget.conversationId));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +48,21 @@ class ChatScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<ChatBloc, ChatState>(
                 builder: (context, state) {
-                  if (state is ChatSuccessState) {
+                  if (state is FeatchMessagesSuccessState) {
                     return ListView.builder(
-                      itemCount: state.chatList.length,
+                      itemCount: state.messageList.length,
                       controller: _scrollController,
                       reverse: true,
                       itemBuilder: (context, index) => Container(
                         margin: const EdgeInsets.all(10),
                         child: ChatWidget(
-                          message: state.chatList[(list.length - 1) - index],
-                          isMe: true,
+                          message: state.messageList[
+                              (state.messageList.length - 1) - index],
+                          isMe: userId ==
+                              state
+                                  .messageList[
+                                      (state.messageList.length - 1) - index]
+                                  .receiverId,
                         ),
                       ),
                     );
@@ -57,6 +86,8 @@ class ChatScreen extends StatelessWidget {
                         context.read<ChatBloc>().add(
                               SendMessageEvent(
                                 message: _messageController.text,
+                                receiverId: widget.receiverId,
+                                conversationId: widget.conversationId,
                               ),
                             );
                         _messageController.clear();

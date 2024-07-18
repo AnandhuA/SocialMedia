@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/Chat/chat_bloc.dart';
 import 'package:social_media/core/bacground.dart';
-import 'package:social_media/core/colors.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/Message/chat_screen.dart';
 
@@ -38,12 +37,17 @@ class _MessageScreenState extends State<MessageScreen> {
                       itemCount: state.userList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatScreen(),
-                            ),
-                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatScreen(
+                                   
+                                    receiverId: state.userList[index].id,
+                                    conversationId: state.chatList[index].id,
+                                  ),
+                                ));
+                          },
                           leading: CircleAvatar(
                             radius: 30,
                             backgroundImage: NetworkImage(
@@ -57,13 +61,13 @@ class _MessageScreenState extends State<MessageScreen> {
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) => const Divider(
-                        color: greyColor,
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.grey.shade500,
                       ),
                     ),
                   );
                 }
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               },

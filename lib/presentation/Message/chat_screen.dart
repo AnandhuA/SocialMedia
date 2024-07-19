@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -29,10 +28,22 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    super.initState();
     context
         .read<ChatBloc>()
         .add(ClickUserEvent(conversationId: widget.conversationId));
-    super.initState();
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   String _formatDate(DateTime date) {
@@ -46,7 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
     } else if (date.isAtSameMomentAs(yesterday)) {
       return 'Yesterday';
     } else if (date.isAfter(weekAgo)) {
-      return DateFormat.EEEE().format(date); 
+      return DateFormat.EEEE().format(date);
     } else {
       return DateFormat.yMMMd().format(date);
     }
@@ -71,6 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return groupedMessages;
   }
 
+  List<Message> messages = [];
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -82,15 +94,23 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               const CustomAppbar(title: "Chat"),
               Expanded(
-                child: BlocBuilder<ChatBloc, ChatState>(
+                child: BlocConsumer<ChatBloc, ChatState>(
+                  listener: (context, state) {
+                    if (state is FeatchMessagesSuccessState) {
+                      _scrollToBottom();
+                    }
+                  },
                   builder: (context, state) {
                     if (state is FeatchMessagesSuccessState) {
-                      final messages = state.messageList;
+                      messages = state.messageList;
                       final groupedMessages = _groupMessagesByDate(messages);
 
-                      return ListView(
+                      return ListView.builder(
                         controller: _scrollController,
-                        children: groupedMessages.entries.map((entry) {
+                        itemCount: groupedMessages.length,
+                        itemBuilder: (context, index) {
+                          final entry =
+                              groupedMessages.entries.elementAt(index);
                           final dateHeader = entry.key;
                           final messages = entry.value;
 
@@ -112,10 +132,39 @@ class _ChatScreenState extends State<ChatScreen> {
                                   )),
                             ],
                           );
-                        }).toList(),
+                        },
                       );
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    final groupedMessages = _groupMessagesByDate(messages);
+
+                    return ListView.builder(
+                      controller: _scrollController,
+                      itemCount: groupedMessages.length,
+                      itemBuilder: (context, index) {
+                        final entry = groupedMessages.entries.elementAt(index);
+                        final dateHeader = entry.key;
+                        final messages = entry.value;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                dateHeader,
+                                style: theme.textTheme.titleLarge,
+                              ),
+                            ),
+                            ...messages.map((message) => Container(
+                                  margin: const EdgeInsets.all(10),
+                                  child: ChatWidget(
+                                    message: message,
+                                    isMe: userId == message.receiverId,
+                                  ),
+                                )),
+                          ],
+                        );
+                      },
+                    );
                   },
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_media/BLoC/Chat/chat_bloc.dart';
+import 'package:social_media/BLoC/chat_featching/chat_featching_bloc.dart';
 import 'package:social_media/core/bacground.dart';
 import 'package:social_media/presentation/CustomWidgets/custom_appbar.dart';
 import 'package:social_media/presentation/Message/chat_screen.dart';
@@ -15,7 +15,7 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
-    context.read<ChatBloc>().add(FeatchMessageListEvent());
+    context.read<ChatFeatchingBloc>().add(FeatchMessageListEvent());
     super.initState();
   }
 
@@ -29,7 +29,13 @@ class _MessageScreenState extends State<MessageScreen> {
             const CustomAppbar(
               title: "Message",
             ),
-            BlocBuilder<ChatBloc, ChatState>(
+            BlocConsumer<ChatFeatchingBloc, ChatFeatchingState>(
+              listener: (context, state) {
+                // if (state is FeatchMessagesSuccessState) {
+                //   log("message");
+                //   context.read<ChatBloc>().add(FeatchMessageListEvent());
+                // }
+              },
               builder: (context, state) {
                 if (state is FetchMessageListSuccessState) {
                   return Expanded(
@@ -42,7 +48,6 @@ class _MessageScreenState extends State<MessageScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ChatScreen(
-                                   
                                     receiverId: state.userList[index].id,
                                     conversationId: state.chatList[index].id,
                                   ),

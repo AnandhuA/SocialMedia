@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:social_media/core/colors.dart';
+import 'package:social_media/core/size.dart';
 import 'package:social_media/models/chat_model.dart';
 
 class ChatWidget extends StatelessWidget {
@@ -18,22 +19,39 @@ class ChatWidget extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.start : MainAxisAlignment.end,
       children: [
         Flexible(
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isMe ? secondaryColor : primaryColor,
-              borderRadius: BorderRadius.only(
-                topRight: const Radius.circular(20),
-                topLeft: const Radius.circular(20),
-                bottomLeft: Radius.circular(isMe ? 0 : 20),
-                bottomRight: Radius.circular(isMe ? 20 : 0),
-              ),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minWidth: 70,
+              maxWidth: 400,
             ),
-            child: Column(
-              children: [
-                Text(message.text),
-                Text(DateFormat.jm().format(message.createdAt))
-              ],
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 10,
+              ),
+              decoration: BoxDecoration(
+                color: isMe ? secondaryColor : primaryColor,
+                borderRadius: BorderRadius.only(
+                  topRight: const Radius.circular(10),
+                  topLeft: const Radius.circular(10),
+                  bottomLeft: Radius.circular(isMe ? 0 : 10),
+                  bottomRight: Radius.circular(isMe ? 10 : 0),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(message.text),
+                  constHeight3,
+                  Text(
+                    DateFormat.jm().format(message.createdAt),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: greyColor300,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

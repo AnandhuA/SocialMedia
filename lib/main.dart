@@ -10,6 +10,7 @@ import 'package:social_media/BLoC/Suggestion/suggestion_bloc_bloc.dart';
 import 'package:social_media/BLoC/UserDetails/user_details_bloc.dart';
 import 'package:social_media/BLoC/UserPost/user_post_bloc.dart';
 import 'package:social_media/BLoC/Authentication/authentication_bloc.dart';
+import 'package:social_media/BLoC/chat_featching/chat_featching_bloc.dart';
 import 'package:social_media/core/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media/BLoC/bottomNavigation/bottom_navigation_cubit.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => FollowingPostBloc()),
         BlocProvider(create: (context) => ExploreBloc()),
         BlocProvider(create: (context) => ChatBloc()),
+         BlocProvider(create: (context) => ChatFeatchingBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

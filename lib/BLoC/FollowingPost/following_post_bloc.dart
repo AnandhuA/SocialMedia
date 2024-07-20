@@ -326,7 +326,7 @@ class FollowingPostBloc extends Bloc<FollowingPostEvent, FollowingPostState> {
     emit(AddNewCommentLoadingState());
     final Response? commentResponce = await PostRepo.commentPost(
       postId: event.post.id,
-      userName: event.post.userId.userName??"no",
+      userName: event.post.userId.userName,
       content: event.comment,
     );
     if (commentResponce != null && commentResponce.body.isNotEmpty) {

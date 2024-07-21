@@ -29,6 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<ChatBloc>().add(ConnectWebSocketEvent());
     context
         .read<ChatBloc>()
         .add(ClickUserEvent(conversationId: widget.conversationId));
@@ -39,7 +40,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(seconds: 1),
           curve: Curves.easeOut,
         );
       }

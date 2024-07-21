@@ -22,3 +22,13 @@ class ClickUserEvent extends ChatEvent {
 
   ClickUserEvent({required this.conversationId});
 }
+
+
+class ConnectWebSocketEvent extends ChatEvent {}
+
+
+class ReceiveMessageEvent extends ChatEvent {
+  final Message message;
+
+  ReceiveMessageEvent({required this.message});
+}

@@ -52,6 +52,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   custom_refresh_indicator: ^3.1.1
   intl: ^0.19.0
+  web_socket_channel: ^3.0.1
 
 dev_dependencies:
   flutter_test:
